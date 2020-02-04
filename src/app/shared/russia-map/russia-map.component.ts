@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Region} from '../../core/models';
+import {ApiService} from '../../core/service';
+
 
 @Component({
   selector: 'app-russia-map',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RussiaMapComponent implements OnInit {
 
-  constructor() { }
+  regions: Region[];
+
+  constructor(
+    private apiService: ApiService
+  ) {
+  }
 
   ngOnInit() {
+    this.apiService.get('regions.json').subscribe(data => {
+      this.regions = data;
+    });
   }
 
 }
