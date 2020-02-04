@@ -1,5 +1,6 @@
 @import '../node_modules/@angular/material/theming';
 @import './app/shared/navbar/navbar-theme';
+@import './app/shared/footer/footer-theme';
 
 
 @mixin app-theme($theme) {
@@ -14,6 +15,12 @@
     background: mat-color($background, background);
   }
 
+  .footer {
+    background: mat-color($primary);
+    color: mat-color($primary, default-contrast);
+  }
+
 
   @include nav-bar-theme($theme);
+  @include footer-theme($theme);
 }

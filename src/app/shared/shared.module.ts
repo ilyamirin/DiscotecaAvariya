@@ -5,6 +5,7 @@ import {MatButtonModule, MatIconModule, MatTableModule, MatTooltipModule} from '
 import {NavbarComponent} from './navbar/navbar.component';
 import {RouterModule} from '@angular/router';
 import { RussiaMapComponent } from './russia-map/russia-map.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -31,9 +32,10 @@ import { RussiaMapComponent } from './russia-map/russia-map.component';
     MatIconModule,
     MatTooltipModule,
     MatTableModule,
-    RussiaMapComponent
+    RussiaMapComponent,
+    FooterComponent
   ],
-  declarations: [NavbarComponent, RussiaMapComponent]
+  declarations: [NavbarComponent, RussiaMapComponent, FooterComponent]
 })
 export class SharedModule {
 }
