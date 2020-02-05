@@ -7,6 +7,7 @@ import {RouterModule} from '@angular/router';
 import {RussiaMapComponent} from './russia-map/russia-map.component';
 import {FooterComponent} from './footer/footer.component';
 import {ChartsModule} from 'ng2-charts';
+import {DataTableComponent} from './data-table/data-table.component';
 
 
 @NgModule({
@@ -23,24 +24,30 @@ import {ChartsModule} from 'ng2-charts';
     MatTooltipModule,
     MatTableModule
   ],
-  exports: [
-    CommonModule,
-    ChartsModule,
-    FormsModule,
+    exports: [
+        CommonModule,
+        ChartsModule,
+        FormsModule,
 
-    /* Export project components */
+        /* Export project components */
+        NavbarComponent,
+
+        /* Export Angular Material modules */
+        MatButtonModule,
+        MatGridListModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatTableModule,
+        RussiaMapComponent,
+        FooterComponent,
+        DataTableComponent
+    ],
+  declarations: [
     NavbarComponent,
-
-    /* Export Angular Material modules */
-    MatButtonModule,
-    MatGridListModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatTableModule,
     RussiaMapComponent,
-    FooterComponent
-  ],
-  declarations: [NavbarComponent, RussiaMapComponent, FooterComponent]
+    FooterComponent,
+    DataTableComponent
+  ]
 })
 export class SharedModule {
 }

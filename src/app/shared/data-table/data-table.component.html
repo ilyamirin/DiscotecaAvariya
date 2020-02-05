@@ -1,0 +1,56 @@
+<table mat-table [dataSource]="" class="mat-elevation-z8" style="margin-top: 48px">
+
+  <ng-container matColumnDef="A">
+    <th mat-header-cell *matHeaderCellDef class="text-center"> А</th>
+    <td mat-cell *matCellDef="let element"> {{element.originalTitle}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="B">
+    <th mat-header-cell *matHeaderCellDef class="text-center"> Б</th>
+    <td mat-cell *matCellDef="let element"> {{element.originalTitle}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="C">
+    <th mat-header-cell *matHeaderCellDef class="text-center"> В</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button matTooltip="Редактировать параметр">
+        <i class="material-icons">
+          edit
+        </i>
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="D">
+    <th mat-header-cell *matHeaderCellDef class="text-center"> Г</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button matTooltip="Добавить параметр">
+        <i class="material-icons">
+          note_add
+        </i>
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef class="text-center">
+      <button mat-icon-button color="black" matTooltip="Добавить параметр">
+        <i class="material-icons">add</i>
+      </button>
+    </th>
+
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button matTooltip="Удалить параметр">
+        <i class="material-icons">
+          delete
+        </i>
+      </button>
+    </td>
+  </ng-container>
+
+  <!--Output columns titles-->
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <!--Output data-->
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
