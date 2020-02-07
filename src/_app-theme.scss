@@ -13,6 +13,7 @@
 
   .app-background {
     background: mat-color($background, background);
+    color: mat-color($foreground, secondary-text);
   }
 
   .footer {
