@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {DialogService} from '../../core/service';
+import {InsertParamsDialogComponent} from '../insert-params-dialog/insert-params-dialog.component';
 
 
 @Component({
@@ -16,10 +18,18 @@ export class DataTableComponent implements OnInit {
     'actions'
   ];
 
-  constructor() {
+  constructor(
+    private dialogService: DialogService
+  ) {
   }
 
   ngOnInit() {
+  }
+
+  openInsertParamsDialog() {
+    const dialogRef = this.dialogService.open(InsertParamsDialogComponent, {
+      data: {}
+    });
   }
 
 }

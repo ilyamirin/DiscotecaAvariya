@@ -28,6 +28,8 @@ export class RussiaMapComponent implements OnInit {
 
   openMetricsDialog(region: Region) {
     const dialogRef = this.dialogService.open(MetricsDialogComponent, {
+      width: '1200px',
+      height: '720px',
       data: {
         region
       }

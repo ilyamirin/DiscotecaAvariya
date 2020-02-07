@@ -34,7 +34,7 @@
 
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef class="text-center">
-      <button mat-icon-button color="black" matTooltip="Добавить параметр">
+      <button mat-icon-button color="black" matTooltip="Добавить параметр" (click)="openInsertParamsDialog()">
         <i class="material-icons">add</i>
       </button>
     </th>
