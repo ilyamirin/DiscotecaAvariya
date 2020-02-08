@@ -29,7 +29,7 @@ export class RussiaMapComponent implements OnInit {
   openMetricsDialog(region: Region) {
     const dialogRef = this.dialogService.open(MetricsDialogComponent, {
       width: '1200px',
-      height: '632',
+      height: '640px',
       data: {
         region
       }
@@ -39,7 +39,11 @@ export class RussiaMapComponent implements OnInit {
   private setOpenDialogAction(regions) {
     regions.forEach(region => {
       document.getElementById(region.code).onclick = () => {
-        this.openMetricsDialog(region);
+        const regionPrimorskyKrai = 'RU-PRI';
+
+        if (region.code === regionPrimorskyKrai) {
+          this.openMetricsDialog(region);
+        }
       };
     });
   }
