@@ -1,6 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {BaseChartDirective, Color, Label} from 'ng2-charts';
-import {ChartDataSets, ChartOptions} from 'chart.js';
+import {ChartDataSets, ChartOptions, ChartType} from 'chart.js';
+import * as pluginAnnotations from 'chartjs-plugin-annotation';
+
 
 
 @Component({
@@ -11,7 +13,10 @@ import {ChartDataSets, ChartOptions} from 'chart.js';
 export class LineChartComponent implements OnInit {
 
   lineChartData: ChartDataSets[] = [
-    {data: [180, 200, 240, 250, 290, 320, 340, 360, 370, 400, 405, 410, 420], label: 'Количество детей-сирот, нуждающихся в жилье', yAxisID: 'y-axis-1'}
+    {
+      data: [180, 200, 240, 250, 290, 320, 340, 360, 370, 400, 405, 410, 420],
+      label: 'Количество детей-сирот, нуждающихся в жилье'
+    }
   ];
 
   lineChartLabels: Label[];
@@ -19,23 +24,22 @@ export class LineChartComponent implements OnInit {
   lineChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
-      xAxes: [{
-        type: 'time',
-        display: true,
-        scaleLabel: {
-          display: true,
-          labelString: 'Год'
-        },
-      }],
+      xAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: 'Год'
+          }
+        }
+      ],
       yAxes: [
         {
-          id: 'y-axis-1',
           position: 'left',
           gridLines: {
-            color: 'rgba(255,0,0,0.3)',
+            color: 'rgba(255,193,7,0.3)',
           },
           ticks: {
-            fontColor: 'red',
+            fontColor: 'rgb(255,193,7)',
           },
           scaleLabel: {
             display: true,
@@ -50,40 +54,34 @@ export class LineChartComponent implements OnInit {
           type: 'line',
           mode: 'vertical',
           scaleID: 'x-axis-0',
-          value: 'March',
-          borderColor: 'orange',
+          value: '2026',
+          borderColor: 'red',
           borderWidth: 2,
           label: {
             enabled: true,
-            fontColor: 'orange',
-            content: 'LineAnno'
+            fontColor: 'red',
+            content: 'Конец плана'
           }
         },
       ],
-    },
+    }
   };
 
   lineChartColors: Color[] = [
     { // green
-      backgroundColor: 'rgba(0, 255, 0, 0.3)',
-      borderColor: 'green',
+      backgroundColor: 'rgba(255,51,181,0.3)',
+      borderColor: 'rgb(255,193,7)',
       pointBackgroundColor: 'rgba(77,83,96,1)',
       pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(77,83,96,1)'
-    },
-    { // red
-      backgroundColor: 'rgba(255,0,0,0.3)',
-      borderColor: 'red',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     }
   ];
 
   lineChartLegend = true;
-  lineChartType = 'line';
+  lineChartType: ChartType = 'line';
+  lineChartPlugins = [pluginAnnotations];
+
 
   @ViewChild(BaseChartDirective, {static: true}) chart: BaseChartDirective;
 
@@ -97,7 +95,7 @@ export class LineChartComponent implements OnInit {
 
   private generateChartLabels() {
     const startYear = 2013;
-    const endYear = 2026;
+    const endYear = 2030;
 
     for (let i = startYear; i < endYear; i++) {
       this.lineChartLabels.push(i.toString());
