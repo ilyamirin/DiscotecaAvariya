@@ -1,16 +1,14 @@
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatDialogModule, MatGridListModule, MatIconModule, MatTableModule, MatTooltipModule} from '@angular/material';
+import {MatButtonModule, MatDialogModule} from '@angular/material';
 import {NavbarComponent} from './navbar/navbar.component';
 import {RouterModule} from '@angular/router';
 import {RussiaMapComponent} from './russia-map/russia-map.component';
 import {FooterComponent} from './footer/footer.component';
 import {ChartsModule} from 'ng2-charts';
-import {DataTableComponent} from './data-table/data-table.component';
 import {MetricsDialogComponent} from './metrics-dialog/metrics-dialog.component';
-import {InsertParamsDialogComponent} from './insert-params-dialog/insert-params-dialog.component';
-import { LineChartComponent } from './line-chart/line-chart.component';
+import {LineChartComponent} from './line-chart/line-chart.component';
 
 
 @NgModule({
@@ -22,11 +20,7 @@ import { LineChartComponent } from './line-chart/line-chart.component';
 
     /* Import Angular Material modules */
     MatButtonModule,
-    MatDialogModule,
-    MatGridListModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatTableModule
+    MatDialogModule
   ],
   exports: [
     CommonModule,
@@ -35,30 +29,22 @@ import { LineChartComponent } from './line-chart/line-chart.component';
 
     /* Export project components */
     NavbarComponent,
+    RussiaMapComponent,
+    FooterComponent,
 
     /* Export Angular Material modules */
     MatButtonModule,
-    MatDialogModule,
-    MatGridListModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatTableModule,
-    RussiaMapComponent,
-    FooterComponent,
-    DataTableComponent
+    MatDialogModule
   ],
   declarations: [
     NavbarComponent,
     RussiaMapComponent,
     FooterComponent,
-    DataTableComponent,
     MetricsDialogComponent,
-    InsertParamsDialogComponent,
     LineChartComponent
   ],
   entryComponents: [
-    MetricsDialogComponent,
-    InsertParamsDialogComponent
+    MetricsDialogComponent
   ]
 })
 export class SharedModule {
