@@ -2,10 +2,10 @@
   <div class="flex-item">
     <div>
       <canvas baseChart width="560" height="560"
-              [datasets]="lineChartData"
-              [labels]="lineChartLabels"
-              [options]="lineChartOptions"
-              [colors]="lineChartColors"
+              [datasets]="chartParams.lineChartData"
+              [labels]="chartParams.lineChartLabels"
+              [options]="chartParams.lineChartOptions"
+              [colors]="chartParams.lineChartColors"
               [legend]="lineChartLegend"
               [chartType]="lineChartType"
               [plugins]="lineChartPlugins">
