@@ -627,7 +627,7 @@ export class MetricsDialogComponent implements OnInit {
       }
     }
 
-    this.dynamicChart.update();
+    this.dynamicChart.chart.update();
   }
 
   private generateNumber(i: number) {
