@@ -27,6 +27,11 @@ export class MetricsDialogComponent implements OnInit {
   ];
   private orphansInSubjectChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
+    title: {
+      display: true,
+      text: 'Число детей-сирот в регионе',
+      fontSize: this.fontSize
+    },
     scales: {
       xAxes: [
         {
@@ -49,7 +54,7 @@ export class MetricsDialogComponent implements OnInit {
           scaleLabel: {
             display: true,
             fontSize: this.fontSize,
-            labelString: 'Количество детей-сирот'
+            labelString: 'Число детей-сирот'
           }
         }
       ]
@@ -96,6 +101,11 @@ export class MetricsDialogComponent implements OnInit {
   ];
   private orphansNeedHousingChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
+    title: {
+      display: true,
+      text: 'Число детей-сирот, нуждающихся в жилье',
+      fontSize: this.fontSize
+    },
     scales: {
       xAxes: [
         {
@@ -118,7 +128,7 @@ export class MetricsDialogComponent implements OnInit {
           scaleLabel: {
             display: true,
             fontSize: this.fontSize,
-            labelString: 'Количество детей-сирот, нуждающихся в жилье'
+            labelString: 'Число детей-сирот'
           }
         }
       ]
@@ -161,6 +171,11 @@ export class MetricsDialogComponent implements OnInit {
   ];
   private numberApartmentsIssuedChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
+    title: {
+      display: true,
+      text: 'Количество выданных квартир',
+      fontSize: this.fontSize
+    },
     scales: {
       xAxes: [
         {
@@ -221,15 +236,20 @@ export class MetricsDialogComponent implements OnInit {
   private financingAmountChartData = [
     {
       data: [undefined, undefined, undefined, undefined, undefined, undefined, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000],
-      label: 'Региональный размер финансирования'
+      label: 'Региональное финансирование'
     },
     {
       data: [undefined, undefined, undefined, undefined, undefined, undefined, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000],
-      label: 'Федеральный размер финансирования'
+      label: 'Федеральное финансирование'
     }
   ];
   private financingAmountChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
+    title: {
+      display: true,
+      text: 'Размер финансирования',
+      fontSize: this.fontSize
+    },
     scales: {
       xAxes: [
         {
@@ -289,12 +309,21 @@ export class MetricsDialogComponent implements OnInit {
   /*Стоимость жилья*/
   private houseCostChartData = [
     {
-      data: [180, 200, 240, 250, 290, 320, 340, 360, 370, 400, 405, 410, 420],
-      label: 'Стоимость жилья'
+      data: [76921.04, 75048.23, 86324.75, 84103.66, 82700.94, 83993.62, 93433.13],
+      label: 'Реальная'
+    },
+    {
+      data: [77415.91, 73766.11, 83490.86, 80981.44, 79028.45, 83407.52, 90816.7],
+      label: 'По минстрою'
     }
   ];
   private houseCostChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
+    title: {
+      display: true,
+      text: 'Стоимость жилья',
+      fontSize: this.fontSize
+    },
     scales: {
       xAxes: [
         {
@@ -360,6 +389,11 @@ export class MetricsDialogComponent implements OnInit {
   ];
   private employeesNumberOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
+    title: {
+      display: true,
+      text: 'Число сотрудников, занимающихся вопросом',
+      fontSize: this.fontSize
+    },
     scales: {
       xAxes: [
         {
