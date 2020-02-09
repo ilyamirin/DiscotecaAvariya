@@ -6,6 +6,8 @@
   <a mat-button class="navbar-hide-small"></a>
 
   <div class="flex-spacer"></div>
+
+  <mat-slide-toggle (change)="toggleLightTheme($event.checked)">Светлая тема</mat-slide-toggle>
 </nav>
 
 <nav class="navbar navbar-show-small">
