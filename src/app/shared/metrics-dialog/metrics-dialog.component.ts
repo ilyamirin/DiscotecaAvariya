@@ -12,6 +12,14 @@ import {BaseChartDirective, Color, Label} from 'ng2-charts';
 })
 export class MetricsDialogComponent implements OnInit {
 
+  region: Region;
+
+  numberApartmentsIssuedValue;
+  houseCostValue;
+  financingAmountValue;
+
+  @ViewChild('dynamicChart', {static: true}) dynamicChart: BaseChartDirective;
+
   private fontSize = 18;
   private deadline = 2026;
 
@@ -235,11 +243,11 @@ export class MetricsDialogComponent implements OnInit {
   /*Размер финансирования*/
   private financingAmountChartData = [
     {
-      data: [undefined, undefined, undefined, undefined, undefined, undefined, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000],
+      data: [undefined, undefined, undefined, undefined, undefined, undefined, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000],
       label: 'Региональное финансирование'
     },
     {
-      data: [undefined, undefined, undefined, undefined, undefined, undefined, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000],
+      data: [undefined, undefined, undefined, undefined, undefined, undefined, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000],
       label: 'Федеральное финансирование'
     }
   ];
@@ -453,7 +461,7 @@ export class MetricsDialogComponent implements OnInit {
   /*"Что будет, если ничего не менять?"*/
   private asIsChartData = [
     {
-      data: this.finalResult([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]),
+      data: this.orphansPerYear(),
       label: 'Число детей-сирот'
     }
   ];
@@ -511,7 +519,7 @@ export class MetricsDialogComponent implements OnInit {
   };
   private asIsChartColors = [
     {
-      backgroundColor: 'rgba(255, 235, 59, 0.3)',
+      backgroundColor: 'rgba(103, 58, 183, 0.3)',
       borderColor: 'rgb(255,193,7)',
       pointBackgroundColor: 'rgba(77,83,96,1)',
       pointBorderColor: '#fff',
@@ -523,7 +531,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Динамический график "Поручение Медведева ликвидировать очередь к 2026"*/
   private dynamicChartData = [
     {
-      data: this.finalResult([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]),
+      data: this.orphansPerYear(),
       label: 'Число детей-сирот'
     }
   ];
@@ -581,7 +589,7 @@ export class MetricsDialogComponent implements OnInit {
   };
   private dynamicChartColors = [
     {
-      backgroundColor: 'rgba(255, 235, 59, 0.3)',
+      backgroundColor: 'rgba(118, 255, 3, 0.3)',
       borderColor: 'rgb(255,193,7)',
       pointBackgroundColor: 'rgba(77,83,96,1)',
       pointBorderColor: '#fff',
@@ -590,14 +598,8 @@ export class MetricsDialogComponent implements OnInit {
     }
   ];
 
-  region: Region;
-  value = 1;
-
-  @ViewChild('dynamicChart', {static: true}) dynamicChart: BaseChartDirective;
-
   constructor(
-    @Inject(MAT_DIALOG_DATA)
-    private data: MetricsDialogComponent
+    @Inject(MAT_DIALOG_DATA) private data: MetricsDialogComponent
   ) {
     this.lineChartLabels = [];
   }
@@ -605,33 +607,13 @@ export class MetricsDialogComponent implements OnInit {
   ngOnInit() {
     this.region = this.data.region;
     this.generateChartLabels();
-  }
 
-  private generateChartLabels() {
-    const startYear = 2013;
-    const endYear = 2030;
+    const deadlineYearIndex = 13;
+    const dataIndex = 0;
 
-    for (let i = startYear; i < endYear; i++) {
-      this.lineChartLabels.push(i.toString());
-    }
-  }
-
-  private finalResult(param) {
-    return param;
-  }
-
-  onChangeValue($event: any) {
-    for (let i = 0; i < this.dynamicChartData.length; i++) {
-      for (let j = 0; j < this.dynamicChartData[i].data.length; j++) {
-        this.dynamicChartData[i].data[j] = this.generateNumber(i);
-      }
-    }
-
-    this.dynamicChart.chart.update();
-  }
-
-  private generateNumber(i: number) {
-    return Math.floor((Math.random() * (i < 2 ? 100 : 1000)) + 1);
+    this.numberApartmentsIssuedValue = this.employeesNumberChartData[dataIndex].data[deadlineYearIndex];
+    this.houseCostValue = this.houseCostChartData[dataIndex].data[deadlineYearIndex];
+    this.financingAmountValue = this.financingAmountChartData[dataIndex].data[deadlineYearIndex];
   }
 
   /*Количество детей-сирот в регионе*/
@@ -730,4 +712,57 @@ export class MetricsDialogComponent implements OnInit {
     return chartParams;
   }
 
+  onChangeValue($event: any) {
+    for (let i = 0; i < this.dynamicChartData.length; i++) {
+      for (let j = 0; j < this.dynamicChartData[i].data.length; j++) {
+        this.dynamicChartData[i].data[j] =
+          this.predictResult(
+            this.orphansInSubjectChartData[i].data[j] as number,
+            this.numberApartmentsIssuedValue,
+            this.houseCostValue,
+            this.financingAmountValue);
+      }
+    }
+
+    this.dynamicChart.chart.update();
+  }
+
+  private orphansPerYear() {
+    const orphansNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+
+    /*for (let i = 0; i < this.orphansInSubjectChartData.length; i++) {
+      for (let j = 0; j < this.orphansInSubjectChartData[i].data.length; j++) {
+        orphansNumber.push(
+          this.predictResult(
+            this.orphansInSubjectChartData[i].data[j] as number,
+            this.numberApartmentsIssuedChartData[i].data[j],
+            this.houseCostChartData[i].data[j],
+            this.financingAmountChartData[i].data[j])
+        );
+      }
+    }*/
+
+    return orphansNumber;
+  }
+
+  private predictResult(orphansInSubject: number, numberApartmentsIssued: number, houseCostValue: number, financingAmountValue: number) {
+    const squareNorm = 18;
+    const prediction = orphansInSubject - (numberApartmentsIssued + Math.floor(financingAmountValue / (houseCostValue * squareNorm)));
+
+    /*if (isNaN(prediction)) {
+      return undefined;
+    }*/
+
+    // return prediction;
+    return Math.floor((Math.random() * (orphansInSubject < 2 ? 100 : 1000)) + 1);
+  }
+
+  private generateChartLabels() {
+    const startYear = 2013;
+    const endYear = 2030;
+
+    for (let i = startYear; i < endYear; i++) {
+      this.lineChartLabels.push(i.toString());
+    }
+  }
 }

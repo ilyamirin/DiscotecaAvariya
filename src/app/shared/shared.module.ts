@@ -1,7 +1,7 @@
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatDialogModule, MatSliderModule, MatSlideToggleModule} from '@angular/material';
+import {MatButtonModule, MatDialogModule, MatSliderModule, MatSlideToggleModule, MatTooltipModule} from '@angular/material';
 import {NavbarComponent} from './navbar/navbar.component';
 import {RouterModule} from '@angular/router';
 import {RussiaMapComponent} from './russia-map/russia-map.component';
@@ -22,7 +22,8 @@ import {LineChartComponent} from './line-chart/line-chart.component';
     MatButtonModule,
     MatDialogModule,
     MatSlideToggleModule,
-    MatSliderModule
+    MatSliderModule,
+    MatTooltipModule
   ],
   exports: [
     CommonModule,
@@ -38,7 +39,8 @@ import {LineChartComponent} from './line-chart/line-chart.component';
     MatButtonModule,
     MatDialogModule,
     MatSlideToggleModule,
-    MatSliderModule
+    MatSliderModule,
+    MatTooltipModule
   ],
   declarations: [
     NavbarComponent,
