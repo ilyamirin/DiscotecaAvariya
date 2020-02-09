@@ -1,8 +1,8 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
 import {ChartParams, Region} from '../../core/models';
 import {ChartDataSets, ChartOptions} from 'chart.js';
-import {Color, Label} from 'ng2-charts';
+import {BaseChartDirective, Color, Label} from 'ng2-charts';
 
 
 @Component({
@@ -381,13 +381,13 @@ export class MetricsDialogComponent implements OnInit {
   ];
 
   /*Число сотрудников*/
-  private employeesNumberData = [
+  private employeesNumberChartData = [
     {
       data: [39, 39, 39, 39, 39, 39, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106],
       label: 'Число сотрудников'
     }
   ];
-  private employeesNumberOptions: (ChartOptions & { annotation: any }) = {
+  private employeesNumberChartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     title: {
       display: true,
@@ -439,7 +439,147 @@ export class MetricsDialogComponent implements OnInit {
       ],
     }
   };
-  private employeesNumberColors = [
+  private employeesNumberChartColors = [
+    {
+      backgroundColor: 'rgba(255, 235, 59, 0.3)',
+      borderColor: 'rgb(255,193,7)',
+      pointBackgroundColor: 'rgba(77,83,96,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(77,83,96,1)'
+    }
+  ];
+
+  /*"Что будет, если ничего не менять?"*/
+  private asIsChartData = [
+    {
+      data: this.finalResult([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]),
+      label: 'Число детей-сирот'
+    }
+  ];
+  private asIsChartOptions: (ChartOptions & { annotation: any }) = {
+    responsive: true,
+    title: {
+      display: true,
+      text: '\"Что будет, если ничего не менять?\"',
+      fontSize: this.fontSize
+    },
+    scales: {
+      xAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            fontSize: this.fontSize,
+            labelString: 'Год'
+          }
+        }
+      ],
+      yAxes: [
+        {
+          position: 'left',
+          gridLines: {
+            color: 'rgba(255,193,7,0.3)',
+          },
+          ticks: {
+            fontColor: 'rgb(255,193,7)',
+          },
+          scaleLabel: {
+            display: true,
+            fontSize: this.fontSize,
+            labelString: 'Число детей-сирот'
+          }
+        }
+      ]
+    },
+    annotation: {
+      annotations: [
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: this.deadline.toString(),
+          borderColor: 'red',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'red',
+            content: 'Конец плана'
+          }
+        },
+      ],
+    }
+  };
+  private asIsChartColors = [
+    {
+      backgroundColor: 'rgba(255, 235, 59, 0.3)',
+      borderColor: 'rgb(255,193,7)',
+      pointBackgroundColor: 'rgba(77,83,96,1)',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: 'rgba(77,83,96,1)'
+    }
+  ];
+
+  /*Динамический график "Поручение Медведева ликвидировать очередь к 2026"*/
+  private dynamicChartData = [
+    {
+      data: this.finalResult([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]),
+      label: 'Число детей-сирот'
+    }
+  ];
+  private dynamicChartOptions: (ChartOptions & { annotation: any }) = {
+    responsive: true,
+    title: {
+      display: true,
+      text: 'Поручение Медведева ликвидировать очередь к 2026',
+      fontSize: this.fontSize
+    },
+    scales: {
+      xAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            fontSize: this.fontSize,
+            labelString: 'Год'
+          }
+        }
+      ],
+      yAxes: [
+        {
+          position: 'left',
+          gridLines: {
+            color: 'rgba(255,193,7,0.3)',
+          },
+          ticks: {
+            fontColor: 'rgb(255,193,7)',
+          },
+          scaleLabel: {
+            display: true,
+            fontSize: this.fontSize,
+            labelString: 'Число детей-сирот'
+          }
+        }
+      ]
+    },
+    annotation: {
+      annotations: [
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: this.deadline.toString(),
+          borderColor: 'red',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'red',
+            content: 'Конец плана'
+          }
+        },
+      ],
+    }
+  };
+  private dynamicChartColors = [
     {
       backgroundColor: 'rgba(255, 235, 59, 0.3)',
       borderColor: 'rgb(255,193,7)',
@@ -451,6 +591,9 @@ export class MetricsDialogComponent implements OnInit {
   ];
 
   region: Region;
+  value = 1;
+
+  @ViewChild('dynamicChart', {static: true}) dynamicChart: BaseChartDirective;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)
@@ -471,6 +614,24 @@ export class MetricsDialogComponent implements OnInit {
     for (let i = startYear; i < endYear; i++) {
       this.lineChartLabels.push(i.toString());
     }
+  }
+
+  private finalResult(param) {
+    return param;
+  }
+
+  onChangeValue($event: any) {
+    for (let i = 0; i < this.dynamicChartData.length; i++) {
+      for (let j = 0; j < this.dynamicChartData[i].data.length; j++) {
+        this.dynamicChartData[i].data[j] = this.generateNumber(i);
+      }
+    }
+
+    this.dynamicChart.update();
+  }
+
+  private generateNumber(i: number) {
+    return Math.floor((Math.random() * (i < 2 ? 100 : 1000)) + 1);
   }
 
   /*Количество детей-сирот в регионе*/
@@ -537,9 +698,33 @@ export class MetricsDialogComponent implements OnInit {
   generateEmployeesNumberChart() {
     const chartParams: ChartParams = {
       lineChartLabels: this.lineChartLabels,
-      lineChartData: this.employeesNumberData,
-      lineChartOptions: this.employeesNumberOptions,
-      lineChartColors: this.employeesNumberColors
+      lineChartData: this.employeesNumberChartData,
+      lineChartOptions: this.employeesNumberChartOptions,
+      lineChartColors: this.employeesNumberChartColors
+    };
+
+    return chartParams;
+  }
+
+  /*"Что будет, если ничего не менять?"*/
+  generateAsIsChart() {
+    const chartParams: ChartParams = {
+      lineChartLabels: this.lineChartLabels,
+      lineChartData: this.asIsChartData,
+      lineChartOptions: this.asIsChartOptions,
+      lineChartColors: this.asIsChartColors
+    };
+
+    return chartParams;
+  }
+
+  /*Динамический график "Поручение Медведева ликвидировать очередь к 2026"*/
+  generateDynamicChart() {
+    const chartParams: ChartParams = {
+      lineChartLabels: this.lineChartLabels,
+      lineChartData: this.dynamicChartData,
+      lineChartOptions: this.dynamicChartOptions,
+      lineChartColors: this.dynamicChartColors
     };
 
     return chartParams;

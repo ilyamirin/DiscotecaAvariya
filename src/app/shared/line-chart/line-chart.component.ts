@@ -1,8 +1,8 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {BaseChartDirective} from 'ng2-charts';
 import {ChartType} from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
-import {ChartParams} from '../../core/models/chart-params.model';
+import {ChartParams} from '../../core/models';
+import {BaseChartDirective} from 'ng2-charts';
 
 
 @Component({
