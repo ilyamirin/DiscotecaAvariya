@@ -21,7 +21,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Количество детей-сирот в регионе*/
   private orphansInSubjectChartData: ChartDataSets[] = [
     {
-      data: [180, 200, 240, 250, 290, 320, 340, 360, 370, 400, 405, 410, 420],
+      data: [undefined, undefined, 9231, 8829, 8414, 7926, 7530, 7153, 6796, 6456, 6133, 5826, 5535, 5258, 4995, 4746, 4508],
       label: 'Количество детей-сирот в регионе'
     }
   ];
@@ -86,8 +86,12 @@ export class MetricsDialogComponent implements OnInit {
   /*Количество детей-сирот, нуждающихся в жилье*/
   private orphansNeedHousingChartData = [
     {
-      data: [180, 200, 240, 250, 290, 320, 340, 360, 370, 400, 405, 410, 420],
-      label: 'Количество детей-сирот, нуждающихся в жилье'
+      data: [undefined, 2500, undefined, 4000, 6552, 7322, 7489, 7908, 8351, 8819, 9312, 9834, 10385, 10966],
+      label: 'Негативный прогноз'
+    },
+    {
+      data: [undefined, undefined, undefined, 6385, 6552, 7322, 7489, 7639, 7792, 7947, 8106, 8268, 8433, 8602],
+      label: 'Позитивный прогноз',
     }
   ];
   private orphansNeedHousingChartOptions: (ChartOptions & { annotation: any }) = {
@@ -151,7 +155,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Количество выданных квартир*/
   private numberApartmentsIssuedChartData = [
     {
-      data: [180, 200, 240, 250, 290, 320, 340, 360, 370, 400, 405, 410, 420],
+      data: [undefined, undefined, 465, 522, 265, 318, 710, 800, 800, 800, 800, 800, 800, 800],
       label: 'Количество выданных квартир'
     }
   ];
@@ -216,8 +220,12 @@ export class MetricsDialogComponent implements OnInit {
   /*Размер финансирования*/
   private financingAmountChartData = [
     {
-      data: [180, 200, 240, 250, 290, 320, 340, 360, 370, 400, 405, 410, 420],
-      label: 'Размер финансирования'
+      data: [undefined, undefined, undefined, undefined, undefined, undefined, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000],
+      label: 'Региональный размер финансирования'
+    },
+    {
+      data: [undefined, undefined, undefined, undefined, undefined, undefined, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000],
+      label: 'Федеральный размер финансирования'
     }
   ];
   private financingAmountChartOptions: (ChartOptions & { annotation: any }) = {
@@ -346,7 +354,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Число сотрудников*/
   private employeesNumberData = [
     {
-      data: [180, 200, 240, 250, 290, 320, 340, 360, 370, 400, 405, 410, 420],
+      data: [39, 39, 39, 39, 39, 39, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106],
       label: 'Число сотрудников'
     }
   ];
