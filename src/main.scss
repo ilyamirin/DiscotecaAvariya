@@ -11,7 +11,7 @@ $primary: mat-palette($mat-cyan);
 $accent: mat-palette($mat-purple);
 
 
-$theme: mat-light-theme($primary, $accent);
+$theme: mat-dark-theme($primary, $accent);
 @include angular-material-theme($theme);
 @include app-theme($theme);
 

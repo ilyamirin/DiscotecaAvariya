@@ -21,6 +21,7 @@ export class MetricsDialogComponent implements OnInit {
   @ViewChild('dynamicChart', {static: true}) dynamicChart: BaseChartDirective;
 
   private fontSize = 18;
+  private currentYear = 2020;
   private deadline = 2026;
 
   // FIXME: chart fields can't be inside methods
@@ -29,11 +30,11 @@ export class MetricsDialogComponent implements OnInit {
   /*Количество детей-сирот в регионе*/
   private orphansInSubjectChartData: ChartDataSets[] = [
     {
-      data: [8829, 8414, 7926, 7530, 7153, 6796, 6456, 6133, 5826, 5535, 5258, 4995, 4746, 4508],
+      data: [8829, 8414, 7926, 7530, 7153, 6796, 6456, 6133, 5826, 5535, 5258, 4995, 4746, 4508, 4283],
       label: 'Количество детей-сирот в регионе'
     },
     {
-      data: [1232, 902, 938, 891, 847, 804, 764, 726, 690, 655, 622, 591, 562, 534],
+      data: [1232, 902, 938, 891, 847, 804, 764, 726, 690, 655, 622, 591, 562, 534, 507],
       label: 'Выявление детей-сирот'
     }
   ];
@@ -86,6 +87,19 @@ export class MetricsDialogComponent implements OnInit {
             content: 'Конец плана'
           }
         },
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: this.currentYear.toString(),
+          borderColor: '#673ab7',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'red',
+            content: 'Прогноз'
+          }
+        }
       ],
     }
   };
@@ -103,11 +117,11 @@ export class MetricsDialogComponent implements OnInit {
   /*Количество детей-сирот, нуждающихся в жилье*/
   private orphansNeedHousingChartData = [
     {
-      data: [4000, 6552, 7322, 7489, 7908, 8351, 8819, 9312, 9834, 10385, 10966],
+      data: [4000, 6552, 7322, 7489, 7908, 8351, 8819, 9312, 9834, 10385, 10966, 11581, 12229, 12914, 13637],
       label: 'Негативный прогноз'
     },
     {
-      data: [6385, 6552, 7322, 7489, 7639, 7792, 7947, 8106, 8268, 8433, 8602],
+      data: [6385, 6552, 7322, 7489, 7639, 7792, 7947, 8106, 8268, 8433, 8603, 8775, 8950, 9129, 9312],
       label: 'Позитивный прогноз',
     }
   ];
@@ -160,6 +174,19 @@ export class MetricsDialogComponent implements OnInit {
             content: 'Конец плана'
           }
         },
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: this.currentYear.toString(),
+          borderColor: '#673ab7',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'red',
+            content: 'Прогноз'
+          }
+        }
       ],
     }
   };
@@ -230,6 +257,19 @@ export class MetricsDialogComponent implements OnInit {
             content: 'Конец плана'
           }
         },
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: this.currentYear.toString(),
+          borderColor: '#673ab7',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'red',
+            content: 'Прогноз'
+          }
+        }
       ],
     }
   };
@@ -304,6 +344,19 @@ export class MetricsDialogComponent implements OnInit {
             content: 'Конец плана'
           }
         },
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: this.currentYear.toString(),
+          borderColor: '#673ab7',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'red',
+            content: 'Прогноз'
+          }
+        }
       ],
     }
   };
@@ -319,8 +372,6 @@ export class MetricsDialogComponent implements OnInit {
   ];
 
   /*Стоимость жилья*/
-  // 79 222,62	77 933,46	85 371,26	96 389,96
-  // 52 279,85	51 123,4	49 933,65	65 149,47
   private houseCostChartData = [
     {
       data: [65751.2, 64528.4, 67652.1, 80769.7],
@@ -380,6 +431,19 @@ export class MetricsDialogComponent implements OnInit {
             content: 'Конец плана'
           }
         },
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: this.currentYear.toString(),
+          borderColor: '#673ab7',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'red',
+            content: 'Прогноз'
+          }
+        }
       ],
     }
   };
@@ -397,7 +461,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Число сотрудников*/
   private employeesNumberChartData = [
     {
-      data: [39, 39, 39, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106],
+      data: [39, 39, 39, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106],
       label: 'Число сотрудников'
     }
   ];
@@ -450,6 +514,19 @@ export class MetricsDialogComponent implements OnInit {
             content: 'Конец плана'
           }
         },
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: this.currentYear.toString(),
+          borderColor: '#673ab7',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'red',
+            content: 'Прогноз'
+          }
+        }
       ],
     }
   };
@@ -520,6 +597,19 @@ export class MetricsDialogComponent implements OnInit {
             content: 'Конец плана'
           }
         },
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: this.currentYear.toString(),
+          borderColor: '#673ab7',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'red',
+            content: 'Прогноз'
+          }
+        }
       ],
     }
   };
@@ -590,6 +680,19 @@ export class MetricsDialogComponent implements OnInit {
             content: 'Конец плана'
           }
         },
+        {
+          type: 'line',
+          mode: 'vertical',
+          scaleID: 'x-axis-0',
+          value: this.currentYear.toString(),
+          borderColor: '#673ab7',
+          borderWidth: 2,
+          label: {
+            enabled: true,
+            fontColor: 'red',
+            content: 'Прогноз'
+          }
+        }
       ],
     }
   };
