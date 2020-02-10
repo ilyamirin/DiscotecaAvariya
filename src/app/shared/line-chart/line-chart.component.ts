@@ -12,8 +12,7 @@ import {BaseChartDirective} from 'ng2-charts';
 })
 export class LineChartComponent implements OnInit {
 
-  @Input()
-  chartParams: ChartParams;
+  @Input() chartParams: ChartParams;
 
   lineChartLegend = true;
   lineChartType: ChartType = 'line';

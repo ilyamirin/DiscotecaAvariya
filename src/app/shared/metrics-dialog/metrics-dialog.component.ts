@@ -29,8 +29,12 @@ export class MetricsDialogComponent implements OnInit {
   /*Количество детей-сирот в регионе*/
   private orphansInSubjectChartData: ChartDataSets[] = [
     {
-      data: [undefined, undefined, 9231, 8829, 8414, 7926, 7530, 7153, 6796, 6456, 6133, 5826, 5535, 5258, 4995, 4746, 4508],
+      data: [8829, 8414, 7926, 7530, 7153, 6796, 6456, 6133, 5826, 5535, 5258, 4995, 4746, 4508],
       label: 'Количество детей-сирот в регионе'
+    },
+    {
+      data: [1232, 902, 938, 891, 847, 804, 764, 726, 690, 655, 622, 591, 562, 534],
+      label: 'Выявление детей-сирот'
     }
   ];
   private orphansInSubjectChartOptions: (ChartOptions & { annotation: any }) = {
@@ -99,11 +103,11 @@ export class MetricsDialogComponent implements OnInit {
   /*Количество детей-сирот, нуждающихся в жилье*/
   private orphansNeedHousingChartData = [
     {
-      data: [undefined, 2500, undefined, 4000, 6552, 7322, 7489, 7908, 8351, 8819, 9312, 9834, 10385, 10966],
+      data: [4000, 6552, 7322, 7489, 7908, 8351, 8819, 9312, 9834, 10385, 10966],
       label: 'Негативный прогноз'
     },
     {
-      data: [undefined, undefined, undefined, 6385, 6552, 7322, 7489, 7639, 7792, 7947, 8106, 8268, 8433, 8602],
+      data: [6385, 6552, 7322, 7489, 7639, 7792, 7947, 8106, 8268, 8433, 8602],
       label: 'Позитивный прогноз',
     }
   ];
@@ -173,7 +177,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Количество выданных квартир*/
   private numberApartmentsIssuedChartData = [
     {
-      data: [undefined, undefined, 465, 522, 265, 318, 710, 800, 800, 800, 800, 800, 800, 800],
+      data: [522, 265, 318, 710, 800, 800, 800, 800, 800, 800, 800],
       label: 'Количество выданных квартир'
     }
   ];
@@ -243,11 +247,11 @@ export class MetricsDialogComponent implements OnInit {
   /*Размер финансирования*/
   private financingAmountChartData = [
     {
-      data: [undefined, undefined, undefined, undefined, undefined, undefined, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000],
+      data: [undefined, undefined, undefined, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000],
       label: 'Региональное финансирование'
     },
     {
-      data: [undefined, undefined, undefined, undefined, undefined, undefined, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000],
+      data: [undefined, undefined, undefined, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000],
       label: 'Федеральное финансирование'
     }
   ];
@@ -315,13 +319,15 @@ export class MetricsDialogComponent implements OnInit {
   ];
 
   /*Стоимость жилья*/
+  // 79 222,62	77 933,46	85 371,26	96 389,96
+  // 52 279,85	51 123,4	49 933,65	65 149,47
   private houseCostChartData = [
     {
-      data: [76921.04, 75048.23, 86324.75, 84103.66, 82700.94, 83993.62, 93433.13],
+      data: [65751.2, 64528.4, 67652.1, 80769.7],
       label: 'Реальная'
     },
     {
-      data: [77415.91, 73766.11, 83490.86, 80981.44, 79028.45, 83407.52, 90816.7],
+      data: [],
       label: 'По минстрою'
     }
   ];
@@ -329,7 +335,7 @@ export class MetricsDialogComponent implements OnInit {
     responsive: true,
     title: {
       display: true,
-      text: 'Стоимость жилья',
+      text: 'Стоимость жилья (за кв. м.)',
       fontSize: this.fontSize
     },
     scales: {
@@ -354,7 +360,7 @@ export class MetricsDialogComponent implements OnInit {
           scaleLabel: {
             display: true,
             fontSize: this.fontSize,
-            labelString: 'Стоимость жилья'
+            labelString: 'Стоимость жилья (за кв. м.)'
           }
         }
       ]
@@ -391,7 +397,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Число сотрудников*/
   private employeesNumberChartData = [
     {
-      data: [39, 39, 39, 39, 39, 39, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106],
+      data: [39, 39, 39, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106],
       label: 'Число сотрудников'
     }
   ];
@@ -758,8 +764,8 @@ export class MetricsDialogComponent implements OnInit {
   }
 
   private generateChartLabels() {
-    const startYear = 2013;
-    const endYear = 2030;
+    const startYear = 2016;
+    const endYear = 2031;
 
     for (let i = startYear; i < endYear; i++) {
       this.lineChartLabels.push(i.toString());
