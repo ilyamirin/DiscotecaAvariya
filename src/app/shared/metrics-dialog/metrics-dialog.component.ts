@@ -539,7 +539,7 @@ export class MetricsDialogComponent implements OnInit {
     responsive: true,
     title: {
       display: true,
-      text: 'Поручение Медведева ликвидировать очередь к 2026',
+      text: 'Поручение Медведева ликвидировать очередь к 2026 году',
       fontSize: this.fontSize
     },
     scales: {

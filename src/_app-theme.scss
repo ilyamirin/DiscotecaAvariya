@@ -1,6 +1,7 @@
 @import '../node_modules/@angular/material/theming';
 @import './app/shared/navbar/navbar-theme';
 @import './app/shared/footer/footer-theme';
+@import './app/shared/metrics-dialog/metrics-dialog-theme';
 
 
 @mixin app-theme($theme) {
@@ -24,4 +25,5 @@
 
   @include nav-bar-theme($theme);
   @include footer-theme($theme);
+  @include metrics-dialog-theme($theme);
 }

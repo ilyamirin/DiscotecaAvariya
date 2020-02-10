@@ -1,0 +1,13 @@
+@mixin metrics-dialog-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+
+  mat-dialog-content {
+    background: mat-color($background, background);
+    color: mat-color($foreground, secondary-text);
+  }
+}
