@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ThemeService} from '../../core/service/theme.service';
+import {ThemeService} from '../../core/service';
 import {Observable} from 'rxjs';
 
 

@@ -8,6 +8,7 @@ import {Subject} from 'rxjs';
 export class ThemeService {
 
   private lightTheme: Subject<boolean> = new Subject<boolean>();
+
   isLightTheme = this.lightTheme.asObservable();
 
   constructor() {

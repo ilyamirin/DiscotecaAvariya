@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA} from '@angular/material';
 import {ChartParams, Region} from '../../core/models';
 import {ChartDataSets, ChartOptions} from 'chart.js';
 import {BaseChartDirective, Color, Label} from 'ng2-charts';
+import {ChartService} from '../../core/service';
 
 
 @Component({
@@ -14,14 +15,15 @@ export class MetricsDialogComponent implements OnInit {
 
   region: Region;
 
-  numberApartmentsIssuedValue;
-  houseCostValue;
-  financingAmountValue;
+  newlyIdentifiedOrphansValue: number;
+  financingAmountValue: number;
+  squareNormValue: number;
+  pricePerSquareMeterValue: number;
 
   @ViewChild('dynamicChart', {static: true}) dynamicChart: BaseChartDirective;
 
   private fontSize = 18;
-  private currentYear = 2020;
+  private currentYear = new Date().getFullYear();
   private deadline = 2026;
 
   // FIXME: chart fields can't be inside methods
@@ -374,11 +376,11 @@ export class MetricsDialogComponent implements OnInit {
   /*Стоимость жилья*/
   private houseCostChartData = [
     {
-      data: [65751.2, 64528.4, 67652.1, 80769.7],
+      data: [65751.2, 64528.4, 67652.1, 80769.7, 86787, 93252.7, 100200, 107664.9, 115685.9, 124304.5, 133565.2, 143515.8, 154207.8, 165696.2, 178040.6],
       label: 'Реальная'
     },
     {
-      data: [],
+      data: [48532, 49163, 56134, 62382, 67996.4, 74116, 80786.5, 88057.3, 95982.4, 104620.9, 114036.7, 124300, 135487, 147680.9, 160972.2],
       label: 'По минстрою'
     }
   ];
@@ -708,21 +710,22 @@ export class MetricsDialogComponent implements OnInit {
   ];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: MetricsDialogComponent
+    @Inject(MAT_DIALOG_DATA) private data: MetricsDialogComponent,
+    private chartService: ChartService
   ) {
-    this.lineChartLabels = [];
   }
 
   ngOnInit() {
     this.region = this.data.region;
-    this.generateChartLabels();
+    this.lineChartLabels = this.chartService.generateChartLabels(2016, 2031);
 
     const deadlineYearIndex = 13;
     const dataIndex = 0;
 
-    this.numberApartmentsIssuedValue = this.employeesNumberChartData[dataIndex].data[deadlineYearIndex];
-    this.houseCostValue = this.houseCostChartData[dataIndex].data[deadlineYearIndex];
+    this.newlyIdentifiedOrphansValue = this.orphansInSubjectChartData[1].data[deadlineYearIndex] as number;
     this.financingAmountValue = this.financingAmountChartData[dataIndex].data[deadlineYearIndex];
+    this.squareNormValue = 30;
+    this.pricePerSquareMeterValue = this.houseCostChartData[dataIndex].data[deadlineYearIndex];
   }
 
   /*Количество детей-сирот в регионе*/
@@ -824,12 +827,15 @@ export class MetricsDialogComponent implements OnInit {
   onChangeValue($event: any) {
     for (let i = 0; i < this.dynamicChartData.length; i++) {
       for (let j = 0; j < this.dynamicChartData[i].data.length; j++) {
-        this.dynamicChartData[i].data[j] =
-          this.predictResult(
-            this.orphansInSubjectChartData[i].data[j] as number,
-            this.numberApartmentsIssuedValue,
-            this.houseCostValue,
-            this.financingAmountValue);
+        const prediction = this.predictResult(
+          this.orphansNeedHousingChartData[0].data[j],
+          this.newlyIdentifiedOrphansValue,
+          this.financingAmountValue,
+          this.squareNormValue,
+          this.pricePerSquareMeterValue
+        );
+
+        this.dynamicChartData[i].data[j] = prediction;
       }
     }
 
@@ -837,41 +843,35 @@ export class MetricsDialogComponent implements OnInit {
   }
 
   private orphansPerYear() {
-    const orphansNumber = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+    const orphansNumber = [];
 
-    /*for (let i = 0; i < this.orphansInSubjectChartData.length; i++) {
+    for (let i = 0; i < 1; i++) {
       for (let j = 0; j < this.orphansInSubjectChartData[i].data.length; j++) {
-        orphansNumber.push(
-          this.predictResult(
-            this.orphansInSubjectChartData[i].data[j] as number,
-            this.numberApartmentsIssuedChartData[i].data[j],
-            this.houseCostChartData[i].data[j],
-            this.financingAmountChartData[i].data[j])
+        const prediction = this.predictResult(
+          this.orphansNeedHousingChartData[0].data[j],
+          this.orphansInSubjectChartData[1].data[j] as number,
+          this.financingAmountChartData[0].data[j] + this.financingAmountChartData[1].data[j],
+          30,
+          this.houseCostChartData[0].data[j]
         );
+
+        orphansNumber.push(prediction);
       }
-    }*/
+    }
 
     return orphansNumber;
   }
 
-  private predictResult(orphansInSubject: number, numberApartmentsIssued: number, houseCostValue: number, financingAmountValue: number) {
-    const squareNorm = 18;
-    const prediction = orphansInSubject - (numberApartmentsIssued + Math.floor(financingAmountValue / (houseCostValue * squareNorm)));
+  private predictResult(
+    orphansNeedHousing: number,
+    newlyIdentifiedOrphans: number,
+    financingAmount: number,
+    squareNorm: number,
+    pricePerSquareMeter: number
+  ) {
+    const numberApartmentsIssued = financingAmount / (squareNorm * pricePerSquareMeter);
+    const prediction = orphansNeedHousing + newlyIdentifiedOrphans - numberApartmentsIssued;
 
-    /*if (isNaN(prediction)) {
-      return undefined;
-    }*/
-
-    // return prediction;
-    return Math.floor((Math.random() * (orphansInSubject < 2 ? 100 : 1000)) + 1);
-  }
-
-  private generateChartLabels() {
-    const startYear = 2016;
-    const endYear = 2031;
-
-    for (let i = startYear; i < endYear; i++) {
-      this.lineChartLabels.push(i.toString());
-    }
+    return isNaN(prediction) ? undefined : Math.floor(prediction);
   }
 }

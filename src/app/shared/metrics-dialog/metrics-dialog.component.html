@@ -44,34 +44,46 @@
 
         <div class="row center">
           <mat-slider
-            min="1000000"
-            [step]="1000000"
-            [(ngModel)]="financingAmountValue"
-            max="10000000000"
-            thumbLabel
-            disabled="false"
-            (change)="onChangeValue($event)"
-            matTooltip="Количество денег">
-          </mat-slider>
-
-          <mat-slider
-            min="1"
-            [(ngModel)]="numberApartmentsIssuedValue"
-            max="110"
-            thumbLabel
-            disabled="false"
-            (change)="onChangeValue($event)"
-            matTooltip="Количество выданных квартир">
-          </mat-slider>
-
-          <mat-slider
             min="0"
-            [(ngModel)]="houseCostValue"
-            max="5528"
+            max="1000"
+            [step]="50"
+            [(ngModel)]="newlyIdentifiedOrphansValue"
             thumbLabel
             disabled="false"
             (change)="onChangeValue($event)"
-            matTooltip="Стоимость жилья">
+            matTooltip="Вновь выявленные дети-сироты">
+          </mat-slider>
+
+          <mat-slider
+            min="1300000000"
+            [step]="100000000"
+            [(ngModel)]="financingAmountValue"
+            max="9000000000"
+            thumbLabel
+            disabled="false"
+            (change)="onChangeValue($event)"
+            matTooltip="Общий объем финансирования">
+          </mat-slider>
+
+          <mat-slider
+            min="26"
+            [(ngModel)]="squareNormValue"
+            max="36"
+            thumbLabel
+            disabled="false"
+            (change)="onChangeValue($event)"
+            matTooltip="Социальная норма жилья">
+          </mat-slider>
+
+          <mat-slider
+            min="60000"
+            [step]="1000"
+            [(ngModel)]="pricePerSquareMeterValue"
+            max="97000"
+            thumbLabel
+            disabled="false"
+            (change)="onChangeValue($event)"
+            matTooltip="Стоимость кв. м. жилья">
           </mat-slider>
         </div>
       </div>

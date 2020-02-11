@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {ThemeService} from './core/service/theme.service';
+import {ThemeService} from './core/service';
 
 
 @Component({

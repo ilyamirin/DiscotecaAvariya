@@ -26,16 +26,6 @@ export class RussiaMapComponent implements OnInit {
     });
   }
 
-  openMetricsDialog(region: Region) {
-    const dialogRef = this.dialogService.open(MetricsDialogComponent, {
-      width: '1200px',
-      height: '640px',
-      data: {
-        region
-      }
-    });
-  }
-
   private setOpenDialogAction(regions) {
     regions.forEach(region => {
       document.getElementById(region.code).onclick = () => {
@@ -48,4 +38,17 @@ export class RussiaMapComponent implements OnInit {
     });
   }
 
+  test($event) {
+    console.log($event.currentTarget.id);
+  }
+
+  openMetricsDialog(region: Region) {
+    const dialogRef = this.dialogService.open(MetricsDialogComponent, {
+      width: '1200px',
+      height: '640px',
+      data: {
+        region
+      }
+    });
+  }
 }
