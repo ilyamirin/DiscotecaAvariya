@@ -25,3 +25,47 @@ $theme: mat-dark-theme($primary, $accent);
   @include angular-material-theme($light-theme);
   @include app-theme($light-theme);
 }
+
+$loader-ring-size: 240px;
+$loader-ring-border-size: 4px;
+
+.relative {
+  position: relative;
+}
+
+.loader-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: $loader-ring-size/-2 0 0 $loader-ring-size/-2;
+  width: $loader-ring-size;
+  height: $loader-ring-size;
+}
+
+.loader-ring-light {
+  width: $loader-ring-size;
+  height: $loader-ring-size;
+  border-radius: $loader-ring-size;
+  // box-shadow: 0 $loader-ring-border-size 0 lighten(#0087bf, 10%) inset;
+  box-shadow: 0 $loader-ring-border-size 0 #00bcd4 inset;
+  animation: rotate-360 2s linear infinite;
+}
+
+.loader-ring-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: $loader-ring-size;
+  height: $loader-ring-size;
+  border-radius: $loader-ring-size;
+  box-shadow: 0 0 10px $loader-ring-border-size rgba(black, .3) inset
+}
+
+@keyframes rotate-360 {
+  from {
+    transform: rotateZ(0deg);
+  }
+  to {
+    transform: rotateZ(360deg);
+  }
+}
