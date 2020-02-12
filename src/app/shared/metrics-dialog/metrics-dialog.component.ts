@@ -719,11 +719,13 @@ export class MetricsDialogComponent implements OnInit {
     this.region = this.data.region;
     this.lineChartLabels = this.chartService.generateChartLabels(2016, 2031);
 
+    // FIXME: wrong index
     const deadlineYearIndex = 13;
     const dataIndex = 0;
 
     this.newlyIdentifiedOrphansValue = this.orphansInSubjectChartData[1].data[deadlineYearIndex] as number;
-    this.financingAmountValue = this.financingAmountChartData[dataIndex].data[deadlineYearIndex];
+    this.financingAmountValue = this.financingAmountChartData[0].data[10] +
+      this.financingAmountChartData[1].data[10];
     this.squareNormValue = 30;
     this.pricePerSquareMeterValue = this.houseCostChartData[dataIndex].data[deadlineYearIndex];
   }
