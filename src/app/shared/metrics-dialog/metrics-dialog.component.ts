@@ -827,8 +827,10 @@ export class MetricsDialogComponent implements OnInit {
   }
 
   onChangeValue($event: any) {
+    const currentYearIndex = 4;
+
     for (let i = 0; i < this.dynamicChartData.length; i++) {
-      for (let j = 0; j < this.dynamicChartData[i].data.length; j++) {
+      for (let j = currentYearIndex; j < this.dynamicChartData[i].data.length; j++) {
         const prediction = this.predictResult(
           this.orphansNeedHousingChartData[0].data[j],
           this.newlyIdentifiedOrphansValue,
@@ -871,9 +873,9 @@ export class MetricsDialogComponent implements OnInit {
     squareNorm: number,
     pricePerSquareMeter: number
   ) {
-    const numberApartmentsIssued = financingAmount / (squareNorm * pricePerSquareMeter);
+    const numberApartmentsIssued = Math.floor(financingAmount / (squareNorm * pricePerSquareMeter));
     const prediction = orphansNeedHousing + newlyIdentifiedOrphans - numberApartmentsIssued;
 
-    return isNaN(prediction) ? undefined : Math.floor(prediction);
+    return isNaN(prediction) ? undefined : prediction;
   }
 }
