@@ -546,7 +546,7 @@ export class MetricsDialogComponent implements OnInit {
   /*"Что будет, если ничего не менять?"*/
   private asIsChartData = [
     {
-      data: this.asIsData(),
+      data: this.asIsData(0.95, 1.056, 800),
       label: 'Число детей-сирот'
     }
   ];
@@ -668,21 +668,8 @@ export class MetricsDialogComponent implements OnInit {
             fontColor: 'red',
             content: 'Конец плана'
           }
-        },
-        {
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: this.currentYear.toString(),
-          borderColor: '#673ab7',
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: 'red',
-            content: 'Прогноз'
-          }
         }
-      ],
+      ]
     }
   };
   private dynamicChartColors = [
@@ -804,7 +791,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Динамический график "Поручение Правительства РФ ликвидировать очередь к 2026"*/
   generateDynamicChart() {
     const chartParams: ChartParams = {
-      lineChartLabels: this.lineChartLabels,
+      lineChartLabels: this.chartService.generateChartLabels(2020, 2044),
       lineChartData: this.dynamicChartData,
       lineChartOptions: this.dynamicChartOptions,
       lineChartColors: this.dynamicChartColors
@@ -816,15 +803,11 @@ export class MetricsDialogComponent implements OnInit {
   onChangeValue($event: any) {
   }
 
-  private asIsData() {
+  private asIsData(reductionCoefficient, growthCoefficient, apartmentsIssuedCoefficient) {
     // 2016 - 2030
     const orphansNeedHousing = this.orphansNeedHousingChartData[0].data;
     const newlyIdentifiedOrphans = this.orphansInSubjectChartData[1].data;
     const numberApartmentsIssued = this.numberApartmentsIssuedChartData[0].data;
-
-    const reductionCoefficient = 0.95;
-    const growthCoefficient = 1.056;
-    const apartmentsIssued = 800;
 
     const year2030Index = 14;
     const year2044Index = 29;
@@ -833,16 +816,16 @@ export class MetricsDialogComponent implements OnInit {
     for (let i = year2030Index; i < year2044Index; i++) {
       orphansNeedHousing.push(Math.round(orphansNeedHousing[i] * growthCoefficient));
       newlyIdentifiedOrphans.push(Math.round((newlyIdentifiedOrphans[i] as number) * reductionCoefficient));
-      numberApartmentsIssued.push(apartmentsIssued);
+      numberApartmentsIssued.push(apartmentsIssuedCoefficient);
     }
 
     const orphansNumber = [];
 
-    const currentYearIndex = 4;
+    const year2020Index = 4;
     let prediction;
     // 2016 - 2044
-    for (let j = currentYearIndex; j < year2044Index; j++) {
-      if (j === currentYearIndex) {
+    for (let j = year2020Index; j < year2044Index; j++) {
+      if (j === year2020Index) {
         prediction = this.predictAsIsResult(
           orphansNeedHousing[j - 1],
           newlyIdentifiedOrphans[j] as number,
@@ -858,12 +841,6 @@ export class MetricsDialogComponent implements OnInit {
 
       orphansNumber.push(prediction);
     }
-
-    console.log(this.chartService.generateChartLabels(2020, 2044).length);
-    console.log(orphansNumber.length);
-
-    console.log(this.chartService.generateChartLabels(2020, 2044));
-    console.log(orphansNumber);
 
     return orphansNumber;
   }
