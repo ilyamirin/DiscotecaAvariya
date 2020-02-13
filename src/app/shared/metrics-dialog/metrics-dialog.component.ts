@@ -26,6 +26,10 @@ export class MetricsDialogComponent implements OnInit {
   private currentYear = new Date().getFullYear();
   private deadline = 2026;
 
+  private reductionCoefficient = 0.95;
+  private growthCoefficient = 1.056;
+  private apartmentsIssuedCoefficient = 800;
+
   // FIXME: chart fields can't be inside methods
   private lineChartLabels: Label[];
   private resultChartsLabels: Label[];
@@ -547,7 +551,7 @@ export class MetricsDialogComponent implements OnInit {
   /*"Что будет, если ничего не менять?"*/
   private asIsChartData = [
     {
-      data: this.asIsData(0.95, 1.056, 800),
+      data: this.asIsData(),
       label: 'Число детей-сирот'
     }
   ];
@@ -617,7 +621,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Динамический график "Поручение Правительства РФ ликвидировать очередь к 2026"*/
   private dynamicChartData = [
     {
-      data: this.asIsData(0.95, 1.056, 800),
+      data: this.asIsData(),
       label: 'Число детей-сирот'
     }
   ];
@@ -696,13 +700,13 @@ export class MetricsDialogComponent implements OnInit {
     this.resultChartsLabels = this.chartService.generateChartLabels(2020, 2044);
 
     // FIXME: wrong index
-    const deadlineYearIndex = 13;
+    const year2020Index = 4;
 
-    this.newlyIdentifiedOrphansValue = this.orphansInSubjectChartData[1].data[deadlineYearIndex] as number;
-    this.financingAmountValue = this.financingAmountChartData[0].data[10] +
-      this.financingAmountChartData[1].data[10];
+    this.newlyIdentifiedOrphansValue = this.orphansInSubjectChartData[1].data[year2020Index] as number;
+    this.financingAmountValue = this.financingAmountChartData[0].data[year2020Index] +
+      this.financingAmountChartData[1].data[year2020Index];
     this.squareNormValue = 30;
-    this.pricePerSquareMeterValue = this.houseCostChartData[0].data[deadlineYearIndex];
+    this.pricePerSquareMeterValue = this.houseCostChartData[0].data[year2020Index];
   }
 
   /*Количество детей-сирот в регионе*/
@@ -802,29 +806,60 @@ export class MetricsDialogComponent implements OnInit {
   }
 
   onChangeValue($event: any) {
+    const orphansNeedHousing = this.orphansNeedHousingChartData[0].data;
+
+    const year2020Index = 4;
+    const year2030Index = 14;
+    const year2044Index = 28;
+
+    for (let i = year2030Index; i <= year2044Index; i++) {
+      orphansNeedHousing.push(Math.round(orphansNeedHousing[i] * this.growthCoefficient));
+    }
+
+    let prediction;
+    for (let j = year2020Index; j < year2044Index; j++) {
+      if (j === year2020Index) {
+        prediction = this.predictDynamicResult(
+          orphansNeedHousing[j - 1],
+          this.newlyIdentifiedOrphansValue,
+          this.financingAmountValue,
+          this.squareNormValue,
+          this.pricePerSquareMeterValue
+        );
+      } else {
+        prediction = this.predictDynamicResult(
+          prediction,
+          this.newlyIdentifiedOrphansValue,
+          this.financingAmountValue,
+          this.squareNormValue,
+          this.pricePerSquareMeterValue
+        );
+      }
+
+      this.dynamicChartData[0].data[j] = prediction;
+    }
+
+    this.dynamicChart.chart.update();
   }
 
-  private asIsData(reductionCoefficient, growthCoefficient, apartmentsIssuedCoefficient) {
-    // 2016 - 2030
+  private asIsData() {
     const orphansNeedHousing = this.orphansNeedHousingChartData[0].data;
     const newlyIdentifiedOrphans = this.orphansInSubjectChartData[1].data;
     const numberApartmentsIssued = this.numberApartmentsIssuedChartData[0].data;
 
+    const year2020Index = 4;
     const year2030Index = 14;
     const year2044Index = 28;
 
-    // 2030 - 2044
     for (let i = year2030Index; i <= year2044Index; i++) {
-      orphansNeedHousing.push(Math.round(orphansNeedHousing[i] * growthCoefficient));
-      newlyIdentifiedOrphans.push(Math.round((newlyIdentifiedOrphans[i] as number) * reductionCoefficient));
-      numberApartmentsIssued.push(apartmentsIssuedCoefficient);
+      orphansNeedHousing.push(Math.round(orphansNeedHousing[i] * this.growthCoefficient));
+      newlyIdentifiedOrphans.push(Math.round((newlyIdentifiedOrphans[i] as number) * this.reductionCoefficient));
+      numberApartmentsIssued.push(this.apartmentsIssuedCoefficient);
     }
 
     const orphansNumber = [];
 
-    const year2020Index = 4;
     let prediction;
-    // 2016 - 2044
     for (let j = year2020Index; j <= year2044Index; j++) {
       if (j === year2020Index) {
         prediction = this.predictAsIsResult(

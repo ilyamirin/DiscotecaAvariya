@@ -1,0 +1,28 @@
+$legend-icon-size: 40px;
+
+.legend {
+  height: $legend-icon-size;
+  width: $legend-icon-size;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.legend-unknown {
+  @extend .legend;
+  background: black;
+}
+
+.legend-good {
+  @extend .legend;
+  background: green;
+}
+
+.legend-acceptable {
+  @extend .legend;
+  background: #ffc107;
+}
+
+.legend-critical {
+  @extend .legend;
+  background: red;
+}
