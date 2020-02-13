@@ -206,7 +206,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Количество выданных квартир*/
   private numberApartmentsIssuedChartData = [
     {
-      data: [522, 265, 318, 710, 800, 800, 800, 800, 800, 800, 800],
+      data: [522, 265, 318, 710, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800],
       label: 'Количество выданных квартир'
     }
   ];
@@ -289,11 +289,11 @@ export class MetricsDialogComponent implements OnInit {
   /*Размер финансирования*/
   private financingAmountChartData = [
     {
-      data: [undefined, undefined, undefined, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000],
+      data: [287529964.5, 277250000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000, 1000000000],
       label: 'Региональное финансирование'
     },
     {
-      data: [undefined, undefined, undefined, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000],
+      data: [252669200, 382000000, 33839671.5, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000, 349000000],
       label: 'Федеральное финансирование'
     }
   ];
@@ -546,7 +546,7 @@ export class MetricsDialogComponent implements OnInit {
   /*"Что будет, если ничего не менять?"*/
   private asIsChartData = [
     {
-      data: this.orphansPerYear(),
+      data: this.asIsData(),
       label: 'Число детей-сирот'
     }
   ];
@@ -579,7 +579,7 @@ export class MetricsDialogComponent implements OnInit {
           scaleLabel: {
             display: true,
             fontSize: this.fontSize,
-            labelString: 'Число детей-сирот'
+            labelString: 'Число детей-сирот, стоящих в очереди'
           }
         }
       ]
@@ -598,21 +598,8 @@ export class MetricsDialogComponent implements OnInit {
             fontColor: 'red',
             content: 'Конец плана'
           }
-        },
-        {
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: this.currentYear.toString(),
-          borderColor: '#673ab7',
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: 'red',
-            content: 'Прогноз'
-          }
         }
-      ],
+      ]
     }
   };
   private asIsChartColors = [
@@ -626,10 +613,10 @@ export class MetricsDialogComponent implements OnInit {
     }
   ];
 
-  /*Динамический график "Поручение Медведева ликвидировать очередь к 2026"*/
+  /*Динамический график "Поручение Правительства РФ ликвидировать очередь к 2026"*/
   private dynamicChartData = [
     {
-      data: this.orphansPerYear(),
+      data: [],
       label: 'Число детей-сирот'
     }
   ];
@@ -637,7 +624,7 @@ export class MetricsDialogComponent implements OnInit {
     responsive: true,
     title: {
       display: true,
-      text: 'Поручение Медведева ликвидировать очередь к 2026 году',
+      text: 'Поручение Правительства РФ ликвидировать очередь к 2026 году',
       fontSize: this.fontSize
     },
     scales: {
@@ -717,7 +704,7 @@ export class MetricsDialogComponent implements OnInit {
 
   ngOnInit() {
     this.region = this.data.region;
-    this.lineChartLabels = this.chartService.generateChartLabels(2016, 2031);
+    this.lineChartLabels = this.chartService.generateChartLabels(2016, 2030);
 
     // FIXME: wrong index
     const deadlineYearIndex = 13;
@@ -805,7 +792,7 @@ export class MetricsDialogComponent implements OnInit {
   /*"Что будет, если ничего не менять?"*/
   generateAsIsChart() {
     const chartParams: ChartParams = {
-      lineChartLabels: this.lineChartLabels,
+      lineChartLabels: this.chartService.generateChartLabels(2020, 2044),
       lineChartData: this.asIsChartData,
       lineChartOptions: this.asIsChartOptions,
       lineChartColors: this.asIsChartColors
@@ -814,7 +801,7 @@ export class MetricsDialogComponent implements OnInit {
     return chartParams;
   }
 
-  /*Динамический график "Поручение Медведева ликвидировать очередь к 2026"*/
+  /*Динамический график "Поручение Правительства РФ ликвидировать очередь к 2026"*/
   generateDynamicChart() {
     const chartParams: ChartParams = {
       lineChartLabels: this.lineChartLabels,
@@ -827,46 +814,67 @@ export class MetricsDialogComponent implements OnInit {
   }
 
   onChangeValue($event: any) {
-    const currentYearIndex = 4;
-
-    for (let i = 0; i < this.dynamicChartData.length; i++) {
-      for (let j = currentYearIndex; j < this.dynamicChartData[i].data.length; j++) {
-        const prediction = this.predictResult(
-          this.orphansNeedHousingChartData[0].data[j],
-          this.newlyIdentifiedOrphansValue,
-          this.financingAmountValue,
-          this.squareNormValue,
-          this.pricePerSquareMeterValue
-        );
-
-        this.dynamicChartData[i].data[j] = prediction;
-      }
-    }
-
-    this.dynamicChart.chart.update();
   }
 
-  private orphansPerYear() {
+  private asIsData() {
+    // 2016 - 2030
+    const orphansNeedHousing = this.orphansNeedHousingChartData[0].data;
+    const newlyIdentifiedOrphans = this.orphansInSubjectChartData[1].data;
+    const numberApartmentsIssued = this.numberApartmentsIssuedChartData[0].data;
+
+    const reductionCoefficient = 0.95;
+    const growthCoefficient = 1.056;
+    const apartmentsIssued = 800;
+
+    const year2030Index = 14;
+    const year2044Index = 29;
+
+    // 2030 - 2044
+    for (let i = year2030Index; i < year2044Index; i++) {
+      orphansNeedHousing.push(Math.round(orphansNeedHousing[i] * growthCoefficient));
+      newlyIdentifiedOrphans.push(Math.round((newlyIdentifiedOrphans[i] as number) * reductionCoefficient));
+      numberApartmentsIssued.push(apartmentsIssued);
+    }
+
     const orphansNumber = [];
 
-    for (let i = 0; i < 1; i++) {
-      for (let j = 0; j < this.orphansInSubjectChartData[i].data.length; j++) {
-        const prediction = this.predictResult(
-          this.orphansNeedHousingChartData[0].data[j],
-          this.orphansInSubjectChartData[1].data[j] as number,
-          this.financingAmountChartData[0].data[j] + this.financingAmountChartData[1].data[j],
-          30,
-          this.houseCostChartData[0].data[j]
+    const currentYearIndex = 4;
+    let prediction;
+    // 2016 - 2044
+    for (let j = currentYearIndex; j < year2044Index; j++) {
+      if (j === currentYearIndex) {
+        prediction = this.predictAsIsResult(
+          orphansNeedHousing[j - 1],
+          newlyIdentifiedOrphans[j] as number,
+          numberApartmentsIssued[j]
         );
-
-        orphansNumber.push(prediction);
+      } else {
+        prediction = this.predictAsIsResult(
+          prediction,
+          newlyIdentifiedOrphans[j] as number,
+          numberApartmentsIssued[j]
+        );
       }
+
+      orphansNumber.push(prediction);
     }
+
+    console.log(this.chartService.generateChartLabels(2020, 2044).length);
+    console.log(orphansNumber.length);
+
+    console.log(this.chartService.generateChartLabels(2020, 2044));
+    console.log(orphansNumber);
 
     return orphansNumber;
   }
 
-  private predictResult(
+  private predictAsIsResult(orphansNeedHousing: number, newlyIdentifiedOrphans: number, numberApartmentsIssued: number) {
+    const prediction = orphansNeedHousing + newlyIdentifiedOrphans - numberApartmentsIssued;
+
+    return isNaN(prediction) ? undefined : (prediction < 0 ? 0 : prediction);
+  }
+
+  private predictDynamicResult(
     orphansNeedHousing: number,
     newlyIdentifiedOrphans: number,
     financingAmount: number,
@@ -876,6 +884,6 @@ export class MetricsDialogComponent implements OnInit {
     const numberApartmentsIssued = Math.floor(financingAmount / (squareNorm * pricePerSquareMeter));
     const prediction = orphansNeedHousing + newlyIdentifiedOrphans - numberApartmentsIssued;
 
-    return isNaN(prediction) ? undefined : prediction;
+    return isNaN(prediction) ? undefined : (prediction < 0 ? 0 : prediction);
   }
 }

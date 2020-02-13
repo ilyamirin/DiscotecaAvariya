@@ -15,46 +15,6 @@
   flex: 1;
 }
 
-.footer-angular-logo {
-  height: 50px;
-}
-
-.footer-version {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-
-  .angular-material-logo {
-    height: 40px;
-    margin: 10px 0 10px 16px;
-  }
-
-  .version {
-    margin: 0 40px;
-  }
-}
-
-.footer-copyright {
-  display: flex;
-  flex: 1;
-  justify-content: flex-end;
-  flex-direction: column;
-  min-width: 225px;
-  margin-top: 16px;
-
-  > div {
-    display: flex;
-    flex-direction: column;
-    align-self: flex-end;
-    text-align: center;
-  }
-
-  @media (min-width: 885px) {
-    margin-top: 0;
-  }
-}
-
 .footer-logo span {
   display: inline-block;
   line-height: 50px;
@@ -64,16 +24,6 @@
   a {
     font-size: 16px;
     padding: 0;
-  }
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-
-  &:hover,
-  &:focus {
-    text-decoration: underline;
   }
 }
 

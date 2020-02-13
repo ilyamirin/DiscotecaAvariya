@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Color, Label} from 'ng2-charts';
-import {ChartColor, ChartDataSets, ChartOptions} from 'chart.js';
+import {ChartDataSets, ChartOptions} from 'chart.js';
 
 
 @Injectable({
@@ -83,7 +83,6 @@ export class ChartService {
   }
 
 
-
   setData(data: Array<number | null | undefined>, label: string) {
   }
 
@@ -96,7 +95,7 @@ export class ChartService {
   generateChartLabels(startYear: number, endYear: number) {
     const lineChartLabels: Label[] = [];
 
-    for (let i = startYear; i < endYear; i++) {
+    for (let i = startYear; i < endYear + 1; i++) {
       lineChartLabels.push(i.toString());
     }
 
