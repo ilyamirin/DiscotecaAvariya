@@ -28,6 +28,7 @@ export class MetricsDialogComponent implements OnInit {
 
   // FIXME: chart fields can't be inside methods
   private lineChartLabels: Label[];
+  private resultChartsLabels: Label[];
 
   /*Количество детей-сирот в регионе*/
   private orphansInSubjectChartData: ChartDataSets[] = [
@@ -616,7 +617,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Динамический график "Поручение Правительства РФ ликвидировать очередь к 2026"*/
   private dynamicChartData = [
     {
-      data: [],
+      data: this.asIsData(0.95, 1.056, 800),
       label: 'Число детей-сирот'
     }
   ];
@@ -692,16 +693,16 @@ export class MetricsDialogComponent implements OnInit {
   ngOnInit() {
     this.region = this.data.region;
     this.lineChartLabels = this.chartService.generateChartLabels(2016, 2030);
+    this.resultChartsLabels = this.chartService.generateChartLabels(2020, 2044);
 
     // FIXME: wrong index
     const deadlineYearIndex = 13;
-    const dataIndex = 0;
 
     this.newlyIdentifiedOrphansValue = this.orphansInSubjectChartData[1].data[deadlineYearIndex] as number;
     this.financingAmountValue = this.financingAmountChartData[0].data[10] +
       this.financingAmountChartData[1].data[10];
     this.squareNormValue = 30;
-    this.pricePerSquareMeterValue = this.houseCostChartData[dataIndex].data[deadlineYearIndex];
+    this.pricePerSquareMeterValue = this.houseCostChartData[0].data[deadlineYearIndex];
   }
 
   /*Количество детей-сирот в регионе*/
@@ -779,7 +780,7 @@ export class MetricsDialogComponent implements OnInit {
   /*"Что будет, если ничего не менять?"*/
   generateAsIsChart() {
     const chartParams: ChartParams = {
-      lineChartLabels: this.chartService.generateChartLabels(2020, 2044),
+      lineChartLabels: this.resultChartsLabels,
       lineChartData: this.asIsChartData,
       lineChartOptions: this.asIsChartOptions,
       lineChartColors: this.asIsChartColors
@@ -791,7 +792,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Динамический график "Поручение Правительства РФ ликвидировать очередь к 2026"*/
   generateDynamicChart() {
     const chartParams: ChartParams = {
-      lineChartLabels: this.chartService.generateChartLabels(2020, 2044),
+      lineChartLabels: this.resultChartsLabels,
       lineChartData: this.dynamicChartData,
       lineChartOptions: this.dynamicChartOptions,
       lineChartColors: this.dynamicChartColors
@@ -810,10 +811,10 @@ export class MetricsDialogComponent implements OnInit {
     const numberApartmentsIssued = this.numberApartmentsIssuedChartData[0].data;
 
     const year2030Index = 14;
-    const year2044Index = 29;
+    const year2044Index = 28;
 
     // 2030 - 2044
-    for (let i = year2030Index; i < year2044Index; i++) {
+    for (let i = year2030Index; i <= year2044Index; i++) {
       orphansNeedHousing.push(Math.round(orphansNeedHousing[i] * growthCoefficient));
       newlyIdentifiedOrphans.push(Math.round((newlyIdentifiedOrphans[i] as number) * reductionCoefficient));
       numberApartmentsIssued.push(apartmentsIssuedCoefficient);
@@ -824,7 +825,7 @@ export class MetricsDialogComponent implements OnInit {
     const year2020Index = 4;
     let prediction;
     // 2016 - 2044
-    for (let j = year2020Index; j < year2044Index; j++) {
+    for (let j = year2020Index; j <= year2044Index; j++) {
       if (j === year2020Index) {
         prediction = this.predictAsIsResult(
           orphansNeedHousing[j - 1],

@@ -95,7 +95,7 @@ export class ChartService {
   generateChartLabels(startYear: number, endYear: number) {
     const lineChartLabels: Label[] = [];
 
-    for (let i = startYear; i < endYear + 1; i++) {
+    for (let i = startYear; i <= endYear; i++) {
       lineChartLabels.push(i.toString());
     }
 
