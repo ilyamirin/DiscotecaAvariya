@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {debounceTime, map, startWith} from 'rxjs/operators';
 import {Region} from '../../core/models';
@@ -18,7 +18,9 @@ export class AddDataDialogComponent implements OnInit {
 
   regions: Region[];
   filteredRegions: Observable<Region[]>;
-  myControl = new FormControl();
+  autocompleteControl = new FormControl();
+
+  addDataForm: FormGroup;
 
   displayedColumns: string[] = [
     'year',
@@ -43,16 +45,39 @@ export class AddDataDialogComponent implements OnInit {
   ];
 
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private formBuilder: FormBuilder
   ) {
-    this.orphansStatistics = new OrphansStatistics();
-    this.apiService.get('regions.json').subscribe(data => {
-      this.regions = data;
-    });
   }
 
   ngOnInit() {
-    this.filteredRegions = this.myControl.valueChanges
+    this.orphansStatistics = new OrphansStatistics();
+
+    this.addDataForm = this.formBuilder.group({
+      year: ['', Validators.compose([Validators.required, Validators.min(2016), Validators.max(2030)])],
+
+      orphansInSubject: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      newlyIdentifiedOrphans: ['', Validators.compose([Validators.required, Validators.min(0)])],
+
+      orphansNeedHousingNegative: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      orphansNeedHousingPositive: ['', Validators.compose([Validators.required, Validators.min(0)])],
+
+      apartmentsNumberIssued: ['', Validators.compose([Validators.required, Validators.min(0)])],
+
+      regionalFunding: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      federalFunding: ['', Validators.compose([Validators.required, Validators.min(0)])],
+
+      realHousingCost: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      minstroyHousingCost: ['', Validators.compose([Validators.required, Validators.min(0)])],
+
+      employeesNumber: ['', Validators.compose([Validators.required, Validators.min(0)])]
+    });
+
+    this.apiService.get('regions.json').subscribe(data => {
+      this.regions = data;
+    });
+
+    this.filteredRegions = this.autocompleteControl.valueChanges
       .pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value.name),
@@ -65,8 +90,8 @@ export class AddDataDialogComponent implements OnInit {
     return region && region.name ? region.name : '';
   }
 
-  save() {
-    console.log(this.orphansStatistics);
+  onSubmitAuthForm(formValue: FormGroup) {
+    console.log(formValue.value);
   }
 
   private _filter(name: string): Region[] {

@@ -1,10 +1,10 @@
 <h1 mat-dialog-title>Добавление данных для региона</h1>
 
 <mat-dialog-content>
-  <form class="addition-form">
+  <form class="addition-form" [formGroup]="addDataForm" (ngSubmit)="onSubmitAuthForm(addDataForm)">
     <mat-form-field class="fw">
       <mat-label>Регион</mat-label>
-      <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+      <input type="text" matInput [formControl]="autocompleteControl" [matAutocomplete]="auto">
 
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         <mat-option *ngFor="let region of filteredRegions | async" [value]="region">
@@ -22,7 +22,7 @@
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Год</mat-label>
-            <input matInput type="number" [(ngModel)]="orphansStatistics.year" name="year"/>
+            <input matInput type="number" formControlName="year"/>
           </mat-form-field>
         </td>
       </ng-container>
@@ -33,7 +33,7 @@
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Число детей-сирот в регионе</mat-label>
-            <input matInput type="number"[(ngModel)]="orphansStatistics.orphansInSubject" name="orphansInSubject" />
+            <input matInput type="number" formControlName="orphansInSubject"/>
           </mat-form-field>
         </td>
       </ng-container>
@@ -43,7 +43,7 @@
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Вновь выявленные дети-сироты</mat-label>
-            <input matInput type="number" [(ngModel)]="orphansStatistics.newlyIdentifiedOrphans" name="newlyIdentifiedOrphans"/>
+            <input matInput type="number" formControlName="newlyIdentifiedOrphans"/>
           </mat-form-field>
         </td>
       </ng-container>
@@ -54,7 +54,7 @@
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Дети-сироты, нуждающиеся в жилье (негативный прогноз)</mat-label>
-            <input matInput type="number" [(ngModel)]="orphansStatistics.orphansNeedHousingNegative" name="orphansNeedHousingNegative"/>
+            <input matInput type="number" formControlName="orphansNeedHousingNegative"/>
           </mat-form-field>
         </td>
       </ng-container>
@@ -64,7 +64,7 @@
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Дети-сироты, нуждающиеся в жилье (позитивный прогноз)</mat-label>
-            <input matInput type="number" [(ngModel)]="orphansStatistics.orphansNeedHousingPositive" name="orphansNeedHousingPositive"/>
+            <input matInput type="number" formControlName="orphansNeedHousingPositive"/>
           </mat-form-field>
         </td>
       </ng-container>
@@ -75,7 +75,7 @@
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Количество выданных квартир</mat-label>
-            <input matInput type="number" [(ngModel)]="orphansStatistics.apartmentsNumberIssued" name="apartmentsNumberIssued"/>
+            <input matInput type="number" formControlName="apartmentsNumberIssued"/>
           </mat-form-field>
         </td>
       </ng-container>
@@ -86,7 +86,7 @@
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Региональное финансирование</mat-label>
-            <input matInput type="number" [(ngModel)]="orphansStatistics.regionalFunding" name="regionalFunding"/>
+            <input matInput type="number" formControlName="regionalFunding"/>
           </mat-form-field>
         </td>
       </ng-container>
@@ -96,7 +96,7 @@
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Федеральное финансирование</mat-label>
-            <input matInput type="number" [(ngModel)]="orphansStatistics.federalFunding" name="federalFunding"/>
+            <input matInput type="number" formControlName="federalFunding"/>
           </mat-form-field>
         </td>
       </ng-container>
@@ -107,7 +107,7 @@
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Стоимость кв. м. жилья (реальная)</mat-label>
-            <input matInput type="number" [(ngModel)]="orphansStatistics.realHousingCost" name="realHousingCost"/>
+            <input matInput type="number" formControlName="realHousingCost"/>
           </mat-form-field>
         </td>
       </ng-container>
@@ -117,7 +117,7 @@
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Стоимость кв. м. жилья (по минстрою)</mat-label>
-            <input matInput type="number" [(ngModel)]="orphansStatistics.minstroyHousingCost" name="minstroyHousingCost"/>
+            <input matInput type="number" formControlName="minstroyHousingCost"/>
           </mat-form-field>
         </td>
       </ng-container>
@@ -128,14 +128,14 @@
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Число работников, занимающихся вопросом</mat-label>
-            <input matInput type="number" [(ngModel)]="orphansStatistics.employeesNumber" name="employeesNumber"/>
+            <input matInput type="number" formControlName="employeesNumber"/>
           </mat-form-field>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>
-          <button mat-icon-button color="black" matTooltip="Добавить" (click)="save()">
+          <button mat-icon-button type="submit" color="black" matTooltip="Добавить" [disabled]="!addDataForm.valid">
             <i class="material-icons">
               add
             </i>
@@ -160,4 +160,31 @@
 
     <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10]"></mat-paginator>
   </form>
+
+  <div class="container">
+    <h4 class="center">Указания, к заполнению полей формы:</h4>
+
+    <div class="row">
+      <div class="col-4 center">
+        <mat-icon color="warn">create</mat-icon>
+        <h6 class="center">Все поля должны быть заполнены (для быстрого перехода к другому полю могут использоваться клавиши "Tab" и "Shift + Tab")</h6>
+      </div>
+
+      <div class="col-4 center">
+        <mat-icon color="warn">warning</mat-icon>
+        <h6 class="center">Поля должны иметь корректные значения, в противном случае функция добавления останется блокированной</h6>
+      </div>
+
+      <div class="col-4 center">
+        <mat-icon color="warn">show_chart</mat-icon>
+        <h6 class="center">Для построения графиков необходимо заполнить период 2016-2030 годов, с указанием прогнозирующих коэффициентов</h6>
+      </div>
+    </div>
+  </div>
 </mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-flat-button mat-dialog-close>
+    Закрыть
+  </button>
+</mat-dialog-actions>
