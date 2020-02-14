@@ -59,6 +59,7 @@
             [step]="100000000"
             [(ngModel)]="financingAmountValue"
             max="9000000000"
+            [displayWith]="formatFinancingAmountValue"
             thumbLabel
             disabled="false"
             (change)="onChangeValue($event)"
@@ -67,7 +68,7 @@
 
           <mat-slider
             min="26"
-            [(ngModel)]="squareNormValue"
+            [(ngModel)]="formatSquareNormValue"
             max="36"
             thumbLabel
             disabled="false"
@@ -80,6 +81,7 @@
             [step]="1000"
             [(ngModel)]="pricePerSquareMeterValue"
             max="97000"
+            [displayWith]="formatSquareNormValue"
             thumbLabel
             disabled="false"
             (change)="onChangeValue($event)"

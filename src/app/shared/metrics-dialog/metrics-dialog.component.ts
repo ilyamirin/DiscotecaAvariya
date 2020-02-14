@@ -123,7 +123,7 @@ export class MetricsDialogComponent implements OnInit {
   /*Количество детей-сирот, нуждающихся в жилье*/
   private orphansNeedHousingChartData = [
     {
-      data: [4000, 6552, 7322, 7489, 7908, 8351, 8819, 9312, 9834, 10385, 10966, 11581, 12229, 12914, 13637],
+      data: [6385, 6552, 7322, 7489, 7908, 8351, 8819, 9312, 9834, 10385, 10966, 11581, 12229, 12914, 13637],
       label: 'Негативный прогноз'
     },
     {
@@ -705,6 +705,24 @@ export class MetricsDialogComponent implements OnInit {
       this.financingAmountChartData[1].data[year2020Index];
     this.squareNormValue = 30;
     this.pricePerSquareMeterValue = this.houseCostChartData[0].data[year2020Index];
+  }
+
+  formatFinancingAmountValue(value: number) {
+    const limit = 1000000000;
+    if (value >= limit) {
+      return value / limit + ' млрд.';
+    }
+
+    return value;
+  }
+
+  formatSquareNormValue(value: number) {
+    const limit = 1000;
+    if (value >= limit) {
+      return value / limit + ' тыс.';
+    }
+
+    return value;
   }
 
   /*Количество детей-сирот в регионе*/

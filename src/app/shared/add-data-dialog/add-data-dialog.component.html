@@ -5,12 +5,90 @@
     <mat-form-field class="fw">
       <mat-label>Регион</mat-label>
       <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
         <mat-option *ngFor="let region of filteredRegions | async" [value]="region">
           {{region.name}}
         </mat-option>
       </mat-autocomplete>
+
+      <mat-icon matSuffix>place</mat-icon>
     </mat-form-field>
+
+    <table mat-table class="mat-elevation-z8">
+      <ng-container matColumnDef="year">
+        <th mat-header-cell *matHeaderCellDef> Год</th>
+        <td mat-cell *matCellDef="let element"> {{element.year}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="orphansInSubject">
+        <th mat-header-cell *matHeaderCellDef> Число детей-сирот в регионе</th>
+        <td mat-cell *matCellDef="let element"> {{element.orphansInSubject}} </td>
+      </ng-container>
+      <ng-container matColumnDef="newlyIdentifiedOrphans">
+        <th mat-header-cell *matHeaderCellDef> Вновь выявленные дети-сироты</th>
+        <td mat-cell *matCellDef="let element"> {{element.newlyIdentifiedOrphans}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="orphansNeedHousingNegative">
+        <th mat-header-cell *matHeaderCellDef> Дети-сироты, нуждающиеся в жилье (негативный прогноз)</th>
+        <td mat-cell *matCellDef="let element"> {{element.orphansNeedHousingNegative}} </td>
+      </ng-container>
+      <ng-container matColumnDef="orphansNeedHousingPositive">
+        <th mat-header-cell *matHeaderCellDef> Дети-сироты, нуждающиеся в жилье (позитивный прогноз)</th>
+        <td mat-cell *matCellDef="let element"> {{element.orphansNeedHousingPositive}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="apartmentsNumberIssued">
+        <th mat-header-cell *matHeaderCellDef> Количество выданных квартир</th>
+        <td mat-cell *matCellDef="let element"> {{element.apartmentsNumberIssued}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="regionalFunding">
+        <th mat-header-cell *matHeaderCellDef> Региональное финансирование</th>
+        <td mat-cell *matCellDef="let element"> {{element.regionalFunding}} </td>
+      </ng-container>
+      <ng-container matColumnDef="federalFunding">
+        <th mat-header-cell *matHeaderCellDef> Федеральное финансирование</th>
+        <td mat-cell *matCellDef="let element"> {{element.federalFunding}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="realHousingCost">
+        <th mat-header-cell *matHeaderCellDef> Стоимость кв. м. жилья (реальная)</th>
+        <td mat-cell *matCellDef="let element"> {{element.realHousingCost}} </td>
+      </ng-container>
+      <ng-container matColumnDef="minstroyHousingCost">
+        <th mat-header-cell *matHeaderCellDef> Стоимость кв. м. жилья (по минстрою)</th>
+        <td mat-cell *matCellDef="let element"> {{element.minstroyHousingCost}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="employeesNumber">
+        <th mat-header-cell *matHeaderCellDef> Число работников, занимающихся вопросом</th>
+        <td mat-cell *matCellDef="let element"> {{element.employeesNumber}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>
+          <button mat-icon-button color="black" matTooltip="Добавить данные за год">
+            <i class="material-icons">
+              add
+            </i>
+          </button>
+        </th>
+
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button matTooltip="Удалить данные">
+            <i class="material-icons">
+              delete
+            </i>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
   </form>
 </mat-dialog-content>
 

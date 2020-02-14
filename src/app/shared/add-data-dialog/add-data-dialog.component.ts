@@ -17,6 +17,28 @@ export class AddDataDialogComponent implements OnInit {
   filteredRegions: Observable<Region[]>;
   myControl = new FormControl();
 
+  displayedColumns: string[] = [
+    'year',
+
+    'orphansInSubject',
+    'newlyIdentifiedOrphans',
+
+    'orphansNeedHousingNegative',
+    'orphansNeedHousingPositive',
+
+    'apartmentsNumberIssued',
+
+    'regionalFunding',
+    'federalFunding',
+
+    'realHousingCost',
+    'minstroyHousingCost',
+
+    'employeesNumber',
+
+    'actions'
+  ];
+
   constructor(
     private apiService: ApiService
   ) {

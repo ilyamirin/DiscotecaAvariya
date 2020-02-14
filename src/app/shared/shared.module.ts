@@ -10,6 +10,7 @@ import {
   MatInputModule,
   MatSliderModule,
   MatSlideToggleModule,
+  MatTableModule,
   MatTooltipModule
 } from '@angular/material';
 import {NavbarComponent} from './navbar/navbar.component';
@@ -39,7 +40,8 @@ import {AddDataDialogComponent} from './add-data-dialog/add-data-dialog.componen
     MatIconModule,
     MatAutocompleteModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule
   ],
   exports: [
     CommonModule,
@@ -61,7 +63,8 @@ import {AddDataDialogComponent} from './add-data-dialog/add-data-dialog.componen
     MatIconModule,
     MatAutocompleteModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatTableModule
   ],
   declarations: [
     NavbarComponent,
