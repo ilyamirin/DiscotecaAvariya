@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {debounceTime, map, startWith} from 'rxjs/operators';
 import {Region} from '../../core/models';
 import {ApiService} from '../../core/services';
+import {OrphansStatistics} from '../../core/models/orphans-statistics.model';
 
 
 @Component({
@@ -12,6 +13,8 @@ import {ApiService} from '../../core/services';
   styleUrls: ['./add-data-dialog.component.scss']
 })
 export class AddDataDialogComponent implements OnInit {
+
+  orphansStatistics: OrphansStatistics;
 
   regions: Region[];
   filteredRegions: Observable<Region[]>;
@@ -42,6 +45,7 @@ export class AddDataDialogComponent implements OnInit {
   constructor(
     private apiService: ApiService
   ) {
+    this.orphansStatistics = new OrphansStatistics();
     this.apiService.get('regions.json').subscribe(data => {
       this.regions = data;
     });
@@ -61,10 +65,13 @@ export class AddDataDialogComponent implements OnInit {
     return region && region.name ? region.name : '';
   }
 
+  save() {
+    console.log(this.orphansStatistics);
+  }
+
   private _filter(name: string): Region[] {
     const filterValue = name.toLowerCase();
 
     return this.regions.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
   }
-
 }

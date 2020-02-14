@@ -3,7 +3,7 @@ table {
   margin: 16px auto;
 }
 
-.mat-header-cell {
+.mat-header-cell, .mat-footer-cell {
   text-align: center;
 }
 
@@ -12,8 +12,23 @@ table {
   height: 100%;
 }
 
+mat-form-field {
+  width: 48px;
+  margin-top: 8px;
+}
+
 .fw {
   max-width: 320px;
   margin-top: 8px;
   width: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance:textfield;
 }

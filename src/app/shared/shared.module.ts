@@ -7,7 +7,7 @@ import {
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule,
+  MatInputModule, MatPaginatorModule,
   MatSliderModule,
   MatSlideToggleModule,
   MatTableModule,
@@ -41,7 +41,8 @@ import {AddDataDialogComponent} from './add-data-dialog/add-data-dialog.componen
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule
   ],
   exports: [
     CommonModule,
@@ -64,7 +65,8 @@ import {AddDataDialogComponent} from './add-data-dialog/add-data-dialog.componen
     MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule
   ],
   declarations: [
     NavbarComponent,
