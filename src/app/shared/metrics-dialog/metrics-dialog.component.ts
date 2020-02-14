@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA} from '@angular/material';
 import {ChartParams, Region} from '../../core/models';
 import {ChartDataSets, ChartOptions} from 'chart.js';
 import {BaseChartDirective, Color, Label} from 'ng2-charts';
-import {ChartService} from '../../core/service';
+import {ChartService} from '../../core/services';
 
 
 @Component({
@@ -30,7 +30,6 @@ export class MetricsDialogComponent implements OnInit {
   private growthCoefficient = 1.056;
   private apartmentsIssuedCoefficient = 800;
 
-  // FIXME: chart fields can't be inside methods
   private lineChartLabels: Label[];
   private resultChartsLabels: Label[];
 
@@ -552,7 +551,7 @@ export class MetricsDialogComponent implements OnInit {
   private asIsChartData = [
     {
       data: this.asIsData(),
-      label: 'Число детей-сирот'
+      label: 'Число детей-сирот, стоящих в очереди'
     }
   ];
   private asIsChartOptions: (ChartOptions & { annotation: any }) = {
@@ -622,7 +621,7 @@ export class MetricsDialogComponent implements OnInit {
   private dynamicChartData = [
     {
       data: this.asIsData(),
-      label: 'Число детей-сирот'
+      label: 'Число детей-сирот, стоящих в очереди'
     }
   ];
   private dynamicChartOptions: (ChartOptions & { annotation: any }) = {
@@ -654,7 +653,7 @@ export class MetricsDialogComponent implements OnInit {
           scaleLabel: {
             display: true,
             fontSize: this.fontSize,
-            labelString: 'Число детей-сирот'
+            labelString: 'Число детей-сирот, стоящих в очереди'
           }
         }
       ]
@@ -699,7 +698,6 @@ export class MetricsDialogComponent implements OnInit {
     this.lineChartLabels = this.chartService.generateChartLabels(2016, 2030);
     this.resultChartsLabels = this.chartService.generateChartLabels(2020, 2044);
 
-    // FIXME: wrong index
     const year2020Index = 4;
 
     this.newlyIdentifiedOrphansValue = this.orphansInSubjectChartData[1].data[year2020Index] as number;

@@ -1,32 +1,34 @@
-import {Injectable} from '@angular/core';
 import {Color, Label} from 'ng2-charts';
 import {ChartDataSets, ChartOptions} from 'chart.js';
 
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ChartService {
+export class Chart {
+  private static readonly defaultStartYear = 2020;
+  private static readonly defaultEndYear = 2030;
 
-  private data: ChartDataSets[];
-  private options: (ChartOptions & { annotation: any });
-  private colors: Color[];
+  private static readonly fontSize = 18;
+
+  chartLabels: Label[];
+  chartData: ChartDataSets[];
+  chartOptions: (ChartOptions & { annotation: any });
+  chartColors: Color[];
 
   constructor() {
-    this.data = [];
-    this.options = {
+    this.chartLabels = Chart.generateChartLabels(Chart.defaultStartYear, Chart.defaultEndYear);
+    this.chartData = [];
+    this.chartOptions = {
       responsive: true,
       title: {
         display: true,
         text: 'Число детей-сирот в регионе',
-        fontSize: undefined
+        fontSize: Chart.fontSize
       },
       scales: {
         xAxes: [
           {
             scaleLabel: {
               display: true,
-              fontSize: undefined,
+              fontSize: Chart.fontSize,
               labelString: 'Год'
             }
           }
@@ -42,7 +44,7 @@ export class ChartService {
             },
             scaleLabel: {
               display: true,
-              fontSize: undefined,
+              fontSize: Chart.fontSize,
               labelString: 'Число детей-сирот'
             }
           }
@@ -79,20 +81,10 @@ export class ChartService {
         ],
       }
     };
-    this.colors = [];
+    this.chartColors = [];
   }
 
-
-  setData(data: Array<number | null | undefined>, label: string) {
-  }
-
-  setOptions() {
-  }
-
-  setColors() {
-  }
-
-  generateChartLabels(startYear: number, endYear: number) {
+  static generateChartLabels(startYear: number, endYear: number) {
     const lineChartLabels: Label[] = [];
 
     for (let i = startYear; i <= endYear; i++) {

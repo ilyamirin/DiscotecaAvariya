@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {ThemeService} from './core/service';
+import {DialogService, ThemeService} from './core/services';
+import {AddDataDialogComponent} from './shared/add-data-dialog/add-data-dialog.component';
 
 
 @Component({
@@ -13,12 +14,19 @@ export class AppComponent implements OnInit {
   isLightTheme: Observable<boolean>;
 
   constructor(
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private dialogService: DialogService
   ) {
   }
 
   ngOnInit() {
     this.isLightTheme = this.themeService.isLightTheme;
+  }
+
+  openAddDataDialog() {
+    const dialogRef = this.dialogService.open(AddDataDialogComponent, {
+      data: {}
+    });
   }
 
 }

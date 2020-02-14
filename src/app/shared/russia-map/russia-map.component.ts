@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Region} from '../../core/models';
-import {ApiService, DialogService} from '../../core/service';
+import {ApiService, DialogService} from '../../core/services';
 import {MetricsDialogComponent} from '../metrics-dialog/metrics-dialog.component';
 
 

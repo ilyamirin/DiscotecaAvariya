@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Добавление данных для региона</h1>
+
+<mat-dialog-content>
+  <form class="addition-form">
+    <mat-form-field class="fw">
+      <mat-label>Регион</mat-label>
+      <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let region of filteredRegions | async" [value]="region">
+          {{region.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-flat-button mat-dialog-close>
+    Закрыть
+  </button>
+</mat-dialog-actions>
