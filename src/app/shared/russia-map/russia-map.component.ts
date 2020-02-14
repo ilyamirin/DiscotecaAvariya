@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Region} from '../../core/models';
-import {ApiService, DialogService} from '../../core/services';
+import {ApiService, DialogService, FirebaseService} from '../../core/services';
 import {MetricsDialogComponent} from '../metrics-dialog/metrics-dialog.component';
 
 
@@ -11,16 +11,17 @@ import {MetricsDialogComponent} from '../metrics-dialog/metrics-dialog.component
 })
 export class RussiaMapComponent implements OnInit {
 
-  regions: Region[];
+  regions: Array<any>;
 
   constructor(
     private apiService: ApiService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private firebaseService: FirebaseService
   ) {
   }
 
   ngOnInit() {
-    this.apiService.get('regions.json').subscribe(data => {
+    this.firebaseService.get('regions').subscribe(data => {
       this.regions = data;
       this.setOpenDialogAction(this.regions);
     });
@@ -28,10 +29,10 @@ export class RussiaMapComponent implements OnInit {
 
   private setOpenDialogAction(regions) {
     regions.forEach(region => {
-      document.getElementById(region.code).onclick = () => {
+      document.getElementById(region.id).onclick = () => {
         const regionPrimorskyKrai = 'RU-PRI';
 
-        if (region.code === regionPrimorskyKrai) {
+        if (region.id === regionPrimorskyKrai) {
           this.openMetricsDialog(region);
         }
       };

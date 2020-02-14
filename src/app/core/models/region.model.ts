@@ -1,4 +1,4 @@
 export interface Region {
-  region: string;
+  id: string;
   name: string;
 }
