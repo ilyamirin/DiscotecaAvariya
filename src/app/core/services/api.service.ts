@@ -24,18 +24,6 @@ export class ApiService {
     return this.request(RequestMethod.Get, path);
   }
 
-  post(path: string, body: object): Observable<any> {
-    return this.request(RequestMethod.Post, path, body);
-  }
-
-  put(path: string, body: object): Observable<any> {
-    return this.request(RequestMethod.Put, path, body);
-  }
-
-  delete(path: string): Observable<any> {
-    return this.request(RequestMethod.Delete, path);
-  }
-
   private request(method: RequestMethod, path: string, body?: object): Observable<any> {
     const req = new HttpRequest(method, `${environment.apiURL}${path}`, body, {
       withCredentials: true

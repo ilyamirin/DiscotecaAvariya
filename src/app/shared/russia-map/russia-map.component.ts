@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Region} from '../../core/models';
+import {Collections, Region} from '../../core/models';
 import {ApiService, DialogService, FirebaseService} from '../../core/services';
 import {MetricsDialogComponent} from '../metrics-dialog/metrics-dialog.component';
 
@@ -21,10 +21,16 @@ export class RussiaMapComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.firebaseService.get('regions').subscribe(data => {
+    this.apiService.get('regions.json').subscribe(data => {
       this.regions = data;
       this.setOpenDialogAction(this.regions);
     });
+
+    // For production only
+    /*this.firebaseService.get(Collections.REGIONS).subscribe(data => {
+      this.regions = data;
+      this.setOpenDialogAction(this.regions);
+    });*/
   }
 
   private setOpenDialogAction(regions) {

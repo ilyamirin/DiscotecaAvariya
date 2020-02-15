@@ -1,342 +1,342 @@
 [
   {
-    "code": "RU-MOW",
+    "id": "RU-MOW",
     "name": "Москва"
   },
   {
-    "code": "RU-CHE",
+    "id": "RU-CHE",
     "name": "Челябинская область"
   },
   {
-    "code": "RU-ORL",
+    "id": "RU-ORL",
     "name": "Орловская область"
   },
   {
-    "code": "RU-OMS",
+    "id": "RU-OMS",
     "name": "Омская область"
   },
   {
-    "code": "RU-LIP",
+    "id": "RU-LIP",
     "name": "Липецкая область"
   },
   {
-    "code": "RU-KRS",
+    "id": "RU-KRS",
     "name": "Курская область"
   },
   {
-    "code": "RU-RYA",
+    "id": "RU-RYA",
     "name": "Рязанская область"
   },
   {
-    "code": "RU-BRY",
+    "id": "RU-BRY",
     "name": "Брянская область"
   },
   {
-    "code": "RU-KIR",
+    "id": "RU-KIR",
     "name": "Кировская область"
   },
   {
-    "code": "RU-ARK",
+    "id": "RU-ARK",
     "name": "Архангельская область"
   },
   {
-    "code": "RU-MUR",
+    "id": "RU-MUR",
     "name": "Мурманская область"
   },
   {
-    "code": "RU-SPE",
+    "id": "RU-SPE",
     "name": "Санкт-Петербург"
   },
   {
-    "code": "RU-YAR",
+    "id": "RU-YAR",
     "name": "Ярославская область"
   },
   {
-    "code": "RU-ULY",
+    "id": "RU-ULY",
     "name": "Ульяновская область"
   },
   {
-    "code": "RU-NVS",
+    "id": "RU-NVS",
     "name": "Новосибирская область"
   },
   {
-    "code": "RU-TYU",
+    "id": "RU-TYU",
     "name": "Тюменская область"
   },
   {
-    "code": "RU-SVE",
+    "id": "RU-SVE",
     "name": "Свердловская область"
   },
   {
-    "code": "RU-NGR",
+    "id": "RU-NGR",
     "name": "Новгородская область"
   },
   {
-    "code": "RU-KGN",
+    "id": "RU-KGN",
     "name": "Курганская область"
   },
   {
-    "code": "RU-KGD",
+    "id": "RU-KGD",
     "name": "Калининградская область"
   },
   {
-    "code": "RU-IVA",
+    "id": "RU-IVA",
     "name": "Ивановская область"
   },
   {
-    "code": "RU-AST",
+    "id": "RU-AST",
     "name": "Астраханская область"
   },
   {
-    "code": "RU-KHA",
+    "id": "RU-KHA",
     "name": "Хабаровский край"
   },
   {
-    "code": "RU-CE",
+    "id": "RU-CE",
     "name": "Чеченская республика"
   },
   {
-    "code": "RU-UD",
+    "id": "RU-UD",
     "name": "Удмуртская республика"
   },
   {
-    "code": "RU-SE",
+    "id": "RU-SE",
     "name": "Республика Северная Осетия"
   },
   {
-    "code": "RU-MO",
+    "id": "RU-MO",
     "name": "Республика Мордовия"
   },
   {
-    "code": "RU-KR",
+    "id": "RU-KR",
     "name": "Республика Карелия"
   },
   {
-    "code": "RU-KL",
+    "id": "RU-KL",
     "name": "Республика Калмыкия"
   },
   {
-    "code": "RU-IN",
+    "id": "RU-IN",
     "name": "Республика Ингушетия"
   },
   {
-    "code": "RU-AL",
+    "id": "RU-AL",
     "name": "Республика Алтай"
   },
   {
-    "code": "RU-BA",
+    "id": "RU-BA",
     "name": "Республика Башкортостан"
   },
   {
-    "code": "RU-AD",
+    "id": "RU-AD",
     "name": "Республика Адыгея"
   },
   {
-    "code": "RU-CR",
+    "id": "RU-CR",
     "name": "Республика Крым"
   },
   {
-    "code": "RU-SEV",
+    "id": "RU-SEV",
     "name": "Севастополь"
   },
   {
-    "code": "RU-KO",
+    "id": "RU-KO",
     "name": "Республика Коми"
   },
   {
-    "code": "RU-PNZ",
+    "id": "RU-PNZ",
     "name": "Пензенская область"
   },
   {
-    "code": "RU-TAM",
+    "id": "RU-TAM",
     "name": "Тамбовская область"
   },
   {
-    "code": "RU-LEN",
+    "id": "RU-LEN",
     "name": "Ленинградская область"
   },
   {
-    "code": "RU-VLG",
+    "id": "RU-VLG",
     "name": "Вологодская область"
   },
   {
-    "code": "RU-KOS",
+    "id": "RU-KOS",
     "name": "Костромская область"
   },
   {
-    "code": "RU-PSK",
+    "id": "RU-PSK",
     "name": "Псковская область"
   },
   {
-    "code": "RU-YAN",
+    "id": "RU-YAN",
     "name": "Ямало-Ненецкий АО"
   },
   {
-    "code": "RU-CHU",
+    "id": "RU-CHU",
     "name": "Чукотский АО"
   },
   {
-    "code": "RU-YEV",
+    "id": "RU-YEV",
     "name": "Еврейская автономская область"
   },
   {
-    "code": "RU-TY",
+    "id": "RU-TY",
     "name": "Республика Тыва"
   },
   {
-    "code": "RU-SAK",
+    "id": "RU-SAK",
     "name": "Сахалинская область"
   },
   {
-    "code": "RU-AMU",
+    "id": "RU-AMU",
     "name": "Амурская область"
   },
   {
-    "code": "RU-BU",
+    "id": "RU-BU",
     "name": "Республика Бурятия"
   },
   {
-    "code": "RU-KK",
+    "id": "RU-KK",
     "name": "Республика Хакасия"
   },
   {
-    "code": "RU-KEM",
+    "id": "RU-KEM",
     "name": "Кемеровская область"
   },
   {
-    "code": "RU-ALT",
+    "id": "RU-ALT",
     "name": "Алтайский край"
   },
   {
-    "code": "RU-DA",
+    "id": "RU-DA",
     "name": "Республика Дагестан"
   },
   {
-    "code": "RU-KB",
+    "id": "RU-KB",
     "name": "Кабардино-Балкарская республика"
   },
   {
-    "code": "RU-KC",
+    "id": "RU-KC",
     "name": "Карачаево-Черкесская республика"
   },
   {
-    "code": "RU-KDA",
+    "id": "RU-KDA",
     "name": "Краснодарский край"
   },
   {
-    "code": "RU-ROS",
+    "id": "RU-ROS",
     "name": "Ростовская область"
   },
   {
-    "code": "RU-SAM",
+    "id": "RU-SAM",
     "name": "Самарская область"
   },
   {
-    "code": "RU-TA",
+    "id": "RU-TA",
     "name": "Республика Татарстан"
   },
   {
-    "code": "RU-ME",
+    "id": "RU-ME",
     "name": "Республика Марий Эл"
   },
   {
-    "code": "RU-CU",
+    "id": "RU-CU",
     "name": "Чувашская республика"
   },
   {
-    "code": "RU-NIZ",
+    "id": "RU-NIZ",
     "name": "Нижегородский край"
   },
   {
-    "code": "RU-VLA",
+    "id": "RU-VLA",
     "name": "Владимировская область"
   },
   {
-    "code": "RU-MOS",
+    "id": "RU-MOS",
     "name": "Московская область"
   },
   {
-    "code": "RU-KLU",
+    "id": "RU-KLU",
     "name": "Калужская область"
   },
   {
-    "code": "RU-BEL",
+    "id": "RU-BEL",
     "name": "Белгородская область"
   },
   {
-    "code": "RU-ZAB",
+    "id": "RU-ZAB",
     "name": "Забайкальский край"
   },
   {
-    "code": "RU-PRI",
+    "id": "RU-PRI",
     "name": "Приморский край"
   },
   {
-    "code": "RU-KAM",
+    "id": "RU-KAM",
     "name": "Камачатский край"
   },
   {
-    "code": "RU-MAG",
+    "id": "RU-MAG",
     "name": "Магаданская область"
   },
   {
-    "code": "RU-SA",
+    "id": "RU-SA",
     "name": "Республика Саха"
   },
   {
-    "code": "RU-KYA",
+    "id": "RU-KYA",
     "name": "Красноярский край"
   },
   {
-    "code": "RU-ORE",
+    "id": "RU-ORE",
     "name": "Оренбургская область"
   },
   {
-    "code": "RU-SAR",
+    "id": "RU-SAR",
     "name": "Саратовская область"
   },
   {
-    "code": "RU-VGG",
+    "id": "RU-VGG",
     "name": "Волгоградская область"
   },
   {
-    "code": "RU-VOR",
+    "id": "RU-VOR",
     "name": "Ставропольский край"
   },
   {
-    "code": "RU-SMO",
+    "id": "RU-SMO",
     "name": "Смоленская область"
   },
   {
-    "code": "RU-TVE",
+    "id": "RU-TVE",
     "name": "Тверская область"
   },
   {
-    "code": "RU-PER",
+    "id": "RU-PER",
     "name": "Пермская область"
   },
   {
-    "code": "RU-KHM",
+    "id": "RU-KHM",
     "name": "Ханты-Мансийский АО"
   },
   {
-    "code": "RU-TOM",
+    "id": "RU-TOM",
     "name": "Томская область"
   },
   {
-    "code": "RU-IRK",
+    "id": "RU-IRK",
     "name": "Иркутская область"
   },
   {
-    "code": "RU-NEN",
+    "id": "RU-NEN",
     "name": "Ненецскй АО"
   },
   {
-    "code": "RU-STA",
+    "id": "RU-STA",
     "name": "Ставропольский край"
   },
   {
-    "code": "RU-TUL",
+    "id": "RU-TUL",
     "name": "Тульская область"
   }
 ]

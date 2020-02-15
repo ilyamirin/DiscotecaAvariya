@@ -2,9 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {debounceTime, map, startWith} from 'rxjs/operators';
-import {Region} from '../../core/models';
-import {ApiService} from '../../core/services';
-import {OrphansStatistics} from '../../core/models/orphans-statistics.model';
+import {OrphansStatistics, Region} from '../../core/models';
+import {ApiService, FirebaseService} from '../../core/services';
 
 
 @Component({
@@ -20,11 +19,31 @@ export class AddDataDialogComponent implements OnInit {
   filteredRegions: Observable<Region[]>;
   autocompleteControl = new FormControl();
 
-  addDataForm: FormGroup;
+  addRegionDataForm: FormGroup;
+  addCoefficientsForm: FormGroup;
 
-  displayedColumns: string[] = [
+  regionDataColumns: string[] = [
     'year',
 
+    'orphansInSubject',
+    'newlyIdentifiedOrphans',
+
+    'orphansNeedHousingNegative',
+    'orphansNeedHousingPositive',
+
+    'apartmentsNumberIssued',
+
+    'regionalFunding',
+    'federalFunding',
+
+    'realHousingCost',
+    'minstroyHousingCost',
+
+    'employeesNumber',
+
+    'actions'
+  ];
+  coefficientDataColumns: string[] = [
     'orphansInSubject',
     'newlyIdentifiedOrphans',
 
@@ -46,14 +65,15 @@ export class AddDataDialogComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private firebaseService: FirebaseService
   ) {
   }
 
   ngOnInit() {
     this.orphansStatistics = new OrphansStatistics();
 
-    this.addDataForm = this.formBuilder.group({
+    this.addRegionDataForm = this.formBuilder.group({
       year: ['', Validators.compose([Validators.required, Validators.min(2016), Validators.max(2030)])],
 
       orphansInSubject: ['', Validators.compose([Validators.required, Validators.min(0)])],
@@ -71,6 +91,23 @@ export class AddDataDialogComponent implements OnInit {
       minstroyHousingCost: ['', Validators.compose([Validators.required, Validators.min(0)])],
 
       employeesNumber: ['', Validators.compose([Validators.required, Validators.min(0)])]
+    });
+    this.addCoefficientsForm = this.formBuilder.group({
+      orphansInSubjectCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      newlyIdentifiedOrphansCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])],
+
+      orphansNeedHousingNegativeCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      orphansNeedHousingPositiveCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])],
+
+      apartmentsNumberIssuedCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])],
+
+      regionalFundingCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      federalFundingCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])],
+
+      realHousingCostCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])],
+      minstroyHousingCostCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])],
+
+      employeesNumberCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])]
     });
 
     this.apiService.get('regions.json').subscribe(data => {
@@ -90,7 +127,12 @@ export class AddDataDialogComponent implements OnInit {
     return region && region.name ? region.name : '';
   }
 
-  onSubmitAuthForm(formValue: FormGroup) {
+  onSubmitRegionDataForm(formValue: FormGroup) {
+    // this.firebaseService.store(Collections.REGIONS, formValue.value);
+    console.log(formValue.value);
+  }
+
+  onSubmitCoefficientsForm(formValue: FormGroup) {
     console.log(formValue.value);
   }
 
