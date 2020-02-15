@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {debounceTime, map, startWith} from 'rxjs/operators';
-import {OrphansStatistics, Region} from '../../core/models';
+import {Region} from '../../core/models';
 import {ApiService, FirebaseService} from '../../core/services';
 
 
@@ -12,13 +10,9 @@ import {ApiService, FirebaseService} from '../../core/services';
   styleUrls: ['./add-data-dialog.component.scss']
 })
 export class AddDataDialogComponent implements OnInit {
-
-  orphansStatistics: OrphansStatistics;
-
   regions: Region[];
-  filteredRegions: Observable<Region[]>;
-  autocompleteControl = new FormControl();
 
+  regionIdControl = new FormControl();
   addRegionDataForm: FormGroup;
   addCoefficientsForm: FormGroup;
 
@@ -44,22 +38,21 @@ export class AddDataDialogComponent implements OnInit {
     'actions'
   ];
   coefficientDataColumns: string[] = [
-    'orphansInSubject',
-    'newlyIdentifiedOrphans',
+    'orphansInSubjectCoefficient',
+    'newlyIdentifiedOrphansCoefficient',
 
-    'orphansNeedHousingNegative',
-    'orphansNeedHousingPositive',
+    'orphansNeedHousingNegativeCoefficient',
+    'orphansNeedHousingPositiveCoefficient',
 
-    'apartmentsNumberIssued',
+    'apartmentsNumberIssuedCoefficient',
 
-    'regionalFunding',
-    'federalFunding',
+    'regionalFundingCoefficient',
+    'federalFundingCoefficient',
 
-    'realHousingCost',
-    'minstroyHousingCost',
+    'realHousingCostCoefficient',
+    'minstroyHousingCostCoefficient',
 
-    'employeesNumber',
-
+    'employeesNumberCoefficient',
     'actions'
   ];
 
@@ -71,8 +64,6 @@ export class AddDataDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.orphansStatistics = new OrphansStatistics();
-
     this.addRegionDataForm = this.formBuilder.group({
       year: ['', Validators.compose([Validators.required, Validators.min(2016), Validators.max(2030)])],
 
@@ -113,32 +104,19 @@ export class AddDataDialogComponent implements OnInit {
     this.apiService.get('regions.json').subscribe(data => {
       this.regions = data;
     });
-
-    this.filteredRegions = this.autocompleteControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(value => typeof value === 'string' ? value : value.name),
-        debounceTime(500),
-        map(name => name ? this._filter(name) : this.regions.slice())
-      );
   }
 
-  displayFn(region: Region): string {
-    return region && region.name ? region.name : '';
+  onSubmitRegionDataForm(autocompleteForm: FormControl, regionDataForm: FormGroup) {
   }
 
-  onSubmitRegionDataForm(formValue: FormGroup) {
-    // this.firebaseService.store(Collections.REGIONS, formValue.value);
-    console.log(formValue.value);
-  }
+  onSubmitCoefficientsForm() {
+    /*const coefficientBody: CoefficientBody = {
+      id,
+      coefficient
+    };
 
-  onSubmitCoefficientsForm(formValue: FormGroup) {
-    console.log(formValue.value);
-  }
-
-  private _filter(name: string): Region[] {
-    const filterValue = name.toLowerCase();
-
-    return this.regions.filter(option => option.name.toLowerCase().indexOf(filterValue) === 0);
+    this.firebaseService.store(Collections.COEFFICIENT, coefficientBody).then(
+      () => this.addCoefficientsForm.reset(this.addCoefficientsForm.value)
+    );*/
   }
 }

@@ -1,3 +1,5 @@
 export enum Collections {
-  REGIONS = 'regions'
+  REGION = 'region',
+  REGION_DATA = 'region-data',
+  COEFFICIENT = 'coefficient'
 }

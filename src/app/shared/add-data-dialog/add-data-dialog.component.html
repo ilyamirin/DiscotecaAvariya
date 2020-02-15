@@ -1,18 +1,12 @@
 <h1 mat-dialog-title>Добавление данных для региона</h1>
 
 <mat-dialog-content>
-  <form class="addition-form" [formGroup]="addRegionDataForm" (ngSubmit)="onSubmitRegionDataForm(addRegionDataForm)">
+  <form class="addition-form" [formGroup]="addRegionDataForm" (ngSubmit)="onSubmitRegionDataForm(regionIdControl, addRegionDataForm)">
     <mat-form-field class="fw">
       <mat-label>Регион</mat-label>
-      <input type="text" matInput [formControl]="autocompleteControl" [matAutocomplete]="auto">
-
-      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-        <mat-option *ngFor="let region of filteredRegions | async" [value]="region">
-          {{region.name}}
-        </mat-option>
-      </mat-autocomplete>
-
-      <mat-icon matSuffix>place</mat-icon>
+      <mat-select [formControl]="regionIdControl">
+        <mat-option *ngFor="let region of regions" [value]="region.name">{{region.name}}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <div class="row">
@@ -189,13 +183,14 @@
     </div>
   </div>
 
-  <form class="addition-form" [formGroup]="addCoefficientsForm" (ngSubmit)="onSubmitCoefficientsForm(addCoefficientsForm)">
+  <form class="addition-form" [formGroup]="addCoefficientsForm"
+        (ngSubmit)="onSubmitCoefficientsForm(regionIdControl.value.id, addCoefficientsForm.value)">
     <div class="row">
       <h4 class="center">Таблица прогнозирующих коэффициентов:</h4>
     </div>
 
     <table mat-table class="mat-elevation-z8">
-      <ng-container matColumnDef="orphansInSubject">
+      <ng-container matColumnDef="orphansInSubjectCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент числа детей-сирот в регионе</th>
         <td mat-cell *matCellDef="let element"> {{element.orphansInSubject}} </td>
         <td mat-footer-cell *matFooterCellDef>
@@ -205,7 +200,7 @@
           </mat-form-field>
         </td>
       </ng-container>
-      <ng-container matColumnDef="newlyIdentifiedOrphans">
+      <ng-container matColumnDef="newlyIdentifiedOrphansCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент вновь выявленных детей-сирот</th>
         <td mat-cell *matCellDef="let element"> {{element.newlyIdentifiedOrphans}} </td>
         <td mat-footer-cell *matFooterCellDef>
@@ -216,7 +211,7 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="orphansNeedHousingNegative">
+      <ng-container matColumnDef="orphansNeedHousingNegativeCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент детей-сирот, нуждающихся в жилье (негативный прогноз)</th>
         <td mat-cell *matCellDef="let element"> {{element.orphansNeedHousingNegative}} </td>
         <td mat-footer-cell *matFooterCellDef>
@@ -226,7 +221,7 @@
           </mat-form-field>
         </td>
       </ng-container>
-      <ng-container matColumnDef="orphansNeedHousingPositive">
+      <ng-container matColumnDef="orphansNeedHousingPositiveCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент детей-сирот, нуждающихся в жилье (позитивный прогноз)</th>
         <td mat-cell *matCellDef="let element"> {{element.orphansNeedHousingPositive}} </td>
         <td mat-footer-cell *matFooterCellDef>
@@ -237,7 +232,7 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="apartmentsNumberIssued">
+      <ng-container matColumnDef="apartmentsNumberIssuedCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент количества выданных квартир</th>
         <td mat-cell *matCellDef="let element"> {{element.apartmentsNumberIssued}} </td>
         <td mat-footer-cell *matFooterCellDef>
@@ -248,7 +243,7 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="regionalFunding">
+      <ng-container matColumnDef="regionalFundingCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент регионального финансирования</th>
         <td mat-cell *matCellDef="let element"> {{element.regionalFunding}} </td>
         <td mat-footer-cell *matFooterCellDef>
@@ -258,7 +253,7 @@
           </mat-form-field>
         </td>
       </ng-container>
-      <ng-container matColumnDef="federalFunding">
+      <ng-container matColumnDef="federalFundingCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент федерального финансирования</th>
         <td mat-cell *matCellDef="let element"> {{element.federalFunding}} </td>
         <td mat-footer-cell *matFooterCellDef>
@@ -269,7 +264,7 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="realHousingCost">
+      <ng-container matColumnDef="realHousingCostCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент стоимости кв. м. жилья (реальной)</th>
         <td mat-cell *matCellDef="let element"> {{element.realHousingCost}} </td>
         <td mat-footer-cell *matFooterCellDef>
@@ -279,7 +274,7 @@
           </mat-form-field>
         </td>
       </ng-container>
-      <ng-container matColumnDef="minstroyHousingCost">
+      <ng-container matColumnDef="minstroyHousingCostCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент стоимости кв. м. жилья (по минстрою)</th>
         <td mat-cell *matCellDef="let element"> {{element.minstroyHousingCost}} </td>
         <td mat-footer-cell *matFooterCellDef>
@@ -290,7 +285,7 @@
         </td>
       </ng-container>
 
-      <ng-container matColumnDef="employeesNumber">
+      <ng-container matColumnDef="employeesNumberCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент числа работников, занимающихся вопросом</th>
         <td mat-cell *matCellDef="let element"> {{element.employeesNumber}} </td>
         <td mat-footer-cell *matFooterCellDef>

@@ -2,12 +2,13 @@ import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgModule} from '@angular/core';
 import {
-  MatAutocompleteModule,
   MatButtonModule,
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatPaginatorModule,
+  MatInputModule,
+  MatPaginatorModule,
+  MatSelectModule,
   MatSliderModule,
   MatSlideToggleModule,
   MatTableModule,
@@ -38,11 +39,11 @@ import {AddDataDialogComponent} from './add-data-dialog/add-data-dialog.componen
     MatSliderModule,
     MatTooltipModule,
     MatIconModule,
-    MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule
   ],
   exports: [
     CommonModule,
@@ -62,11 +63,11 @@ import {AddDataDialogComponent} from './add-data-dialog/add-data-dialog.componen
     MatSliderModule,
     MatTooltipModule,
     MatIconModule,
-    MatAutocompleteModule,
     MatFormFieldModule,
     MatInputModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSelectModule
   ],
   declarations: [
     NavbarComponent,

@@ -16,8 +16,12 @@ export class FirebaseService {
     return this.angularFirestore.collection(collection).valueChanges();
   }
 
-  store(collection: string, value: object) {
-    return this.angularFirestore.collection(collection).add(JSON.stringify(value));
+  store(collection: string, value: any) {
+    return this.angularFirestore.collection(collection).add(JSON.parse(JSON.stringify(value)));
+  }
+
+  update(collection: string, key: string, value: object) {
+    return this.angularFirestore.collection(collection).doc(key).update(JSON.parse(JSON.stringify(value)));
   }
 
   delete(collection: string, key: string) {

@@ -1,4 +1,4 @@
-export class OrphansStatistics {
+export class RegionStatistics {
   year: string;
 
   orphansInSubject: number;
