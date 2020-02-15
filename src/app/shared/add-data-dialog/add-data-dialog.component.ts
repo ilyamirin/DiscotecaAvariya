@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Region} from '../../core/models';
+import {Collections, Region, RegionData, RegionStatistics} from '../../core/models';
 import {ApiService, FirebaseService} from '../../core/services';
+import {CoefficientsData} from '../../core/models';
+import {MetricCoefficients} from '../../core/models';
 
 
 @Component({
@@ -106,17 +108,23 @@ export class AddDataDialogComponent implements OnInit {
     });
   }
 
-  onSubmitRegionDataForm(autocompleteForm: FormControl, regionDataForm: FormGroup) {
-  }
-
-  onSubmitCoefficientsForm() {
-    /*const coefficientBody: CoefficientBody = {
+  onSubmitRegionDataForm(id: string, regionStatistics: RegionStatistics) {
+    const regionData: RegionData = {
       id,
-      coefficient
+      data: regionStatistics
     };
 
-    this.firebaseService.store(Collections.COEFFICIENT, coefficientBody).then(
-      () => this.addCoefficientsForm.reset(this.addCoefficientsForm.value)
-    );*/
+    this.firebaseService.store(Collections.REGION_DATA, regionData);
+    this.addCoefficientsForm.reset();
+  }
+
+  onSubmitCoefficientsForm(id: string, coefficients: MetricCoefficients) {
+    const coefficientsData: CoefficientsData = {
+      id,
+      coefficients
+    };
+
+    this.firebaseService.store(Collections.COEFFICIENT, coefficientsData);
+    this.addCoefficientsForm.reset();
   }
 }

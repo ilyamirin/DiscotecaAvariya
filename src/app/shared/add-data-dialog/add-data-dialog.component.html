@@ -1,14 +1,15 @@
 <h1 mat-dialog-title>Добавление данных для региона</h1>
 
 <mat-dialog-content>
-  <form class="addition-form" [formGroup]="addRegionDataForm" (ngSubmit)="onSubmitRegionDataForm(regionIdControl, addRegionDataForm)">
-    <mat-form-field class="fw">
-      <mat-label>Регион</mat-label>
-      <mat-select [formControl]="regionIdControl">
-        <mat-option *ngFor="let region of regions" [value]="region.name">{{region.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field class="fw">
+    <mat-label>Регион</mat-label>
+    <mat-select [formControl]="regionIdControl">
+      <mat-option *ngFor="let region of regions" [value]="region.id">{{region.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 
+  <form class="addition-form" [formGroup]="addRegionDataForm"
+        (ngSubmit)="onSubmitRegionDataForm(regionIdControl.value, addRegionDataForm.value)">
     <div class="row">
       <h4 class="center">Таблица для статических данных:</h4>
     </div>
@@ -184,7 +185,7 @@
   </div>
 
   <form class="addition-form" [formGroup]="addCoefficientsForm"
-        (ngSubmit)="onSubmitCoefficientsForm(regionIdControl.value.id, addCoefficientsForm.value)">
+        (ngSubmit)="onSubmitCoefficientsForm(regionIdControl.value, addCoefficientsForm.value)">
     <div class="row">
       <h4 class="center">Таблица прогнозирующих коэффициентов:</h4>
     </div>
