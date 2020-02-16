@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
-import {ChartParams, Region} from '../../core/models';
+import {ChartParams, Collections, Region, RegionStatistics} from '../../core/models';
 import {ChartDataSets, ChartOptions} from 'chart.js';
 import {BaseChartDirective, Color, Label} from 'ng2-charts';
 import {ChartService, FirebaseService} from '../../core/services';
@@ -14,6 +14,7 @@ import {ChartService, FirebaseService} from '../../core/services';
 export class MetricsDialogComponent implements OnInit {
 
   region: Region;
+  regionData: RegionStatistics[];
 
   newlyIdentifiedOrphansValue: number;
   financingAmountValue: number;
@@ -465,87 +466,9 @@ export class MetricsDialogComponent implements OnInit {
   ];
 
   /*Число сотрудников*/
-  private employeesNumberChartData = [
-    {
-      data: [39, 39, 39, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106, 106],
-      label: 'Число сотрудников'
-    }
-  ];
-  private employeesNumberChartOptions: (ChartOptions & { annotation: any }) = {
-    responsive: true,
-    title: {
-      display: true,
-      text: 'Число сотрудников, занимающихся вопросом',
-      fontSize: this.fontSize
-    },
-    scales: {
-      xAxes: [
-        {
-          scaleLabel: {
-            display: true,
-            fontSize: this.fontSize,
-            labelString: 'Год'
-          }
-        }
-      ],
-      yAxes: [
-        {
-          position: 'left',
-          gridLines: {
-            color: 'rgba(255,193,7,0.3)',
-          },
-          ticks: {
-            fontColor: 'rgb(255,193,7)',
-          },
-          scaleLabel: {
-            display: true,
-            fontSize: this.fontSize,
-            labelString: 'Число сотрудников'
-          }
-        }
-      ]
-    },
-    annotation: {
-      annotations: [
-        {
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: this.deadline.toString(),
-          borderColor: 'red',
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: 'red',
-            content: 'Конец плана'
-          }
-        },
-        {
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: this.currentYear.toString(),
-          borderColor: '#673ab7',
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: 'red',
-            content: 'Прогноз'
-          }
-        }
-      ],
-    }
-  };
-  private employeesNumberChartColors = [
-    {
-      backgroundColor: 'rgba(255, 235, 59, 0.3)',
-      borderColor: 'rgb(255,193,7)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
-    }
-  ];
+  private employeesNumberChartData: ChartDataSets[];
+  private employeesNumberChartOptions: (ChartOptions & { annotation: any });
+  private employeesNumberChartColors: Color[];
 
   /*"Что будет, если ничего не менять?"*/
   private asIsChartData = [
@@ -694,8 +617,102 @@ export class MetricsDialogComponent implements OnInit {
   ) {
   }
 
+  employeesNumber: number[];
+
   ngOnInit() {
     this.region = this.data.region;
+
+    this.employeesNumber = [];
+
+    this.firebaseService.get(this.region.id).subscribe(data => {
+      this.regionData = data as RegionStatistics[];
+      this.regionData.forEach((value, index) => {
+        this.employeesNumber.push(value.employeesNumber);
+      });
+
+      this.employeesNumberChartData = [
+        {
+          data: this.employeesNumber,
+          label: 'Число сотрудников'
+        }
+      ];
+      this.employeesNumberChartOptions = {
+        responsive: true,
+        title: {
+          display: true,
+          text: 'Число сотрудников, занимающихся вопросом',
+          fontSize: this.fontSize
+        },
+        scales: {
+          xAxes: [
+            {
+              scaleLabel: {
+                display: true,
+                fontSize: this.fontSize,
+                labelString: 'Год'
+              }
+            }
+          ],
+          yAxes: [
+            {
+              position: 'left',
+              gridLines: {
+                color: 'rgba(255,193,7,0.3)',
+              },
+              ticks: {
+                fontColor: 'rgb(255,193,7)',
+              },
+              scaleLabel: {
+                display: true,
+                fontSize: this.fontSize,
+                labelString: 'Число сотрудников'
+              }
+            }
+          ]
+        },
+        annotation: {
+          annotations: [
+            {
+              type: 'line',
+              mode: 'vertical',
+              scaleID: 'x-axis-0',
+              value: this.deadline.toString(),
+              borderColor: 'red',
+              borderWidth: 2,
+              label: {
+                enabled: true,
+                fontColor: 'red',
+                content: 'Конец плана'
+              }
+            },
+            {
+              type: 'line',
+              mode: 'vertical',
+              scaleID: 'x-axis-0',
+              value: this.currentYear.toString(),
+              borderColor: '#673ab7',
+              borderWidth: 2,
+              label: {
+                enabled: true,
+                fontColor: 'red',
+                content: 'Прогноз'
+              }
+            }
+          ],
+        }
+      };
+      this.employeesNumberChartColors = [
+        {
+          backgroundColor: 'rgba(255, 235, 59, 0.3)',
+          borderColor: 'rgb(255,193,7)',
+          pointBackgroundColor: 'rgba(77,83,96,1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(77,83,96,1)'
+        }
+      ];
+    });
+
     this.lineChartLabels = this.chartService.generateChartLabels(2016, 2030);
     this.resultChartsLabels = this.chartService.generateChartLabels(2020, 2044);
 

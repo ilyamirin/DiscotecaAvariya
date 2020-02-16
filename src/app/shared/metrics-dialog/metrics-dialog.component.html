@@ -28,7 +28,7 @@
       </div>
 
       <div class="col-6">
-        <app-line-chart [chartParams]="generateEmployeesNumberChart()"></app-line-chart>
+        <app-line-chart *ngIf="employeesNumber.length" [chartParams]="generateEmployeesNumberChart()"></app-line-chart>
       </div>
     </div>
 
