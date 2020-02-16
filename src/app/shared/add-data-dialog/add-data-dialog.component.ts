@@ -17,6 +17,8 @@ export class AddDataDialogComponent implements OnInit {
   addRegionDataForm: FormGroup;
   addCoefficientsForm: FormGroup;
 
+  selectedRegionId: string;
+
   regionDataColumns: string[];
   coefficientDataColumns: string[];
 
@@ -75,6 +77,8 @@ export class AddDataDialogComponent implements OnInit {
       employeesNumberCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])]
     });
 
+    this.selectedRegionId = this.regionIdControl.value;
+
     this.regionDataColumns = [
       'year',
 
@@ -115,14 +119,7 @@ export class AddDataDialogComponent implements OnInit {
       'actions'
     ];
 
-    this.firebaseService.getById(Collections.REGION_DATA, this.regionIdControl.value).subscribe(data => {
-      this.regionDataDataSource = new MatTableDataSource<RegionStatistics>([data as RegionStatistics]);
-      this.regionDataDataSource.paginator = this.paginator;
-    });
-
-    this.firebaseService.getById(Collections.COEFFICIENT, this.regionIdControl.value).subscribe(data => {
-      this.coefficientsDataDataSource = new MatTableDataSource<MetricCoefficients>([data as MetricCoefficients]);
-    });
+    this.loadData(this.selectedRegionId);
   }
 
   onSubmitRegionDataForm(id: string, regionStatistics: RegionStatistics) {
@@ -137,5 +134,16 @@ export class AddDataDialogComponent implements OnInit {
 
   onDelete(id: string) {
     this.firebaseService.delete(Collections.COEFFICIENT, id);
+  }
+
+  loadData(selectedRegionId: string) {
+    this.firebaseService.getById(Collections.REGION_DATA, selectedRegionId).subscribe(data => {
+      this.regionDataDataSource = new MatTableDataSource<RegionStatistics>(data === undefined ? [] : [data as RegionStatistics]);
+      this.regionDataDataSource.paginator = this.paginator;
+    });
+
+    this.firebaseService.getById(Collections.COEFFICIENT, selectedRegionId).subscribe(data => {
+      this.coefficientsDataDataSource = new MatTableDataSource<MetricCoefficients>(data === undefined ? [] : [data as MetricCoefficients]);
+    });
   }
 }
