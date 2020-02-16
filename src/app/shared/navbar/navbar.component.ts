@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ThemeService} from '../../core/services';
+import {AuthService, ThemeService} from '../../core/services';
 import {Observable} from 'rxjs';
 
 
@@ -13,7 +13,8 @@ export class NavbarComponent implements OnInit {
   isLightTheme: Observable<boolean>;
 
   constructor(
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private authService: AuthService
   ) {
   }
 

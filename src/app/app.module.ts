@@ -11,6 +11,7 @@ import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFirestore} from '@angular/fire/firestore';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
   ],
   providers: [
     AngularFirestore,
+    AngularFireAuth,
     {
       provide: MatPaginatorIntl,
       useValue: getTranslatePaginatorIntl()

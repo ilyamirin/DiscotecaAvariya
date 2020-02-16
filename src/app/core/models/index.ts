@@ -8,3 +8,5 @@ export * from './region.model';
 export * from './region-statistics.model';
 
 export * from './metric-coefficients.model';
+
+export * from './user.model';

@@ -1,4 +1,5 @@
 export enum Collections {
   REGION = 'region',
-  COEFFICIENT = 'coefficient'
+  COEFFICIENT = 'coefficient',
+  USER = 'user'
 }

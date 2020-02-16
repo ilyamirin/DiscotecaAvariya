@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
-import {DialogService, ThemeService} from './core/services';
+import {AuthService, DialogService, ThemeService} from './core/services';
 import {AddDataDialogComponent} from './shared/add-data-dialog/add-data-dialog.component';
 
 
@@ -15,7 +15,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private themeService: ThemeService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private authService: AuthService
   ) {
   }
 
