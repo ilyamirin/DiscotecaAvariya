@@ -11,7 +11,7 @@ import {MetricsDialogComponent} from '../metrics-dialog/metrics-dialog.component
 })
 export class RussiaMapComponent implements OnInit {
 
-  regions: Array<any>;
+  regions: Region[];
 
   constructor(
     private apiService: ApiService,
@@ -26,9 +26,8 @@ export class RussiaMapComponent implements OnInit {
       this.setOpenDialogAction(this.regions);
     });
 
-    // For production only
-    /*this.firebaseService.get(Collections.REGIONS).subscribe(data => {
-      this.regions = data;
+    /*this.firebaseService.get(Collections.REGION).subscribe(data => {
+      this.regions = data as Region[];
       this.setOpenDialogAction(this.regions);
     });*/
   }
