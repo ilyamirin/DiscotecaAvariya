@@ -319,7 +319,7 @@
 
       <tr mat-header-row *matHeaderRowDef="coefficientDataColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: coefficientDataColumns"></tr>
-      <tr mat-footer-row *matFooterRowDef="coefficientDataColumns"></tr>
+      <tr mat-footer-row *matFooterRowDef="coefficientDataColumns" [hidden]="!isDataEmpty()"></tr>
     </table>
   </form>
 

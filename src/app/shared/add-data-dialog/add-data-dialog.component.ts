@@ -119,6 +119,9 @@ export class AddDataDialogComponent implements OnInit {
       'actions'
     ];
 
+    this.regionDataDataSource = new MatTableDataSource([]);
+    this.coefficientsDataDataSource = new MatTableDataSource([]);
+
     this.loadData(this.selectedRegionId);
   }
 
@@ -145,5 +148,9 @@ export class AddDataDialogComponent implements OnInit {
     this.firebaseService.getById(Collections.COEFFICIENT, selectedRegionId).subscribe(data => {
       this.coefficientsDataDataSource = new MatTableDataSource<MetricCoefficients>(data === undefined ? [] : [data as MetricCoefficients]);
     });
+  }
+
+  isDataEmpty() {
+    return this.coefficientsDataDataSource.data.length === 0;
   }
 }
