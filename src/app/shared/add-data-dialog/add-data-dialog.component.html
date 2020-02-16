@@ -9,7 +9,7 @@
   </mat-form-field>
 
   <form class="addition-form" [formGroup]="addRegionDataForm"
-        (ngSubmit)="onSubmitRegionDataForm(regionIdControl.value, addRegionDataForm.value)">
+        (ngSubmit)="onSubmitRegionDataForm(regionIdControl.value, addRegionDataForm.value.year, addRegionDataForm.value)">
     <div class="row">
       <h4 class="center">Таблица для статических данных:</h4>
     </div>
@@ -143,7 +143,8 @@
 
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button matTooltip="Удалить">
+          <button mat-icon-button type="button" matTooltip="Удалить"
+                  (click)="onDeleteRegionData(regionIdControl.value, element.year)">
             <i class="material-icons">
               close
             </i>
@@ -308,7 +309,8 @@
 
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button matTooltip="Удалить" (click)="onDelete(element.id)">
+          <button mat-icon-button type="button" matTooltip="Удалить"
+                  (click)="onDeleteCoefficients(regionIdControl.value)">
             <i class="material-icons">
               close
             </i>

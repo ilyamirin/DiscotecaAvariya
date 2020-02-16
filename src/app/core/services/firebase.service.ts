@@ -20,7 +20,7 @@ export class FirebaseService {
     return this.angularFirestore.collection(collection).doc(id).valueChanges();
   }
 
-  store(collection: string, value: any, id?: string) {
+  store(collection: string, id: string, value: any) {
     /*new Promise<T>((resolve, reject) => {
       if (id) {
         // If there is an ID Provided, lets specifically set the Document

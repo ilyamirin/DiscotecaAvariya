@@ -125,23 +125,27 @@ export class AddDataDialogComponent implements OnInit {
     this.loadData(this.selectedRegionId);
   }
 
-  onSubmitRegionDataForm(id: string, regionStatistics: RegionStatistics) {
-    this.firebaseService.store(Collections.REGION_DATA, regionStatistics, id);
+  onSubmitRegionDataForm(collection: string, id: number, regionStatistics: RegionStatistics) {
+    this.firebaseService.store(collection, id.toString(), regionStatistics);
     this.addRegionDataForm.reset();
   }
 
   onSubmitCoefficientsForm(id: string, coefficients: MetricCoefficients) {
-    this.firebaseService.store(Collections.COEFFICIENT, coefficients, id);
+    this.firebaseService.store(Collections.COEFFICIENT, id, coefficients);
     this.addCoefficientsForm.reset();
   }
 
-  onDelete(id: string) {
-    this.firebaseService.delete(Collections.COEFFICIENT, id);
+  onDeleteRegionData(collection: string, id: number) {
+    this.firebaseService.delete(collection, id.toString());
+  }
+
+  onDeleteCoefficients(id: number) {
+    this.firebaseService.delete(Collections.COEFFICIENT, id.toString());
   }
 
   loadData(selectedRegionId: string) {
-    this.firebaseService.getById(Collections.REGION_DATA, selectedRegionId).subscribe(data => {
-      this.regionDataDataSource = new MatTableDataSource<RegionStatistics>(data === undefined ? [] : [data as RegionStatistics]);
+    this.firebaseService.get(selectedRegionId).subscribe(data => {
+      this.regionDataDataSource = new MatTableDataSource<RegionStatistics>(data as RegionStatistics[]);
       this.regionDataDataSource.paginator = this.paginator;
     });
 
