@@ -16,8 +16,39 @@ export class FirebaseService {
     return this.angularFirestore.collection(collection).valueChanges();
   }
 
-  store(collection: string, value: any) {
-    return this.angularFirestore.collection(collection).add(JSON.parse(JSON.stringify(value)));
+  getById(collection: string, id: string) {
+    return this.angularFirestore.collection(collection).doc(id).valueChanges();
+  }
+
+  store(collection: string, value: any, id?: string) {
+    /*new Promise<T>((resolve, reject) => {
+      if (id) {
+        // If there is an ID Provided, lets specifically set the Document
+        this.collection
+          .doc(id)
+          .set(firebaseSerialize(entity))
+          .then(ref => {
+            resolve(entity);
+          });
+      } else {
+        // If no ID is set, allow Firestore to Auto-Generate one
+        this.collection.add(firebaseSerialize(entity)).then(ref => {
+          // Let's make sure we return the newly added ID with Model
+          const newentity = {
+            id: ref.id,
+            ...entity,
+          };
+          resolve(newentity);
+        });
+      }
+    });*/
+    if (id) {
+      this.angularFirestore.collection(collection)
+        .doc(id)
+        .set(JSON.parse(JSON.stringify(value)));
+    } else {
+      return this.angularFirestore.collection(collection).add(JSON.parse(JSON.stringify(value)));
+    }
   }
 
   update(collection: string, key: string, value: object) {

@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {CoefficientsData, Collections, MetricCoefficients, Region, RegionData, RegionStatistics} from '../../core/models';
+import {Collections, MetricCoefficients, Region, RegionData, RegionStatistics} from '../../core/models';
 import {ApiService, FirebaseService} from '../../core/services';
-import {Observable} from 'rxjs';
+import {MatTableDataSource} from '@angular/material';
 
 
 @Component({
@@ -20,8 +20,8 @@ export class AddDataDialogComponent implements OnInit {
   regionDataColumns: string[];
   coefficientDataColumns: string[];
 
-  regionDataDataSource: Observable<any>;
-  coefficientsDataDataSource: Observable<any>;
+  regionDataDataSource: MatTableDataSource<RegionData>;
+  coefficientsDataDataSource: MatTableDataSource<MetricCoefficients>;
 
   constructor(
     private apiService: ApiService,
@@ -112,6 +112,10 @@ export class AddDataDialogComponent implements OnInit {
       'employeesNumberCoefficient',
       'actions'
     ];
+
+    this.firebaseService.getById(Collections.COEFFICIENT, this.regionIdControl.value).subscribe(data => {
+      this.coefficientsDataDataSource = new MatTableDataSource<MetricCoefficients>([data as MetricCoefficients]);
+    });
   }
 
   onSubmitRegionDataForm(id: string, regionStatistics: RegionStatistics) {
@@ -120,17 +124,16 @@ export class AddDataDialogComponent implements OnInit {
       data: regionStatistics
     };
 
-    this.firebaseService.store(Collections.REGION_DATA, regionData);
+    this.firebaseService.store(Collections.REGION_DATA, regionData, id);
     this.addCoefficientsForm.reset();
   }
 
   onSubmitCoefficientsForm(id: string, coefficients: MetricCoefficients) {
-    const coefficientsData: CoefficientsData = {
-      id,
-      coefficients
-    };
-
-    this.firebaseService.store(Collections.COEFFICIENT, coefficientsData);
+    this.firebaseService.store(Collections.COEFFICIENT, coefficients, id);
     this.addCoefficientsForm.reset();
+  }
+
+  onDelete(id: string) {
+    this.firebaseService.delete(Collections.COEFFICIENT, id);
   }
 }

@@ -193,7 +193,7 @@
     <table mat-table [dataSource]="coefficientsDataDataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="orphansInSubjectCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент числа детей-сирот в регионе</th>
-        <td mat-cell *matCellDef="let element"> {{element.orphansInSubject}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.orphansInSubjectCoefficient}} </td>
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Значение</mat-label>
@@ -203,7 +203,7 @@
       </ng-container>
       <ng-container matColumnDef="newlyIdentifiedOrphansCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент вновь выявленных детей-сирот</th>
-        <td mat-cell *matCellDef="let element"> {{element.newlyIdentifiedOrphans}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.newlyIdentifiedOrphansCoefficient}} </td>
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Значение</mat-label>
@@ -214,7 +214,7 @@
 
       <ng-container matColumnDef="orphansNeedHousingNegativeCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент детей-сирот, нуждающихся в жилье (негативный прогноз)</th>
-        <td mat-cell *matCellDef="let element"> {{element.orphansNeedHousingNegative}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.orphansNeedHousingNegativeCoefficient}} </td>
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Значение</mat-label>
@@ -224,7 +224,7 @@
       </ng-container>
       <ng-container matColumnDef="orphansNeedHousingPositiveCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент детей-сирот, нуждающихся в жилье (позитивный прогноз)</th>
-        <td mat-cell *matCellDef="let element"> {{element.orphansNeedHousingPositive}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.orphansNeedHousingPositiveCoefficient}} </td>
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Значение</mat-label>
@@ -235,7 +235,7 @@
 
       <ng-container matColumnDef="apartmentsNumberIssuedCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент количества выданных квартир</th>
-        <td mat-cell *matCellDef="let element"> {{element.apartmentsNumberIssued}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.apartmentsNumberIssuedCoefficient}} </td>
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Значение</mat-label>
@@ -246,7 +246,7 @@
 
       <ng-container matColumnDef="regionalFundingCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент регионального финансирования</th>
-        <td mat-cell *matCellDef="let element"> {{element.regionalFunding}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.regionalFundingCoefficient}} </td>
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Значение</mat-label>
@@ -256,7 +256,7 @@
       </ng-container>
       <ng-container matColumnDef="federalFundingCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент федерального финансирования</th>
-        <td mat-cell *matCellDef="let element"> {{element.federalFunding}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.federalFundingCoefficient}} </td>
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Значение</mat-label>
@@ -267,7 +267,7 @@
 
       <ng-container matColumnDef="realHousingCostCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент стоимости кв. м. жилья (реальной)</th>
-        <td mat-cell *matCellDef="let element"> {{element.realHousingCost}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.realHousingCostCoefficient}} </td>
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Значение</mat-label>
@@ -277,7 +277,7 @@
       </ng-container>
       <ng-container matColumnDef="minstroyHousingCostCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент стоимости кв. м. жилья (по минстрою)</th>
-        <td mat-cell *matCellDef="let element"> {{element.minstroyHousingCost}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.minstroyHousingCostCoefficient}} </td>
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Значение</mat-label>
@@ -288,7 +288,7 @@
 
       <ng-container matColumnDef="employeesNumberCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент числа работников, занимающихся вопросом</th>
-        <td mat-cell *matCellDef="let element"> {{element.employeesNumber}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.employeesNumberCoefficient}} </td>
         <td mat-footer-cell *matFooterCellDef>
           <mat-form-field>
             <mat-label>Значение</mat-label>
@@ -308,7 +308,7 @@
 
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button matTooltip="Удалить">
+          <button mat-icon-button matTooltip="Удалить" (click)="onDelete(element.id)">
             <i class="material-icons">
               close
             </i>

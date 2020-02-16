@@ -9,4 +9,3 @@ export * from './region-statistics.model';
 export * from './region-data.model';
 
 export * from './metric-coefficients.model';
-export * from './coefficients-data.model';
