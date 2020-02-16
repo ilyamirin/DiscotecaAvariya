@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA} from '@angular/material';
 import {ChartParams, Region} from '../../core/models';
 import {ChartDataSets, ChartOptions} from 'chart.js';
 import {BaseChartDirective, Color, Label} from 'ng2-charts';
-import {ChartService} from '../../core/services';
+import {ChartService, FirebaseService} from '../../core/services';
 
 
 @Component({
@@ -689,7 +689,8 @@ export class MetricsDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: MetricsDialogComponent,
-    private chartService: ChartService
+    private chartService: ChartService,
+    private firebaseService: FirebaseService
   ) {
   }
 

@@ -14,7 +14,7 @@
       <h4 class="center">Таблица для статических данных:</h4>
     </div>
 
-    <table mat-table class="mat-elevation-z8">
+    <table mat-table [dataSource]="regionDataDataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="year">
         <th mat-header-cell *matHeaderCellDef> Год</th>
         <td mat-cell *matCellDef="let element"> {{element.year}} </td>
@@ -190,7 +190,7 @@
       <h4 class="center">Таблица прогнозирующих коэффициентов:</h4>
     </div>
 
-    <table mat-table class="mat-elevation-z8">
+    <table mat-table [dataSource]="coefficientsDataDataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="orphansInSubjectCoefficient">
         <th mat-header-cell *matHeaderCellDef> Коэффициент числа детей-сирот в регионе</th>
         <td mat-cell *matCellDef="let element"> {{element.orphansInSubject}} </td>

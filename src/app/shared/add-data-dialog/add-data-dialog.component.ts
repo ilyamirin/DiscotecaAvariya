@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Collections, Region, RegionData, RegionStatistics} from '../../core/models';
+import {CoefficientsData, Collections, MetricCoefficients, Region, RegionData, RegionStatistics} from '../../core/models';
 import {ApiService, FirebaseService} from '../../core/services';
-import {CoefficientsData} from '../../core/models';
-import {MetricCoefficients} from '../../core/models';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -14,49 +13,15 @@ import {MetricCoefficients} from '../../core/models';
 export class AddDataDialogComponent implements OnInit {
   regions: Region[];
 
-  regionIdControl = new FormControl();
+  regionIdControl: FormControl;
   addRegionDataForm: FormGroup;
   addCoefficientsForm: FormGroup;
 
-  regionDataColumns: string[] = [
-    'year',
+  regionDataColumns: string[];
+  coefficientDataColumns: string[];
 
-    'orphansInSubject',
-    'newlyIdentifiedOrphans',
-
-    'orphansNeedHousingNegative',
-    'orphansNeedHousingPositive',
-
-    'apartmentsNumberIssued',
-
-    'regionalFunding',
-    'federalFunding',
-
-    'realHousingCost',
-    'minstroyHousingCost',
-
-    'employeesNumber',
-
-    'actions'
-  ];
-  coefficientDataColumns: string[] = [
-    'orphansInSubjectCoefficient',
-    'newlyIdentifiedOrphansCoefficient',
-
-    'orphansNeedHousingNegativeCoefficient',
-    'orphansNeedHousingPositiveCoefficient',
-
-    'apartmentsNumberIssuedCoefficient',
-
-    'regionalFundingCoefficient',
-    'federalFundingCoefficient',
-
-    'realHousingCostCoefficient',
-    'minstroyHousingCostCoefficient',
-
-    'employeesNumberCoefficient',
-    'actions'
-  ];
+  regionDataDataSource: Observable<any>;
+  coefficientsDataDataSource: Observable<any>;
 
   constructor(
     private apiService: ApiService,
@@ -66,6 +31,11 @@ export class AddDataDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.apiService.get('regions.json').subscribe(data => {
+      this.regions = data;
+    });
+
+    this.regionIdControl = new FormControl('RU-PRI');
     this.addRegionDataForm = this.formBuilder.group({
       year: ['', Validators.compose([Validators.required, Validators.min(2016), Validators.max(2030)])],
 
@@ -103,9 +73,45 @@ export class AddDataDialogComponent implements OnInit {
       employeesNumberCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])]
     });
 
-    this.apiService.get('regions.json').subscribe(data => {
-      this.regions = data;
-    });
+    this.regionDataColumns = [
+      'year',
+
+      'orphansInSubject',
+      'newlyIdentifiedOrphans',
+
+      'orphansNeedHousingNegative',
+      'orphansNeedHousingPositive',
+
+      'apartmentsNumberIssued',
+
+      'regionalFunding',
+      'federalFunding',
+
+      'realHousingCost',
+      'minstroyHousingCost',
+
+      'employeesNumber',
+
+      'actions'
+    ];
+    this.coefficientDataColumns = [
+      'orphansInSubjectCoefficient',
+      'newlyIdentifiedOrphansCoefficient',
+
+      'orphansNeedHousingNegativeCoefficient',
+      'orphansNeedHousingPositiveCoefficient',
+
+      'apartmentsNumberIssuedCoefficient',
+
+      'regionalFundingCoefficient',
+      'federalFundingCoefficient',
+
+      'realHousingCostCoefficient',
+      'minstroyHousingCostCoefficient',
+
+      'employeesNumberCoefficient',
+      'actions'
+    ];
   }
 
   onSubmitRegionDataForm(id: string, regionStatistics: RegionStatistics) {
