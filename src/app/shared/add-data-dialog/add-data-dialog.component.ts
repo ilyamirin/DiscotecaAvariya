@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Collections, MetricCoefficients, Region, RegionData, RegionStatistics} from '../../core/models';
+import {Collections, MetricCoefficients, Region, RegionStatistics} from '../../core/models';
 import {ApiService, FirebaseService} from '../../core/services';
-import {MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatTableDataSource} from '@angular/material';
 
 
 @Component({
@@ -20,7 +20,9 @@ export class AddDataDialogComponent implements OnInit {
   regionDataColumns: string[];
   coefficientDataColumns: string[];
 
-  regionDataDataSource: MatTableDataSource<RegionData>;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  regionDataDataSource: MatTableDataSource<RegionStatistics>;
+
   coefficientsDataDataSource: MatTableDataSource<MetricCoefficients>;
 
   constructor(
@@ -113,19 +115,19 @@ export class AddDataDialogComponent implements OnInit {
       'actions'
     ];
 
+    this.firebaseService.getById(Collections.REGION_DATA, this.regionIdControl.value).subscribe(data => {
+      this.regionDataDataSource = new MatTableDataSource<RegionStatistics>([data as RegionStatistics]);
+      this.regionDataDataSource.paginator = this.paginator;
+    });
+
     this.firebaseService.getById(Collections.COEFFICIENT, this.regionIdControl.value).subscribe(data => {
       this.coefficientsDataDataSource = new MatTableDataSource<MetricCoefficients>([data as MetricCoefficients]);
     });
   }
 
   onSubmitRegionDataForm(id: string, regionStatistics: RegionStatistics) {
-    const regionData: RegionData = {
-      id,
-      data: regionStatistics
-    };
-
-    this.firebaseService.store(Collections.REGION_DATA, regionData, id);
-    this.addCoefficientsForm.reset();
+    this.firebaseService.store(Collections.REGION_DATA, regionStatistics, id);
+    this.addRegionDataForm.reset();
   }
 
   onSubmitCoefficientsForm(id: string, coefficients: MetricCoefficients) {
