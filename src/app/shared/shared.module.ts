@@ -8,6 +8,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatPaginatorModule,
+  MatProgressBarModule,
   MatSelectModule,
   MatSliderModule,
   MatSlideToggleModule,
@@ -45,7 +46,8 @@ import {AddDataDialogComponent} from './add-data-dialog/add-data-dialog.componen
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressBarModule
   ],
   exports: [
     CommonModule,
@@ -70,7 +72,8 @@ import {AddDataDialogComponent} from './add-data-dialog/add-data-dialog.componen
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressBarModule
   ],
   declarations: [
     NavbarComponent,

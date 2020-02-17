@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
-import {Chart, Collections, MetricCoefficients, Region, RegionStatistics} from '../../core/models';
+import {Chart, MetricCoefficients, Region, RegionStatistics} from '../../core/models';
 import {BaseChartDirective} from 'ng2-charts';
 import {FirebaseService} from '../../core/services';
 
@@ -40,6 +40,8 @@ export class MetricsDialogComponent implements OnInit {
 
   region: Region;
   regionData: RegionStatistics[];
+
+  isAllDataLoaded: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: MetricsDialogComponent,
@@ -147,9 +149,11 @@ export class MetricsDialogComponent implements OnInit {
           label: 'Число сотрудников'
         }
       ]);
+
+      this.isAllDataLoaded = true;
     });
 
-    this.firebaseService.getById(Collections.COEFFICIENT, this.region.id).subscribe(data => {
+    /*this.firebaseService.getById(Collections.COEFFICIENT, this.region.id).subscribe(data => {
       this.metricCoefficients = data as MetricCoefficients;
 
       this.asIsChart = new Chart([
@@ -158,7 +162,7 @@ export class MetricsDialogComponent implements OnInit {
           label: 'Число детей-сирот, стоящих в очереди'
         }
       ], 2020, 2044);
-    });
+    });*/
   }
 
   generateOrphansInSubjectChart() {

@@ -1,43 +1,43 @@
 <h1 mat-dialog-title>Статистика по региону "{{region.name}}":</h1>
 
 <mat-dialog-content>
-  <div class="container" style="width: 100%; height: 100%">
+  <div class="container" style="width: 100%; height: 100%" *ngIf="isAllDataLoaded; else loading">
     <div class="row">
       <div class="col-6">
-        <app-line-chart *ngIf="orphansInSubject.length" [chartParams]="generateOrphansInSubjectChart()"></app-line-chart>
+        <app-line-chart [chartParams]="generateOrphansInSubjectChart()"></app-line-chart>
       </div>
 
       <div class="col-6">
-        <app-line-chart *ngIf="orphansNeedHousingPositive.length" [chartParams]="generateOrphansNeedHousingChart()"></app-line-chart>
+        <app-line-chart [chartParams]="generateOrphansNeedHousingChart()"></app-line-chart>
       </div>
     </div>
 
     <div class="row">
       <div class="col-6">
-        <app-line-chart *ngIf="apartmentsNumberIssued.length" [chartParams]="generateApartmentsNumberIssuedChart()"></app-line-chart>
+        <app-line-chart [chartParams]="generateApartmentsNumberIssuedChart()"></app-line-chart>
       </div>
 
       <div class="col-6">
-        <app-line-chart *ngIf="regionalFunding.length" [chartParams]="generateFinancingAmountChart()"></app-line-chart>
+        <app-line-chart [chartParams]="generateFinancingAmountChart()"></app-line-chart>
       </div>
     </div>
 
     <div class="row">
       <div class="col-6">
-        <app-line-chart *ngIf="realHousingCost.length" [chartParams]="generateHouseCostChart()"></app-line-chart>
+        <app-line-chart [chartParams]="generateHouseCostChart()"></app-line-chart>
       </div>
 
       <div class="col-6">
-        <app-line-chart *ngIf="employeesNumber.length" [chartParams]="generateEmployeesNumberChart()"></app-line-chart>
+        <app-line-chart [chartParams]="generateEmployeesNumberChart()"></app-line-chart>
       </div>
     </div>
 
     <h2 class="center">Итоговые результаты:</h2>
 
     <div class="row">
-      <div class="col-6">
+      <!--<div class="col-6">
         <app-line-chart *ngIf="metricCoefficients" [chartParams]="generateAsIsChart()"></app-line-chart>
-      </div>
+      </div>-->
 
       <!--<div class="col-6">
         <app-line-chart #dynamicChart [chartParams]="generateDynamicChart()"></app-line-chart>
@@ -91,6 +91,10 @@
       </div>-->
     </div>
   </div>
+
+  <ng-template #loading>
+    <mat-progress-bar mode="indeterminate" color="accent" class="center"></mat-progress-bar>
+  </ng-template>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

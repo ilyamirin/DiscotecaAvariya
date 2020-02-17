@@ -28,7 +28,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.isLightTheme = this.themeService.isLightTheme;
     this.authService.user.subscribe(data => {
-      this.uid = data.uid;
+      if (data !== null) {
+        this.uid = data.uid;
+      }
     });
   }
 
