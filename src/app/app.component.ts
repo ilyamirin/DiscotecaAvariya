@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   isLightTheme: Observable<boolean>;
   private uid: string;
   private readonly adminUid: string = '7ws5bz2dtzR9tZhlcn6aKXbwU1z1';
+  private readonly AlexeyUid: string = '7QvwaOJvcWav9PVzUJ5vlpcQz0o1';
 
   constructor(
     private themeService: ThemeService,
@@ -32,7 +33,7 @@ export class AppComponent implements OnInit {
   }
 
   openAddDataDialog(user) {
-    if (user.uid === this.adminUid) {
+    if (this.hasWriteAccess(user)) {
       const dialogRef = this.dialogService.open(AddDataDialogComponent, {
         hasBackdrop: false,
         width: '1360px',
@@ -47,5 +48,9 @@ export class AppComponent implements OnInit {
     this.snackBar.open('У вас нет доступа для редактирования', '', {
       duration: 3000
     });
+  }
+
+  private hasWriteAccess(user) {
+    return user.uid === this.adminUid || this.uid === this.AlexeyUid;
   }
 }

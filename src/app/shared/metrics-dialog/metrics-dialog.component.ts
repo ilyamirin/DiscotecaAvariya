@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
 import {Chart, Collections, MetricCoefficients, Region, RegionStatistics} from '../../core/models';
-import {BaseChartDirective, Label} from 'ng2-charts';
-import {ChartService, FirebaseService} from '../../core/services';
+import {BaseChartDirective} from 'ng2-charts';
+import {FirebaseService} from '../../core/services';
 
 
 @Component({
@@ -12,20 +12,18 @@ import {ChartService, FirebaseService} from '../../core/services';
 })
 export class MetricsDialogComponent implements OnInit {
 
-  private orphansInSubject: number[];
-  private newlyIdentifiedOrphans: number[];
-  private orphansNeedHousingNegative: number[];
-  private orphansNeedHousingPositive: number[];
-  private apartmentsNumberIssued: number[];
-  private regionalFunding: number[];
-  private federalFunding: number[];
-  private realHousingCost: number[];
-  private minstroyHousingCost: number[];
-  private employeesNumber: number[];
+  orphansInSubject: number[];
+  newlyIdentifiedOrphans: number[];
+  orphansNeedHousingNegative: number[];
+  orphansNeedHousingPositive: number[];
+  apartmentsNumberIssued: number[];
+  regionalFunding: number[];
+  federalFunding: number[];
+  realHousingCost: number[];
+  minstroyHousingCost: number[];
+  employeesNumber: number[];
 
-  private metricCoefficients: MetricCoefficients;
-
-  private dynamicChartLabels: Label[];
+  metricCoefficients: MetricCoefficients;
 
   private orphansInSubjectChart: Chart;
   private orphansNeedHousingChart: Chart;
@@ -45,7 +43,6 @@ export class MetricsDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: MetricsDialogComponent,
-    private chartService: ChartService,
     public firebaseService: FirebaseService
   ) {
   }

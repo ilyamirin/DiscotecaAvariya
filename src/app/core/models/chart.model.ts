@@ -106,10 +106,6 @@ export class Chart {
     this.chartColors[colorIndex].backgroundColor = backgroundColor;
   }
 
-  setLabels(labels: Label[]) {
-    this.chartLabels = labels;
-  }
-
   setOptions(title: string, yAxeLabel: string) {
     this.chartOptions.title.text = title;
     this.chartOptions.scales.yAxes[0].scaleLabel.labelString = yAxeLabel;
