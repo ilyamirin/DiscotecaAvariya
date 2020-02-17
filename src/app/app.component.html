@@ -3,8 +3,8 @@
   <router-outlet></router-outlet>
   <app-footer></app-footer>
 
-  <span *ngIf="authService.user | async" class="float-button">
-    <button mat-mini-fab matTooltip="Добавить данные" (click)="openAddDataDialog()">
+  <span *ngIf="authService.user | async as user" class="float-button">
+    <button mat-mini-fab matTooltip="Добавить данные" (click)="openAddDataDialog(user)">
       <mat-icon>add</mat-icon>
     </button>
   </span>

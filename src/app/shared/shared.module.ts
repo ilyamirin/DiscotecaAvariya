@@ -11,6 +11,7 @@ import {
   MatSelectModule,
   MatSliderModule,
   MatSlideToggleModule,
+  MatSnackBarModule,
   MatTableModule,
   MatTooltipModule
 } from '@angular/material';
@@ -43,7 +44,8 @@ import {AddDataDialogComponent} from './add-data-dialog/add-data-dialog.componen
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ],
   exports: [
     CommonModule,
@@ -67,7 +69,8 @@ import {AddDataDialogComponent} from './add-data-dialog/add-data-dialog.componen
     MatInputModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSnackBarModule
   ],
   declarations: [
     NavbarComponent,
