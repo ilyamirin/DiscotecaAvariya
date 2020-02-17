@@ -9,9 +9,8 @@ import {getTranslatePaginatorIntl} from './shared/add-data-dialog/translate-intl
 import {MatPaginatorIntl} from '@angular/material';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
-import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {AngularFireAuth} from '@angular/fire/auth';
+import {AngularFireAuthModule} from '@angular/fire/auth';
 
 
 @NgModule({
@@ -21,13 +20,12 @@ import {AngularFireAuth} from '@angular/fire/auth';
   imports: [
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireDatabaseModule,
+    AngularFireAuthModule,
     CoreModule,
     SharedModule
   ],
   providers: [
     AngularFirestore,
-    AngularFireAuth,
     {
       provide: MatPaginatorIntl,
       useValue: getTranslatePaginatorIntl()

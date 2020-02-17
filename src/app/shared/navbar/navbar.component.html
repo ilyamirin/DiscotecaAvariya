@@ -5,11 +5,13 @@
 
   <div class="flex-spacer"></div>
 
-  <button mat-button>Войти в аккаунт</button>
-
-  <button mat-icon-button matTooltip="Выход">
+  <button *ngIf="authService.user | async as user; else login" mat-icon-button matTooltip="Выход" (click)="authService.googleSignOut()">
     <mat-icon>exit_to_app</mat-icon>
   </button>
+
+  <ng-template #login>
+    <button mat-button (click)="authService.googleSignIn()">Войти в аккаунт</button>
+  </ng-template>
 </nav>
 
 <nav class="navbar navbar-show-small">

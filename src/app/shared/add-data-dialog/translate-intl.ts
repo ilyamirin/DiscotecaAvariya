@@ -22,7 +22,7 @@ const translateRangeLabel = (page: number, pageSize: number, length: number) => 
 export function getTranslatePaginatorIntl() {
   const paginatorIntl = new MatPaginatorIntl();
 
-  paginatorIntl.itemsPerPageLabel = 'Элементов на странице:';
+  paginatorIntl.itemsPerPageLabel = 'Количество строк на странице:';
   paginatorIntl.firstPageLabel = 'Первая страница';
   paginatorIntl.previousPageLabel = 'Предыдущая страница';
   paginatorIntl.nextPageLabel = 'Следующая страница';
