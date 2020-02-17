@@ -33,6 +33,7 @@ export class MetricsDialogComponent implements OnInit {
   private financingAmountChart: Chart;
   private houseCostChart: Chart;
   private employeesNumberChart: Chart;
+  private asIsChart: Chart;
 
   newlyIdentifiedOrphansValue: number;
   financingAmountValue: number;
@@ -153,9 +154,14 @@ export class MetricsDialogComponent implements OnInit {
 
     this.firebaseService.getById(Collections.COEFFICIENT, this.region.id).subscribe(data => {
       this.metricCoefficients = data as MetricCoefficients;
-    });
 
-    this.dynamicChartLabels = this.chartService.generateChartLabels(2016, 2044);
+      this.asIsChart = new Chart([
+        {
+          data: this.asIsData(this.metricCoefficients),
+          label: 'Число детей-сирот, стоящих в очереди'
+        }
+      ], 2020, 2044);
+    });
   }
 
   generateOrphansInSubjectChart() {
@@ -206,9 +212,50 @@ export class MetricsDialogComponent implements OnInit {
     return this.employeesNumberChart;
   }
 
+  generateAsIsChart() {
+    this.asIsChart.setOptions('\"Что будет, если ничего не менять?\"', 'Число детей-сирот, стоящих в очереди');
+    return this.asIsChart;
+  }
+
   onChangeValue($event: any) {
   }
 
-  private asIsData() {
+  private asIsData(metricCoefficients: MetricCoefficients) {
+    const orphansNeedHousingNegative = this.orphansNeedHousingNegative;
+    const newlyIdentifiedOrphans = this.newlyIdentifiedOrphans;
+    const apartmentsNumberIssued = this.apartmentsNumberIssued;
+
+    const year2020Index = 4;
+    const year2030Index = 14;
+    const year2044Index = 28;
+
+    for (let i = year2030Index; i <= year2044Index; i++) {
+      orphansNeedHousingNegative.push(Math.round(orphansNeedHousingNegative[i] * metricCoefficients.orphansNeedHousingNegativeCoefficient));
+      newlyIdentifiedOrphans.push(Math.round((newlyIdentifiedOrphans[i] as number) * metricCoefficients.newlyIdentifiedOrphansCoefficient));
+      apartmentsNumberIssued.push(apartmentsNumberIssued[i] * metricCoefficients.apartmentsNumberIssuedCoefficient);
+    }
+
+    const orphansNumber = [];
+
+    let prediction;
+    for (let j = year2020Index; j <= year2044Index; j++) {
+      if (j === year2020Index) {
+        prediction = MetricsDialogComponent.predictAsIsResult(
+          orphansNeedHousingNegative[j - 1],
+          newlyIdentifiedOrphans[j] as number,
+          apartmentsNumberIssued[j]
+        );
+      } else {
+        prediction = MetricsDialogComponent.predictAsIsResult(
+          prediction,
+          newlyIdentifiedOrphans[j] as number,
+          apartmentsNumberIssued[j]
+        );
+      }
+
+      orphansNumber.push(prediction);
+    }
+
+    return orphansNumber;
   }
 }

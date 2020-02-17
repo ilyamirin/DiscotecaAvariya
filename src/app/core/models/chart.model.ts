@@ -1,12 +1,10 @@
 import {Color, Label} from 'ng2-charts';
-import {ChartDataSets, ChartOptions, ChartTitleOptions} from 'chart.js';
+import {ChartDataSets, ChartOptions} from 'chart.js';
 
 
 export class Chart {
-  private static readonly defaultStartYear = 2016;
   private static readonly currentYear = new Date().getFullYear();
   private static readonly deadline = 2026;
-  private static readonly defaultEndYear = 2030;
 
   private static readonly fontSize = 18;
 
@@ -15,8 +13,8 @@ export class Chart {
   chartOptions: (ChartOptions & { annotation: any });
   chartColors: Color[];
 
-  constructor(chartData: ChartDataSets[]) {
-    this.chartLabels = Chart.generateChartLabels(Chart.defaultStartYear, Chart.defaultEndYear);
+  constructor(chartData: ChartDataSets[], startYear = 2016, endYear = 2030) {
+    this.chartLabels = Chart.generateChartLabels(startYear, endYear);
     this.chartData = chartData;
     this.chartOptions = {
       responsive: true,
@@ -106,6 +104,10 @@ export class Chart {
   setBackgroundColor(backgroundColor: string) {
     const colorIndex = 0;
     this.chartColors[colorIndex].backgroundColor = backgroundColor;
+  }
+
+  setLabels(labels: Label[]) {
+    this.chartLabels = labels;
   }
 
   setOptions(title: string, yAxeLabel: string) {
