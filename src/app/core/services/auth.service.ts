@@ -4,7 +4,9 @@ import {AngularFireAuth} from '@angular/fire/auth';
 import {Observable, of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {Collections, User} from '../models';
-import {auth} from 'firebase/app';
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import {auth} from 'firebase';
 
 
 @Injectable({

@@ -19,8 +19,8 @@ export class AppComponent implements OnInit {
   constructor(
     private themeService: ThemeService,
     private dialogService: DialogService,
-    private authService: AuthService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public authService: AuthService
   ) {
   }
 

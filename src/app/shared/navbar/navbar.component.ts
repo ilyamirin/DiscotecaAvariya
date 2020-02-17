@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private themeService: ThemeService,
-    private authService: AuthService
+    public authService: AuthService
   ) {
   }
 
