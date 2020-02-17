@@ -4,27 +4,27 @@
   <div class="container" style="width: 100%; height: 100%">
     <div class="row">
       <div class="col-6">
-        <app-line-chart [chartParams]="generateOrphansInSubjectChart()"></app-line-chart>
+        <app-line-chart *ngIf="orphansInSubject.length" [chartParams]="generateOrphansInSubjectChart()"></app-line-chart>
       </div>
 
       <div class="col-6">
-        <app-line-chart [chartParams]="generateOrphansNeedHousingChart()"></app-line-chart>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-6">
-        <app-line-chart [chartParams]="generateNumberApartmentsIssuedChart()"></app-line-chart>
-      </div>
-
-      <div class="col-6">
-        <app-line-chart [chartParams]="generateFinancingAmountChart()"></app-line-chart>
+        <app-line-chart *ngIf="orphansNeedHousingPositive.length" [chartParams]="generateOrphansNeedHousingChart()"></app-line-chart>
       </div>
     </div>
 
     <div class="row">
       <div class="col-6">
-        <app-line-chart [chartParams]="generateHouseCostChart()"></app-line-chart>
+        <app-line-chart *ngIf="apartmentsNumberIssued.length" [chartParams]="generateApartmentsNumberIssuedChart()"></app-line-chart>
+      </div>
+
+      <div class="col-6">
+        <app-line-chart *ngIf="regionalFunding.length" [chartParams]="generateFinancingAmountChart()"></app-line-chart>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <app-line-chart *ngIf="realHousingCost.length" [chartParams]="generateHouseCostChart()"></app-line-chart>
       </div>
 
       <div class="col-6">
@@ -35,7 +35,7 @@
     <h2 class="center">Итоговые результаты:</h2>
 
     <div class="row">
-      <div class="col-6">
+      <!--<div class="col-6">
         <app-line-chart [chartParams]="generateAsIsChart()"></app-line-chart>
       </div>
 
@@ -88,7 +88,7 @@
             matTooltip="Стоимость кв. м. жилья">
           </mat-slider>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </mat-dialog-content>

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ChartType} from 'chart.js';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
-import {ChartParams} from '../../core/models';
+import {Chart} from '../../core/models';
 import {BaseChartDirective} from 'ng2-charts';
 
 
@@ -12,7 +12,7 @@ import {BaseChartDirective} from 'ng2-charts';
 })
 export class LineChartComponent implements OnInit {
 
-  @Input() chartParams: ChartParams;
+  @Input() chartParams: Chart;
 
   lineChartLegend = true;
   lineChartType: ChartType = 'line';

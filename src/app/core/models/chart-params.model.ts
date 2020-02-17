@@ -3,8 +3,8 @@ import {Color, Label} from 'ng2-charts';
 
 
 export interface ChartParams {
-  lineChartLabels: Label[];
-  lineChartData: ChartDataSets[];
-  lineChartOptions: (ChartOptions & { annotation: any });
-  lineChartColors: Color[];
+  chartLabels: Label[];
+  chartData: ChartDataSets[];
+  chartOptions: (ChartOptions & { annotation: any });
+  chartColors: Color[];
 }

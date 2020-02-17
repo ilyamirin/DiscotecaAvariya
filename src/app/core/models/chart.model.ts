@@ -1,9 +1,11 @@
 import {Color, Label} from 'ng2-charts';
-import {ChartDataSets, ChartOptions} from 'chart.js';
+import {ChartDataSets, ChartOptions, ChartTitleOptions} from 'chart.js';
 
 
 export class Chart {
-  private static readonly defaultStartYear = 2020;
+  private static readonly defaultStartYear = 2016;
+  private static readonly currentYear = new Date().getFullYear();
+  private static readonly deadline = 2026;
   private static readonly defaultEndYear = 2030;
 
   private static readonly fontSize = 18;
@@ -13,14 +15,13 @@ export class Chart {
   chartOptions: (ChartOptions & { annotation: any });
   chartColors: Color[];
 
-  constructor() {
+  constructor(chartData: ChartDataSets[]) {
     this.chartLabels = Chart.generateChartLabels(Chart.defaultStartYear, Chart.defaultEndYear);
-    this.chartData = [];
+    this.chartData = chartData;
     this.chartOptions = {
       responsive: true,
       title: {
         display: true,
-        text: 'Число детей-сирот в регионе',
         fontSize: Chart.fontSize
       },
       scales: {
@@ -45,7 +46,6 @@ export class Chart {
             scaleLabel: {
               display: true,
               fontSize: Chart.fontSize,
-              labelString: 'Число детей-сирот'
             }
           }
         ]
@@ -56,7 +56,7 @@ export class Chart {
             type: 'line',
             mode: 'vertical',
             scaleID: 'x-axis-0',
-            value: undefined,
+            value: Chart.deadline.toString(),
             borderColor: 'red',
             borderWidth: 2,
             label: {
@@ -69,7 +69,7 @@ export class Chart {
             type: 'line',
             mode: 'vertical',
             scaleID: 'x-axis-0',
-            value: undefined,
+            value: Chart.currentYear.toString(),
             borderColor: '#673ab7',
             borderWidth: 2,
             label: {
@@ -81,7 +81,16 @@ export class Chart {
         ],
       }
     };
-    this.chartColors = [];
+    this.chartColors = [
+      {
+        backgroundColor: 'rgba(255,51,181,0.3)',
+        borderColor: 'rgb(255,193,7)',
+        pointBackgroundColor: 'rgba(77,83,96,1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(77,83,96,1)'
+      }
+    ];
   }
 
   static generateChartLabels(startYear: number, endYear: number) {
@@ -92,5 +101,15 @@ export class Chart {
     }
 
     return lineChartLabels;
+  }
+
+  setBackgroundColor(backgroundColor: string) {
+    const colorIndex = 0;
+    this.chartColors[colorIndex].backgroundColor = backgroundColor;
+  }
+
+  setOptions(title: string, yAxeLabel: string) {
+    this.chartOptions.title.text = title;
+    this.chartOptions.scales.yAxes[0].scaleLabel.labelString = yAxeLabel;
   }
 }

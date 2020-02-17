@@ -32,17 +32,9 @@ export class RussiaMapComponent implements OnInit {
   private setOpenDialogAction(regions) {
     regions.forEach(region => {
       document.getElementById(region.id).onclick = () => {
-        const regionPrimorskyKrai = 'RU-PRI';
-
-        if (region.id === regionPrimorskyKrai) {
-          this.openMetricsDialog(region);
-        }
+        this.openMetricsDialog(region);
       };
     });
-  }
-
-  test($event) {
-    console.log($event.currentTarget.id);
   }
 
   openMetricsDialog(region: Region) {

@@ -6,7 +6,7 @@ import {switchMap} from 'rxjs/operators';
 import {Collections, User} from '../models';
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import {auth} from 'firebase';
+import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 
 
 @Injectable({
@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   async googleSignIn() {
-    const provider = new auth.GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();
     const credential = await this.angularFireAuth.auth.signInWithPopup(provider);
     return this.updateUserData(credential.user);
   }
@@ -51,8 +51,5 @@ export class AuthService {
     };
 
     return userRef.set(data, {merge: true});
-  }
-
-  hasWriteAccess() {
   }
 }
