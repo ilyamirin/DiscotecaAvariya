@@ -4,6 +4,8 @@ export * from './collections.enum';
 
 export * from './region.model';
 
+export * from './region-status.model';
+
 export * from './region-statistics.model';
 
 export * from './metric-coefficients.model';

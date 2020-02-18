@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {MAT_DIALOG_DATA} from '@angular/material';
-import {Chart, Collections, MetricCoefficients, Region, RegionStatistics} from '../../core/models';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {Chart, Collections, MetricCoefficients, Region, RegionStatistics, RegionStatus} from '../../core/models';
 import {BaseChartDirective} from 'ng2-charts';
 import {FirebaseService} from '../../core/services';
 
@@ -41,13 +41,15 @@ export class MetricsDialogComponent implements OnInit {
   pricePerSquareMeterValue: number;
 
   region: Region;
+  regionStatus: RegionStatus;
   regionData: RegionStatistics[];
 
   isAllDataLoaded: boolean;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) private data: MetricsDialogComponent,
-    private firebaseService: FirebaseService
+    @Inject(MAT_DIALOG_DATA) public data: MetricsDialogComponent,
+    private firebaseService: FirebaseService,
+    private dialogRef: MatDialogRef<MetricsDialogComponent>,
   ) {
   }
 
@@ -71,6 +73,7 @@ export class MetricsDialogComponent implements OnInit {
 
   ngOnInit() {
     this.region = this.data.region;
+    this.regionStatus = this.data.regionStatus;
 
     this.orphansInSubject = [];
     this.newlyIdentifiedOrphans = [];
@@ -178,6 +181,12 @@ export class MetricsDialogComponent implements OnInit {
 
         this.isAllDataLoaded = true;
       });
+    });
+  }
+
+  onCloseClick() {
+    this.dialogRef.close({
+      regionStatus: this.regionStatus
     });
   }
 
@@ -316,6 +325,14 @@ export class MetricsDialogComponent implements OnInit {
         }
 
         orphansNumber.push(prediction);
+      }
+
+      if (orphansNumber[year2020Index] === 0) {
+        this.regionStatus = RegionStatus.GOOD;
+      } else if (orphansNumber[year2030Index] === 0) {
+        this.regionStatus = RegionStatus.ACCEPTABLE;
+      } else {
+        this.regionStatus = RegionStatus.CRITICAL;
       }
 
       return orphansNumber;

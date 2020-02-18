@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Collections, Region} from '../../core/models';
-import {ApiService, DialogService, FirebaseService} from '../../core/services';
+import {Region} from '../../core/models';
+import {ApiService, DialogService} from '../../core/services';
 import {MetricsDialogComponent} from '../metrics-dialog/metrics-dialog.component';
+import {RegionStatus} from '../../core/models';
 
 
 @Component({
@@ -13,8 +14,7 @@ export class RussiaMapComponent implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private dialogService: DialogService,
-    private firebaseService: FirebaseService
+    private dialogService: DialogService
   ) {
   }
 
@@ -22,11 +22,6 @@ export class RussiaMapComponent implements OnInit {
     this.apiService.get('regions.json').subscribe(data => {
       this.setOpenDialogAction(data as Region[]);
     });
-
-    /*this.firebaseService.get(Collections.REGION).subscribe(data => {
-      this.regions = data as Region[];
-      this.setOpenDialogAction(this.regions);
-    });*/
   }
 
   private setOpenDialogAction(regions) {
@@ -38,12 +33,20 @@ export class RussiaMapComponent implements OnInit {
   }
 
   openMetricsDialog(region: Region) {
+    const regionStatus: RegionStatus = RegionStatus.UNKNOWN;
+
     const dialogRef = this.dialogService.open(MetricsDialogComponent, {
       width: '1200px',
       height: '640px',
+      hasBackdrop: false,
       data: {
-        region
+        region,
+        regionStatus
       }
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      document.getElementById(region.id).style.fill = res.regionStatus;
     });
   }
 }

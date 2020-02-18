@@ -13,15 +13,15 @@ $legend-icon-size: 24px;
 
 .legend-good {
   @extend .legend;
-  background: green;
+  background: #76FF03;
 }
 
 .legend-acceptable {
   @extend .legend;
-  background: #ffc107;
+  background: #FF8800;
 }
 
 .legend-critical {
   @extend .legend;
-  background: red;
+  background: #FF0000;
 }
