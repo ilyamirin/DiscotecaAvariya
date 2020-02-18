@@ -51,7 +51,7 @@ export class MetricsDialogComponent implements OnInit {
   ) {
   }
 
-  @ViewChild('dynamicChart', {static: true}) dynamicChart: BaseChartDirective;
+  @ViewChild('dynamicChart', {static: false}) dynamicChart: BaseChartDirective;
 
   private static predictAsIsResult(orphansNeedHousing: number, newlyIdentifiedOrphans: number, numberApartmentsIssued: number) {
     return this.predict(orphansNeedHousing, newlyIdentifiedOrphans, numberApartmentsIssued);
@@ -164,7 +164,7 @@ export class MetricsDialogComponent implements OnInit {
         this.finalChart = new Chart([
           {
             data: this.asIsData(this.metricCoefficients),
-            label: 'Поручение Правительства РФ ликвидировать очередь'
+            label: 'Число детей-сирот, стоящих в очереди'
           }
         ], 2020, 2044);
 
@@ -232,6 +232,40 @@ export class MetricsDialogComponent implements OnInit {
   }
 
   onChangeValue($event: any) {
+    const orphansNeedHousingNegative = this.orphansNeedHousingNegative;
+
+    const year2020Index = 4;
+    const year2030Index = 14;
+    const year2044Index = 28;
+
+    for (let i = year2030Index; i <= year2044Index; i++) {
+      orphansNeedHousingNegative.push(Math.round(orphansNeedHousingNegative[i] *
+        this.metricCoefficients.orphansNeedHousingNegativeCoefficient));
+    }
+
+    let prediction;
+    for (let j = year2020Index; j < year2044Index; j++) {
+      if (j === year2020Index) {
+        prediction = MetricsDialogComponent.predictDynamicResult(
+          orphansNeedHousingNegative[j - 1],
+          this.newlyIdentifiedOrphansValue,
+          this.financingAmountValue,
+          this.squareNormValue,
+          this.pricePerSquareMeterValue
+        );
+      } else {
+        prediction = MetricsDialogComponent.predictDynamicResult(
+          prediction,
+          this.newlyIdentifiedOrphansValue,
+          this.financingAmountValue,
+          this.squareNormValue,
+          this.pricePerSquareMeterValue
+        );
+      }
+
+      this.finalChart.chartData[0].data[j] = prediction;
+    }
+
     this.dynamicChart.chart.update();
   }
 
