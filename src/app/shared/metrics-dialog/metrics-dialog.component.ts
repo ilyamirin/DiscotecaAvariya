@@ -278,6 +278,7 @@ export class MetricsDialogComponent implements OnInit {
   }
 
   private asIsData(metricCoefficients: MetricCoefficients) {
+    // FIXME: when coefficients empty, disable dynamic chart
     const orphansNeedHousingNegative = this.orphansNeedHousingNegative;
     const newlyIdentifiedOrphans = this.newlyIdentifiedOrphans;
     const apartmentsNumberIssued = this.apartmentsNumberIssued;
