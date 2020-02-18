@@ -240,80 +240,87 @@ export class MetricsDialogComponent implements OnInit {
   }
 
   onChangeValue($event: any) {
-    const orphansNeedHousingNegative = this.orphansNeedHousingNegative;
+    if (this.metricCoefficients !== undefined) {
+      const orphansNeedHousingNegative = this.orphansNeedHousingNegative;
 
-    const year2020Index = 4;
-    const year2030Index = 14;
-    const year2044Index = 28;
+      const year2020Index = 4;
+      const year2030Index = 14;
+      const year2044Index = 28;
 
-    for (let i = year2030Index; i <= year2044Index; i++) {
-      orphansNeedHousingNegative.push(Math.round(orphansNeedHousingNegative[i] *
-        this.metricCoefficients.orphansNeedHousingNegativeCoefficient));
-    }
-
-    let prediction;
-    for (let j = year2020Index; j < year2044Index; j++) {
-      if (j === year2020Index) {
-        prediction = MetricsDialogComponent.predictDynamicResult(
-          orphansNeedHousingNegative[j - 1],
-          this.newlyIdentifiedOrphansValue,
-          this.financingAmountValue,
-          this.squareNormValue,
-          this.pricePerSquareMeterValue
-        );
-      } else {
-        prediction = MetricsDialogComponent.predictDynamicResult(
-          prediction,
-          this.newlyIdentifiedOrphansValue,
-          this.financingAmountValue,
-          this.squareNormValue,
-          this.pricePerSquareMeterValue
-        );
+      for (let i = year2030Index; i <= year2044Index; i++) {
+        orphansNeedHousingNegative.push(Math.round(orphansNeedHousingNegative[i] *
+          this.metricCoefficients.orphansNeedHousingNegativeCoefficient));
       }
 
-      this.finalChart.chartData[0].data[j] = prediction;
-    }
+      let prediction;
+      for (let j = year2020Index; j < year2044Index; j++) {
+        if (j === year2020Index) {
+          prediction = MetricsDialogComponent.predictDynamicResult(
+            orphansNeedHousingNegative[j - 1],
+            this.newlyIdentifiedOrphansValue,
+            this.financingAmountValue,
+            this.squareNormValue,
+            this.pricePerSquareMeterValue
+          );
+        } else {
+          prediction = MetricsDialogComponent.predictDynamicResult(
+            prediction,
+            this.newlyIdentifiedOrphansValue,
+            this.financingAmountValue,
+            this.squareNormValue,
+            this.pricePerSquareMeterValue
+          );
+        }
 
-    this.dynamicChart.chart.update();
+        this.finalChart.chartData[0].data[j] = prediction;
+      }
+
+      this.dynamicChart.chart.update();
+    }
   }
 
   private asIsData(metricCoefficients: MetricCoefficients) {
-    // FIXME: when coefficients empty, disable dynamic chart
-    const orphansNeedHousingNegative = this.orphansNeedHousingNegative;
-    const newlyIdentifiedOrphans = this.newlyIdentifiedOrphans;
-    const apartmentsNumberIssued = this.apartmentsNumberIssued;
+    if (metricCoefficients !== undefined) {
+      const orphansNeedHousingNegative = this.orphansNeedHousingNegative;
+      const newlyIdentifiedOrphans = this.newlyIdentifiedOrphans;
+      const apartmentsNumberIssued = this.apartmentsNumberIssued;
 
-    const year2020Index = 4;
-    const year2030Index = 14;
-    const year2044Index = 28;
+      const year2020Index = 4;
+      const year2030Index = 14;
+      const year2044Index = 28;
 
-    for (let i = year2030Index; i <= year2044Index; i++) {
-      orphansNeedHousingNegative.push(Math.round(orphansNeedHousingNegative[i] * metricCoefficients.orphansNeedHousingNegativeCoefficient));
-      newlyIdentifiedOrphans.push(Math.round((newlyIdentifiedOrphans[i] as number) * metricCoefficients.newlyIdentifiedOrphansCoefficient));
-      apartmentsNumberIssued.push(apartmentsNumberIssued[i] * metricCoefficients.apartmentsNumberIssuedCoefficient);
-    }
-
-    const orphansNumber = [];
-
-    let prediction;
-    for (let j = year2020Index; j <= year2044Index; j++) {
-      if (j === year2020Index) {
-        prediction = MetricsDialogComponent.predictAsIsResult(
-          orphansNeedHousingNegative[j - 1],
-          newlyIdentifiedOrphans[j] as number,
-          apartmentsNumberIssued[j]
-        );
-      } else {
-        prediction = MetricsDialogComponent.predictAsIsResult(
-          prediction,
-          newlyIdentifiedOrphans[j] as number,
-          apartmentsNumberIssued[j]
-        );
+      for (let i = year2030Index; i <= year2044Index; i++) {
+        orphansNeedHousingNegative.push(Math.round(orphansNeedHousingNegative[i] *
+          metricCoefficients.orphansNeedHousingNegativeCoefficient));
+        newlyIdentifiedOrphans.push(Math.round((newlyIdentifiedOrphans[i] as number) *
+          metricCoefficients.newlyIdentifiedOrphansCoefficient));
+        apartmentsNumberIssued.push(apartmentsNumberIssued[i] * metricCoefficients.apartmentsNumberIssuedCoefficient);
       }
 
-      orphansNumber.push(prediction);
-    }
+      const orphansNumber = [];
 
-    return orphansNumber;
+      let prediction;
+      for (let j = year2020Index; j <= year2044Index; j++) {
+        if (j === year2020Index) {
+          prediction = MetricsDialogComponent.predictAsIsResult(
+            orphansNeedHousingNegative[j - 1],
+            newlyIdentifiedOrphans[j] as number,
+            apartmentsNumberIssued[j]
+          );
+        } else {
+          prediction = MetricsDialogComponent.predictAsIsResult(
+            prediction,
+            newlyIdentifiedOrphans[j] as number,
+            apartmentsNumberIssued[j]
+          );
+        }
+
+        orphansNumber.push(prediction);
+      }
+
+      return orphansNumber;
+    } else {
+      return [];
+    }
   }
 }
