@@ -152,6 +152,14 @@ export class MetricsDialogComponent implements OnInit {
         }
       ]);
 
+      const initValueIndex = 4;
+
+      this.newlyIdentifiedOrphansValue = this.newlyIdentifiedOrphans[initValueIndex];
+      this.financingAmountValue = this.federalFunding[initValueIndex] + this.regionalFunding[initValueIndex];
+      // FIXME: add field for square norm
+      this.squareNormValue = 30;
+      this.pricePerSquareMeterValue = this.realHousingCost[initValueIndex];
+
       this.firebaseService.getById(Collections.COEFFICIENT, this.region.id).subscribe(res => {
         this.metricCoefficients = res as MetricCoefficients;
 
