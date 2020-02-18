@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material';
-import {Chart, MetricCoefficients, Region, RegionStatistics} from '../../core/models';
+import {Chart, Collections, MetricCoefficients, Region, RegionStatistics} from '../../core/models';
 import {BaseChartDirective} from 'ng2-charts';
 import {FirebaseService} from '../../core/services';
 
@@ -12,18 +12,18 @@ import {FirebaseService} from '../../core/services';
 })
 export class MetricsDialogComponent implements OnInit {
 
-  orphansInSubject: number[];
-  newlyIdentifiedOrphans: number[];
-  orphansNeedHousingNegative: number[];
-  orphansNeedHousingPositive: number[];
-  apartmentsNumberIssued: number[];
-  regionalFunding: number[];
-  federalFunding: number[];
-  realHousingCost: number[];
-  minstroyHousingCost: number[];
-  employeesNumber: number[];
+  private orphansInSubject: number[];
+  private newlyIdentifiedOrphans: number[];
+  private orphansNeedHousingNegative: number[];
+  private orphansNeedHousingPositive: number[];
+  private apartmentsNumberIssued: number[];
+  private regionalFunding: number[];
+  private federalFunding: number[];
+  private realHousingCost: number[];
+  private minstroyHousingCost: number[];
+  private employeesNumber: number[];
 
-  metricCoefficients: MetricCoefficients;
+  private metricCoefficients: MetricCoefficients;
 
   private orphansInSubjectChart: Chart;
   private orphansNeedHousingChart: Chart;
@@ -32,6 +32,8 @@ export class MetricsDialogComponent implements OnInit {
   private houseCostChart: Chart;
   private employeesNumberChart: Chart;
   private asIsChart: Chart;
+
+  private finalChart: Chart;
 
   newlyIdentifiedOrphansValue: number;
   financingAmountValue: number;
@@ -45,7 +47,7 @@ export class MetricsDialogComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: MetricsDialogComponent,
-    public firebaseService: FirebaseService
+    private firebaseService: FirebaseService
   ) {
   }
 
@@ -84,7 +86,7 @@ export class MetricsDialogComponent implements OnInit {
     this.firebaseService.get(this.region.id).subscribe(data => {
       this.regionData = data as RegionStatistics[];
 
-      this.regionData.forEach((value, index) => {
+      this.regionData.forEach(value => {
         this.orphansInSubject.push(value.orphansInSubject);
         this.newlyIdentifiedOrphans.push(value.newlyIdentifiedOrphans);
         this.orphansNeedHousingNegative.push(value.orphansNeedHousingNegative);
@@ -150,19 +152,43 @@ export class MetricsDialogComponent implements OnInit {
         }
       ]);
 
-      this.isAllDataLoaded = true;
+      this.firebaseService.getById(Collections.COEFFICIENT, this.region.id).subscribe(res => {
+        this.metricCoefficients = res as MetricCoefficients;
+
+        this.asIsChart = new Chart([
+          {
+            data: this.asIsData(this.metricCoefficients),
+            label: 'Число детей-сирот, стоящих в очереди'
+          }
+        ], 2020, 2044);
+        this.finalChart = new Chart([
+          {
+            data: this.asIsData(this.metricCoefficients),
+            label: 'Поручение Правительства РФ ликвидировать очередь'
+          }
+        ], 2020, 2044);
+
+        this.isAllDataLoaded = true;
+      });
     });
+  }
 
-    /*this.firebaseService.getById(Collections.COEFFICIENT, this.region.id).subscribe(data => {
-      this.metricCoefficients = data as MetricCoefficients;
+  formatFinancingAmountValue(value: number) {
+    const limit = 1000000000;
+    if (value >= limit) {
+      return value / limit + ' млрд.';
+    }
 
-      this.asIsChart = new Chart([
-        {
-          data: this.asIsData(this.metricCoefficients),
-          label: 'Число детей-сирот, стоящих в очереди'
-        }
-      ], 2020, 2044);
-    });*/
+    return value;
+  }
+
+  formatSquareNormValue(value: number) {
+    const limit = 1000;
+    if (value >= limit) {
+      return value / limit + ' тыс.';
+    }
+
+    return value;
   }
 
   generateOrphansInSubjectChart() {
@@ -185,24 +211,6 @@ export class MetricsDialogComponent implements OnInit {
     return this.financingAmountChart;
   }
 
-  formatFinancingAmountValue(value: number) {
-    const limit = 1000000000;
-    if (value >= limit) {
-      return value / limit + ' млрд.';
-    }
-
-    return value;
-  }
-
-  formatSquareNormValue(value: number) {
-    const limit = 1000;
-    if (value >= limit) {
-      return value / limit + ' тыс.';
-    }
-
-    return value;
-  }
-
   generateHouseCostChart() {
     this.houseCostChart.setOptions('Стоимость жилья (за кв. м.)', 'Стоимость жилья (за кв. м.)');
     return this.houseCostChart;
@@ -218,7 +226,13 @@ export class MetricsDialogComponent implements OnInit {
     return this.asIsChart;
   }
 
+  generateFinalChart() {
+    this.finalChart.setOptions('Поручение Правительства РФ ликвидировать очередь', 'Число детей-сирот, стоящих в очереди');
+    return this.finalChart;
+  }
+
   onChangeValue($event: any) {
+    this.dynamicChart.chart.update();
   }
 
   private asIsData(metricCoefficients: MetricCoefficients) {

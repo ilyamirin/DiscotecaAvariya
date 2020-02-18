@@ -1,5 +1,4 @@
 export * from './request-method.enum';
-export * from './chart-params.model';
 export * from './chart.model';
 export * from './collections.enum';
 
