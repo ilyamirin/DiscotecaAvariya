@@ -164,7 +164,9 @@ export class MetricsDialogComponent implements OnInit {
       this.firebaseService.getById(Collections.COEFFICIENT, this.region.id).subscribe(res => {
         this.metricCoefficients = res as MetricCoefficients;
 
-        this.squareNormValue = this.metricCoefficients.squareNorm;
+        if (this.metricCoefficients !== undefined) {
+          this.squareNormValue = this.metricCoefficients.squareNorm;
+        }
 
         this.asIsChart = new Chart([
           {
@@ -215,36 +217,43 @@ export class MetricsDialogComponent implements OnInit {
 
   generateOrphansNeedHousingChart() {
     this.orphansNeedHousingChart.setOptions('Число детей-сирот, нуждающихся в жилье', 'Число детей-сирот');
+    this.orphansNeedHousingChart.setBackgroundColor('rgba(43, 187, 173, 0.3)');
     return this.orphansNeedHousingChart;
   }
 
   generateApartmentsNumberIssuedChart() {
     this.apartmentsNumberIssuedChart.setOptions('Количество выданных квартир', 'Количество выданных квартир');
+    this.apartmentsNumberIssuedChart.setBackgroundColor('rgba(156, 39, 176, 0.3)');
     return this.apartmentsNumberIssuedChart;
   }
 
   generateFinancingAmountChart() {
     this.financingAmountChart.setOptions('Размер финансирования', 'Размер финансирования');
+    this.financingAmountChart.setBackgroundColor('rgba(33, 150, 243, 0.3)');
     return this.financingAmountChart;
   }
 
   generateHouseCostChart() {
     this.houseCostChart.setOptions('Стоимость жилья (за кв. м.)', 'Стоимость жилья (за кв. м.)');
+    this.houseCostChart.setBackgroundColor('rgba(0, 188, 212, 0.3)');
     return this.houseCostChart;
   }
 
   generateEmployeesNumberChart() {
     this.employeesNumberChart.setOptions('Число сотрудников, занимающихся вопросом', 'Число сотрудников');
+    this.employeesNumberChart.setBackgroundColor('rgba(255, 235, 59, 0.3)');
     return this.employeesNumberChart;
   }
 
   generateAsIsChart() {
     this.asIsChart.setOptions('\"Что будет, если ничего не менять?\"', 'Число детей-сирот, стоящих в очереди');
+    this.asIsChart.setBackgroundColor('rgba(103, 58, 183, 0.3)');
     return this.asIsChart;
   }
 
   generateFinalChart() {
     this.finalChart.setOptions('Поручение Правительства РФ ликвидировать очередь', 'Число детей-сирот, стоящих в очереди');
+    this.finalChart.setBackgroundColor('rgba(118, 255, 3, 0.3)');
     return this.finalChart;
   }
 
