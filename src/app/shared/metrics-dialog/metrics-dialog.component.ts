@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {Chart, Collections, MetricCoefficients, Region, RegionStatistics, RegionStatus} from '../../core/models';
 import {BaseChartDirective} from 'ng2-charts';
 import {FirebaseService} from '../../core/services';
+import {isUndefined} from 'util';
 
 
 @Component({
@@ -304,6 +305,7 @@ export class MetricsDialogComponent implements OnInit {
       const apartmentsNumberIssued = this.apartmentsNumberIssued;
 
       const year2020Index = 4;
+      const year2026Index = 10;
       const year2030Index = 14;
       const year2044Index = 28;
 
@@ -336,12 +338,15 @@ export class MetricsDialogComponent implements OnInit {
         orphansNumber.push(prediction);
       }
 
-      if (orphansNumber[year2020Index] === 0) {
+      if (orphansNumber[year2026Index] === 0) {
         this.regionStatus = RegionStatus.GOOD;
       } else if (orphansNumber[year2030Index] === 0) {
         this.regionStatus = RegionStatus.ACCEPTABLE;
       } else {
-        this.regionStatus = RegionStatus.CRITICAL;
+        // Check 2031 year
+        if (!isUndefined(orphansNumber[year2030Index + 1])) {
+          this.regionStatus = RegionStatus.CRITICAL;
+        }
       }
 
       return orphansNumber;
