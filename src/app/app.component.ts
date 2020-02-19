@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
 
   openAddDataDialog(user) {
     if (this.hasWriteAccess(user)) {
-      const dialogRef = this.dialogService.open(AddDataDialogComponent, {
+      this.dialogService.open(AddDataDialogComponent, {
         hasBackdrop: false,
         width: '1360px',
         height: '640px'

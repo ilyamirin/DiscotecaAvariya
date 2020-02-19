@@ -74,6 +74,8 @@ export class AddDataDialogComponent implements OnInit {
       realHousingCostCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])],
       minstroyHousingCostCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])],
 
+      squareNorm: ['', Validators.compose([Validators.required, Validators.min(1)])],
+
       employeesNumberCoefficient: ['', Validators.compose([Validators.required, Validators.min(0)])]
     });
 
@@ -116,6 +118,9 @@ export class AddDataDialogComponent implements OnInit {
       'minstroyHousingCostCoefficient',
 
       'employeesNumberCoefficient',
+
+      'squareNorm',
+
       'actions'
     ];
 

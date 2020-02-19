@@ -47,7 +47,7 @@ export class MetricsDialogComponent implements OnInit {
   isAllDataLoaded: boolean;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: MetricsDialogComponent,
+    @Inject(MAT_DIALOG_DATA) private data: MetricsDialogComponent,
     private firebaseService: FirebaseService,
     private dialogRef: MatDialogRef<MetricsDialogComponent>,
   ) {
@@ -159,12 +159,12 @@ export class MetricsDialogComponent implements OnInit {
 
       this.newlyIdentifiedOrphansValue = this.newlyIdentifiedOrphans[initValueIndex];
       this.financingAmountValue = this.federalFunding[initValueIndex] + this.regionalFunding[initValueIndex];
-      // FIXME: add field for square norm
-      this.squareNormValue = 30;
       this.pricePerSquareMeterValue = this.realHousingCost[initValueIndex];
 
       this.firebaseService.getById(Collections.COEFFICIENT, this.region.id).subscribe(res => {
         this.metricCoefficients = res as MetricCoefficients;
+
+        this.squareNormValue = this.metricCoefficients.squareNorm;
 
         this.asIsChart = new Chart([
           {

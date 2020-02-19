@@ -14,4 +14,6 @@ export class MetricCoefficients {
   minstroyHousingCostCoefficient: number;
 
   employeesNumberCoefficient: number;
+
+  squareNorm: number;
 }
