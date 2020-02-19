@@ -272,7 +272,7 @@ export class MetricsDialogComponent implements OnInit {
       }
 
       let prediction;
-      for (let j = year2020Index; j < year2044Index; j++) {
+      for (let j = year2020Index; j <= year2044Index; j++) {
         if (j === year2020Index) {
           prediction = MetricsDialogComponent.predictDynamicResult(
             orphansNeedHousingNegative[j - 1],
@@ -291,7 +291,7 @@ export class MetricsDialogComponent implements OnInit {
           );
         }
 
-        this.finalChart.chartData[0].data[j] = prediction;
+        this.finalChart.chartData[0].data[j - 4] = prediction;
       }
 
       this.dynamicChart.chart.update();
